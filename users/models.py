@@ -60,7 +60,7 @@ class Transactions(models.Model):
     from_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'from_account')
     to_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'to_account')
     amount = models.BigIntegerField()
-    transaction_status = models.CharField(max_length = 128, choices = transaction_status)
+    transaction_status = models.CharField(max_length = 128, choices = transaction_status,default='pending')
     transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE)
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)

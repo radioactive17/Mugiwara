@@ -12,6 +12,18 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from .forms import UserUpdateForm, BankingUserUpdateForm
 # users/views.py
+from django.db.models import Sum
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.db.models import Q
+from .models import Transactions, BankingUser
+
+
+from django.shortcuts import render, redirect
+from .forms import Transactions_form
+
+from .forms import Transactions_form
+from .models import Transactions
 
 
 from django.shortcuts import render, get_object_or_404, redirect
@@ -77,12 +89,34 @@ def profile(request):
    return render(request, 'users/profile.html', context)
 
 
+
+
+@login_required
+def create_transaction(request):
+    if request.method == 'POST':
+        form = Transactions_form(request.POST)
+        if form.is_valid():
+            form.instance.transaction_status = 'pending'
+            form.instance.transaction_handler = request.user.bankinguser
+            form.save()
+            return redirect('all_transactions')
+    else:
+        current_user_account = request.user.bankinguser.account_set.first()
+        initial_data = {'from_account': current_user_account}
+        form = Transactions_form(initial=initial_data)
+
+    return render(request, 'users/create_transaction.html', {'form': form})
+
+
+
+
+
 @login_required
 def all_transactions(request):
    # Filter transactions where the current user is either the sender or the receiver
    transactions = Transactions.objects.filter(
        Q(from_account__user=request.user.bankinguser) | Q(to_account__user=request.user.bankinguser)
-   ).distinct()
+   ).distinct()  
 
 
    return render(request, 'users/all_transactions.html', {'transactions': transactions})
@@ -96,8 +130,10 @@ def user_transactions(request):
        Q(from_account__user=request.user.bankinguser) | Q(to_account__user=request.user.bankinguser)
    ).distinct()
 
-
-   return render(request, 'users/user_transactions.html', {'transactions': transactions})
+   banking_user = request.user.bankinguser
+   Account_user = Account.objects.get(user=banking_user)
+   account_balance=Account_user.account_bal
+   return render(request, 'users/user_transactions.html', {'transactions': transactions, 'account_balance': account_balance})
 
 
 @login_required
@@ -109,14 +145,17 @@ def approve_transaction(request, transaction_id):
    if request.method == 'POST':
        if transaction.transaction_status == 'pending':
            # Update the transaction status to 'approved'
-           transaction.transaction_status = 'approved'
+
 
 
            # Perform deduction from "From_account"
            from_account = transaction.from_account
            from_account.account_bal -= transaction.amount
+           to_account = transaction.to_account
+           to_account.account_bal+=transaction.amount
            from_account.save()
-
+           to_account.save()
+           transaction.transaction_status = 'approved'
 
            transaction.save()
 
