@@ -24,7 +24,7 @@ from .forms import Transactions_form
 
 from .forms import Transactions_form
 from .models import Transactions
-
+from django.db import transaction
 
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -33,8 +33,6 @@ from .models import Transactions
 
 
 from django.db.models import Q
-
-
 
 
 def home(request):
@@ -114,9 +112,7 @@ def create_transaction(request):
 @login_required
 def all_transactions(request):
    # Filter transactions where the current user is either the sender or the receiver
-   transactions = Transactions.objects.filter(
-       Q(from_account__user=request.user.bankinguser) | Q(to_account__user=request.user.bankinguser)
-   ).distinct()  
+   transactions = Transactions.objects.all()
 
 
    return render(request, 'users/all_transactions.html', {'transactions': transactions})
@@ -136,63 +132,7 @@ def user_transactions(request):
    return render(request, 'users/user_transactions.html', {'transactions': transactions, 'account_balance': account_balance})
 
 
-@login_required
-# users/views.py
-def approve_transaction(request, transaction_id):
-   transaction = get_object_or_404(Transactions, id=transaction_id)
 
-
-   if request.method == 'POST':
-       if transaction.transaction_status == 'pending':
-           # Update the transaction status to 'approved'
-
-
-
-           # Perform deduction from "From_account"
-           from_account = transaction.from_account
-           from_account.account_bal -= transaction.amount
-           to_account = transaction.to_account
-           to_account.account_bal+=transaction.amount
-           from_account.save()
-           to_account.save()
-           transaction.transaction_status = 'approved'
-
-           transaction.save()
-
-
-           # Perform additional actions if needed
-
-
-           # Redirect or render a response as needed
-
-
-   # Render a page for approving transactions (optional)
-   return redirect('/user_transactions', transaction_id=transaction_id)
-
-
-
-
-@login_required
-def decline_transaction(request, transaction_id):
-   transaction = get_object_or_404(Transactions, id=transaction_id)
-
-
-   if request.method == 'POST':
-       if transaction.transaction_status == 'pending':
-       # Update the transaction status to 'rejected'
-           transaction.transaction_status = 'rejected'
-           transaction.save()
-
-
-       # Redirect or render a response as needed
-
-
-   # Render a page for declining transactions (optional)
-   return redirect('/user_transactions', transaction_id=transaction_id)
-
-
-
-from django.db import transaction
 
 @transaction.atomic
 def debit_view(request):
@@ -257,3 +197,63 @@ def credit_view(request):
         return redirect('/user_transactions')
 
     return render(request, 'users/credit_template.html', {'form': form})
+
+
+
+@login_required
+# users/views.py
+def approve_transaction(request, transaction_id):
+   transaction = get_object_or_404(Transactions, id=transaction_id)
+
+
+   if request.method == 'POST':
+       if transaction.transaction_status == 'pending':
+           # Update the transaction status to 'approved'
+
+
+
+           # Perform deduction from "From_account"
+           from_account = transaction.from_account
+           from_account.account_bal -= transaction.amount
+           to_account = transaction.to_account
+           to_account.account_bal+=transaction.amount
+           from_account.save()
+           to_account.save()
+           transaction.transaction_status = 'approved'
+           transaction.transaction_handler = request.user.bankinguser
+           transaction.save()
+
+
+           # Perform additional actions if needed
+
+
+           # Redirect or render a response as needed
+
+
+   # Render a page for approving transactions (optional)
+   return redirect('/all_transactions', transaction_id=transaction_id)
+
+
+
+
+@login_required
+def decline_transaction(request, transaction_id):
+   transaction = get_object_or_404(Transactions, id=transaction_id)
+
+
+   if request.method == 'POST':
+       if transaction.transaction_status == 'pending':
+       # Update the transaction status to 'rejected'
+           transaction.transaction_status = 'rejected'
+           transaction.transaction_handler = request.user.bankinguser
+           transaction.save()
+
+
+       # Redirect or render a response as needed
+
+
+   # Render a page for declining transactions (optional)
+   return redirect('/all_transactions', transaction_id=transaction_id)
+
+
+
