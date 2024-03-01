@@ -1,5 +1,7 @@
 <!-- users/transaction_list.html -->
+{% extends 'users/base.html' %}
 
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -9,48 +11,53 @@
     <title>All Transactions</title>
 </head>
 <body>
-    <h1>All Transactions</h1>
-
-    <table border="1">
-        <thead>
-            <tr>
-                <th>From Account</th>
-                <th>To Account</th>
-                <th>Amount</th>
-                <th>Status</th>
-                <th>Transaction Handler</th>
-                <th>Initiated</th>
-                <th>Status Changed</th>
-           
-                <th>Actions</th>
-
-            </tr>
-        </thead>
-        <tbody>
-            {% for transaction in transactions %}
-            <tr>
-                <td>{{ transaction.from_account }}</td>
-                <td>{{ transaction.to_account }}</td>
-                <td>{{ transaction.amount }}</td>
-                <td>{{ transaction.transaction_status }}</td>
-                <td>{{ transaction.transaction_handler }}</td>
-                <td>{{ transaction.initiated }}</td>
-                <td>{{ transaction.status_changed }}</td>
-                <td>
-                    <!-- Display the approve and decline buttons for eligible users -->
-                    <form method="post" action="{% url 'approve_transaction' transaction.id %}">
-                        {% csrf_token %}
-                        <button type="submit">Approve</button>
-                    </form>
-                
-                    <form method="post" action="{% url 'decline_transaction' transaction.id %}">
-                        {% csrf_token %}
-                        <button type="submit">Decline</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+    <div class="container">
+        <h1 class="my-4">All Transactions</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>From Account</th>
+                        <th>To Account</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Transaction Handler</th>
+                        <th>Initiated</th>
+                        <th>Status Changed</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for transaction in transactions %}
+                    <tr>
+                        <td>{{ transaction.from_account }}</td>
+                        <td>{{ transaction.to_account }}</td>
+                        <td>{{ transaction.amount }}</td>
+                        <td>{{ transaction.transaction_status }}</td>
+                        <td>{{ transaction.transaction_handler }}</td>
+                        <td>{{ transaction.initiated }}</td>
+                        <td>{{ transaction.status_changed }}</td>
+                        <td>
+                            <!-- Display the approve and decline buttons for eligible users -->
+                            <div class="d-inline-block">
+                                <form method="post" action="{% url 'approve_transaction' transaction.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success">Approve</button>
+                                </form>
+                            </div>
+                            <div class="d-inline-block">
+                                <form method="post" action="{% url 'decline_transaction' transaction.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Decline</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 </html>
+{% endblock %}
