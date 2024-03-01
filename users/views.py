@@ -18,7 +18,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Transactions, BankingUser
 
-
+from .forms import DebitForm, CreditForm
 from django.shortcuts import render, redirect
 from .forms import Transactions_form
 
@@ -191,3 +191,69 @@ def decline_transaction(request, transaction_id):
    return redirect('/user_transactions', transaction_id=transaction_id)
 
 
+
+from django.db import transaction
+
+@transaction.atomic
+def debit_view(request):
+    form = DebitForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        amount = form.cleaned_data['amount']
+
+        user = request.user.bankinguser
+        account = Account.objects.get(user=user)
+
+        if account.account_bal < amount:
+            messages.error(request, "Insufficient funds.")
+            return redirect('debit_view')
+
+        # Deduct the amount from the account balance
+        account.account_bal -= amount
+        account.save()
+
+        # Create a debit transaction record
+        transaction_handler = BankingUser.objects.get(user=request.user)
+        Transactions.objects.create(
+            from_account=account,
+            to_account=account,
+            amount=amount,
+            transaction_status='pending',
+            transaction_handler=transaction_handler,
+        )
+        return redirect('/user_transactions')
+
+    return render(request, 'users/debit_template.html', {'form': form})
+
+
+
+
+
+@transaction.atomic
+def credit_view(request):
+    form = CreditForm(request.POST or None)
+
+    if request.method == 'POST' and form.is_valid():
+        amount = form.cleaned_data['amount']
+
+        user = request.user.bankinguser
+        account = Account.objects.get(user=user)
+
+        # Add the amount to the account balance
+        account.account_bal += amount
+        account.save()
+
+        # Create a credit transaction record
+        transaction_handler = BankingUser.objects.get(user=request.user)
+        Transactions.objects.create(
+            from_account=account,
+            to_account=account,
+            amount=amount,
+            transaction_status='pending',
+            transaction_handler=transaction_handler,
+        )
+
+
+        return redirect('/user_transactions')
+
+    return render(request, 'users/credit_template.html', {'form': form})

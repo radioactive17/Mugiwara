@@ -48,3 +48,19 @@ class Transactions_form(forms.ModelForm):
         current_user_account = kwargs.get('initial', {}).get('from_account')
         if current_user_account:
             self.fields['to_account'].queryset = self.fields['to_account'].queryset.exclude(pk=current_user_account.pk)
+
+
+class DebitForm(forms.Form):
+    amount = forms.IntegerField(
+        label='Amount',
+        min_value=1,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter debit amount'}),
+    )
+
+
+class CreditForm(forms.Form):
+    amount = forms.IntegerField(
+        label='Amount',
+        min_value=1,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'}),
+    )

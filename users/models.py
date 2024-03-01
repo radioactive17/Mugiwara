@@ -66,4 +66,5 @@ class Transactions(models.Model):
     status_changed = models.DateTimeField(auto_now = True)
 
 
-
+    def __str__(self):
+        return str(self.from_account) + '-' + str(self.to_account)
