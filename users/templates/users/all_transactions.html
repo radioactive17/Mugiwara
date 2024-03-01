@@ -18,7 +18,7 @@
                 <th>To Account</th>
                 <th>Amount</th>
                 <th>Status</th>
-                <th>Transaction Handler</th>
+                {% comment %} <th>Transaction Handler</th> {% endcomment %}
                 <th>Initiated</th>
                 <th>Status Changed</th>
            
@@ -33,7 +33,7 @@
                 <td>{{ transaction.to_account }}</td>
                 <td>{{ transaction.amount }}</td>
                 <td>{{ transaction.transaction_status }}</td>
-                <td>{{ transaction.transaction_handler }}</td>
+                {% comment %} <td>{{ transaction.transaction_handler }}</td> {% endcomment %}
                 <td>{{ transaction.initiated }}</td>
                 <td>{{ transaction.status_changed }}</td>
                 <td>

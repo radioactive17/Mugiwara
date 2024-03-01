@@ -99,7 +99,7 @@ def create_transaction(request):
             form.instance.transaction_status = 'pending'
             form.instance.transaction_handler = request.user.bankinguser
             form.save()
-            return redirect('all_transactions')
+            return redirect('user_transactions')
     else:
         current_user_account = request.user.bankinguser.account_set.first()
         initial_data = {'from_account': current_user_account}
