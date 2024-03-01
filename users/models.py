@@ -44,10 +44,10 @@ class Account(models.Model):
     account_bal = models.BigIntegerField(default = 0)
     created_on = models.DateTimeField(auto_now_add = True)
     account_status = models.CharField(max_length = 32, choices = account_status, default = 'o')
-    closed_on = models.DateTimeField(default = None, blank = True)
+    closed_on = models.DateTimeField(blank = True, null = True)
 
     def __str__(self):
-        return self.user.get_full_name() + '-' + self.account_type
+        return self.user.user.first_name + '-' + self.account_type
     
 
 class Transactions(models.Model):
@@ -60,7 +60,7 @@ class Transactions(models.Model):
     from_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'from_account')
     to_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'to_account')
     amount = models.BigIntegerField()
-    transaction_status = models.CharField(max_length = 128, choices = transaction_status)
+    transaction_status = models.CharField(max_length = 128, choices = transaction_status,default='pending')
     transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE)
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)
