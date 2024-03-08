@@ -2,22 +2,26 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="blog-slider" style="margin-top: 150px;height: 500px;">
-    <div class="blog-slider__wrp swiper-wrapper">
-        <div class="blog-slider__text">
-            <div class="blog-slider__title">
-                <p>{{ user.username }}</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">{{ user.username }}</h2>
+                </div>
+                <div class="card-body">
+                    <form id="create_blog" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ u_form|crispy }}
+                        {{ b_form|crispy }}
+                        <div class="form-group mt-3">
+                            <button type="submit" class="btn btn-primary mr-2">Update</button>
+                            <a class="btn btn-danger" href="{% url 'mugiwara' %}" role="button">Cancel</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-            <form id = "create_blog"  method = "POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                {{ u_form|crispy }}
-                {{ b_form|crispy }}
-                <button type="submit" class="btn btn-primary mt-3">Update</button>
-                <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
-            </form>  
         </div>
-        
-
     </div>
 </div>
 {% endblock %}
