@@ -63,6 +63,7 @@ class AccountUpdateForm(ModelForm):
         # fields = '__all__'
         # exclude = ['user', 'closed_on']
     
+<<<<<<< HEAD
     def __init__(self, *args, **kwargs):
         super(AccountUpdateForm, self).__init__(*args, **kwargs)
 
@@ -71,4 +72,47 @@ class AccountUpdateForm(ModelForm):
             self.fields['account_bal'].disabled = True
             self.fields['account_status'].disabled = True
 
+=======
+    
+from django import forms
+from .models import Transactions
+>>>>>>> main
 
+class Transactions_form(forms.ModelForm):
+    class Meta:
+        model = Transactions
+        fields = ['from_account', 'to_account', 'amount']
+
+    def __init__(self, *args, **kwargs):
+        super(Transactions_form, self).__init__(*args, **kwargs)
+
+        # Remove the drop-down in the 'from_account' field
+        self.fields['from_account'].widget = forms.HiddenInput()
+
+        # Exclude the current user from the 'to_account' choices
+        current_user_account = kwargs.get('initial', {}).get('from_account')
+        if current_user_account:
+            self.fields['to_account'].queryset = self.fields['to_account'].queryset.exclude(pk=current_user_account.pk)
+
+
+class DebitForm(forms.Form):
+    amount = forms.IntegerField(
+        label='Amount',
+        min_value=1,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter debit amount'}),
+    )
+
+
+class CreditForm(forms.Form):
+    amount = forms.IntegerField(
+        label='Amount',
+        min_value=1,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'}),
+    )
+
+
+
+class TransactionsForm(forms.ModelForm):
+    class Meta:
+        model = Transactions
+        fields = ['amount']
