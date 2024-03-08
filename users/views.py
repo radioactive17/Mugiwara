@@ -34,6 +34,10 @@ from .models import Transactions
 
 from django.db.models import Q
 
+# users/views.py
+from django.shortcuts import render, get_object_or_404, redirect
+from .models import Transactions
+from .forms import TransactionsForm
 
 def home(request):
    # laptopo = LaptopO.objects.all().order_by('-laptop_id')[:12]
@@ -89,6 +93,7 @@ def profile(request):
 
 
 
+# User create transaction
 @login_required
 def create_transaction(request):
     if request.method == 'POST':
@@ -108,7 +113,7 @@ def create_transaction(request):
 
 
 
-
+# can view all transactions
 @login_required
 def all_transactions(request):
    # Filter transactions where the current user is either the sender or the receiver
@@ -119,7 +124,7 @@ def all_transactions(request):
 
 
 
-
+# user view for all transactions
 @login_required
 def user_transactions(request):
    transactions = Transactions.objects.filter(
@@ -133,7 +138,7 @@ def user_transactions(request):
 
 
 
-
+# user debit transaction
 @transaction.atomic
 def debit_view(request):
     form = DebitForm(request.POST or None)
@@ -168,7 +173,7 @@ def debit_view(request):
 
 
 
-
+# user credit transaction
 @transaction.atomic
 def credit_view(request):
     form = CreditForm(request.POST or None)
@@ -200,6 +205,8 @@ def credit_view(request):
 
 
 
+
+# Internal user approve transactions from users 
 @login_required
 # users/views.py
 def approve_transaction(request, transaction_id):
@@ -235,7 +242,7 @@ def approve_transaction(request, transaction_id):
 
 
 
-
+# Internal user decline transactions from users 
 @login_required
 def decline_transaction(request, transaction_id):
    transaction = get_object_or_404(Transactions, id=transaction_id)
@@ -257,3 +264,31 @@ def decline_transaction(request, transaction_id):
 
 
 
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, get_object_or_404
+from .forms import TransactionsForm  # Import your form
+from django.urls import reverse
+from django.shortcuts import redirect
+
+@login_required
+def modify_transaction(request, transaction_id):
+    transaction = get_object_or_404(Transactions, id=transaction_id)
+
+    # Check if the transaction status is neither approved nor declined
+    if transaction.transaction_status not in ['approved', 'declined']:
+        # Process modification logic here
+
+        # For example, you can create a form instance and render a template
+        form = TransactionsForm(instance=transaction)
+
+        # Handle form submission
+        if request.method == 'POST':
+            form = TransactionsForm(request.POST, instance=transaction)
+            if form.is_valid():
+                form.save()
+                return redirect('all_transactions') # Use the name of the URL pattern
+
+        return render(request, 'users/modify_transaction.html', {'form': form, 'transaction': transaction})
+    else:
+        # If the transaction is approved or declined, redirect to a page indicating it cannot be modified
+        return HttpResponse('<script>alert("Cannot modify. Transaction is already approved or declined."); window.history.back();</script>')

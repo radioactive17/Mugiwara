@@ -20,6 +20,7 @@ urlpatterns = [
    path('create_transaction', create_transaction, name='create_transaction'),
    path('debit', debit_view, name='debit_view'),
    path('credit', credit_view, name='credit_view'),
+   path('modify_transaction/<int:transaction_id>/', modify_transaction, name='modify_transaction'),
 ]
 
 
