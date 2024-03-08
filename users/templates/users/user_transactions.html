@@ -1,6 +1,4 @@
-{% extends 'users/base.html' %}
-
-{% block content %}
+<!-- users/transaction_list.html -->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -8,42 +6,34 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Transactions</title>
-    <!-- <link rel="stylesheet" href="../../static/users/assets1/css/user_transactions.css"> -->
+    <title>All Transactions</title>
 </head>
 <body>
-    <div class="container">
-        <h1 class="my-4">User Transactions</h1>
-        <p class="mb-4">Current Account Balance: ${{ account_balance }}</p>
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead class="thead-dark">
-                    <tr>
-                        <th>From Account</th>
-                        <th>To Account</th>
-                        <th>Amount</th>
-                        <th>Status</th>
-                        <th>Transaction Handler</th>
-                        <th>Initiated</th>
-                        <th>Status Changed</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for transaction in transactions %}
-                    <tr>
-                        <td>{{ transaction.from_account }}</td>
-                        <td>{{ transaction.to_account }}</td>
-                        <td>{{ transaction.amount }}</td>
-                        <td>{{ transaction.transaction_status }}</td>
-                        <td>{{ transaction.transaction_handler }}</td>
-                        <td>{{ transaction.initiated }}</td>
-                        <td>{{ transaction.status_changed }}</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <h1>All Transactions</h1>
+    <p>Current Account Balance: ${{ account_balance }}</p>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Initiated</th>
+                <th>Status Changed</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
+            <tr>
+                <td>{{ transaction.from_account }}</td>
+                <td>{{ transaction.to_account }}</td>
+                <td>{{ transaction.amount }}</td>
+                <td>{{ transaction.transaction_status }}</td>
+                <td>{{ transaction.initiated }}</td>
+                <td>{{ transaction.status_changed }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </body>
 </html>
-{% endblock %}

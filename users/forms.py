@@ -64,3 +64,10 @@ class CreditForm(forms.Form):
         min_value=1,
         widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'}),
     )
+
+
+
+class TransactionsForm(forms.ModelForm):
+    class Meta:
+        model = Transactions
+        fields = ['amount']
