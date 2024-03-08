@@ -21,26 +21,63 @@
                         class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#">
-                            <!-- <i class="fa fa-home"></i>&nbsp;Deposit</a></li> -->
-                            <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                        class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile'%}"><i
-                                        class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
                                     class="fa fa-user-circle-o"></i>&nbsp;Portfolio</a></li> -->
                         {% if user.is_authenticated %}
-                            <li class="nav-item">
-                                <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
-                                    {% csrf_token %}
-                                    <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
-                                        <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
-                                </form>
-                                <!-- -->
-                            </li>
+                                {% if user.user.usertype == 'eu_cust' %}
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
+                                        <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
+                                                class="fa fa-money"></i>&nbsp;Withdraw</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                                    class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
+                                                    class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
+                                                    class="fa fa-user"></i>&nbsp;Profile</a></li>
+                                    <li class="nav-item">
+                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                            {% csrf_token %}
+                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
+                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
+                                        </form>
+                                        <!-- -->
+                                    </li>
+                                {% elif user.user.usertype == 'iu_sa' %}
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'view-accounts' %}">
+                                        <i class="fa fa-money"></i>&nbsp;Users/Accounts</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'account-approvals' %}"><i
+                                                class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                                    class="fa fa-exchange"></i>&nbsp;Transactions</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                                    class="fa fa-user"></i>&nbsp;TransactionApprovals</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
+                                                    class="fa fa-user"></i>&nbsp;Profile</a></li>
+                                    <li class="nav-item">
+                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                            {% csrf_token %}
+                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
+                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
+                                        </form>
+                                        <!-- -->
+                                    </li>
+                                {% else %}
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#">
+                                        <i class="fa fa-money"></i>&nbsp;Transactions Approval</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                                class="fa fa-money"></i>&nbsp;Profile Approval</a></li>
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
+                                        class="fa fa-user"></i>&nbsp;Profile</a></li>
+                                    <li class="nav-item">
+                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                            {% csrf_token %}
+                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
+                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
+                                        </form>
+                                        <!-- -->
+                                    </li>
+                                {% endif %}
                         {% else %}
                             <li class="nav-item dropdown"><a class="nav-link" style="color:#ffffff;" href="{% url 'login' %}"><i
                                 class="fa fa-sign-in"></i>&nbsp;Sign In</a>
@@ -51,6 +88,8 @@
             </div>
         </nav>
     </div><!-- End: Dark NavBar -->
+    
+    
     {% if messages %}
       {% for message in messages %}
         {% if message.tags == 'error' %}

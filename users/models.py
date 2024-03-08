@@ -3,7 +3,8 @@ from django.contrib.auth.models import User, Group
 
 
 
-class BankingUser(models.Model):
+class BankingUser(models.Model):   
+   
     User_types = {
         'iu_re': 'Regular Employee',
         'iu_sm': 'System Manager',
@@ -12,8 +13,14 @@ class BankingUser(models.Model):
         'eu_mo': 'Merchant/Organization',
     }
 
-    user = models.OneToOneField(User, on_delete = models.CASCADE)
-    user_type = models.CharField(max_length = 256, choices = User_types)
+    modification_status = {
+       'pending': 'Waiting for approval',
+       'rejected': 'Rejected',
+       'approved': 'Approved'
+    }
+
+    user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'user')
+    usertype = models.CharField(max_length = 256, choices = User_types)
     dob = models.DateField(default = None, blank = True)
     mobile_number = models.CharField(max_length = 256, default=None, blank=True)
     street_address = models.CharField(max_length = 512, default=None, blank=True)
@@ -22,7 +29,9 @@ class BankingUser(models.Model):
     zip_code = models.CharField(max_length = 10, default=None, blank=True)
     country = models.CharField(max_length = 256, default=None, blank=True)
     account_created = models.DateTimeField(auto_now_add = True)
-    account_modified = models.DateTimeField(auto_now = True)
+    user_handler = models.ForeignKey("BankingUser", on_delete = models.CASCADE, related_name = 'internal_user', blank=True, null = True)
+    pd_modification_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
+    pd_modified = models.DateTimeField(auto_now = True, blank=True, null = True)
 
 
     def __str__(self):
@@ -39,15 +48,27 @@ class Account(models.Model):
         'o': 'Open',
         'c': 'Close',
     }
+
+    modification_status = {
+       'pending': 'Waiting for approval',
+       'rejected': 'Rejected',
+       'approved': 'Approved'
+    }
+
+
+    account_number = models.AutoField(primary_key = True)
     account_type = models.CharField(max_length = 128, choices = account_types)
-    user = models.ForeignKey('BankingUser', on_delete = models.CASCADE)
+    banking_user = models.ForeignKey('BankingUser', on_delete = models.CASCADE, related_name = 'banking_user')
     account_bal = models.BigIntegerField(default = 0)
     created_on = models.DateTimeField(auto_now_add = True)
     account_status = models.CharField(max_length = 32, choices = account_status, default = 'o')
-    closed_on = models.DateTimeField(default = None, blank = True)
+    account_handler = models.ForeignKey("BankingUser", on_delete = models.CASCADE, related_name = 'account_handler', blank=True, null = True)
+    acc_modification_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
+    account_modified = models.DateTimeField(auto_now = True)
+    closed_on = models.DateTimeField( blank = True, null = True)
 
     def __str__(self):
-        return self.user.get_full_name() + '-' + self.account_type
+        return self.banking_user.user.get_username() + '-' + self.account_type
     
 
 class Transactions(models.Model):
@@ -61,7 +82,7 @@ class Transactions(models.Model):
     to_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'to_account')
     amount = models.BigIntegerField()
     transaction_status = models.CharField(max_length = 128, choices = transaction_status)
-    transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE)
+    transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE, related_name = 'transaction_handler')
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)
 
