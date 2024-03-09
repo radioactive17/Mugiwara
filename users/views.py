@@ -95,6 +95,18 @@ def view_account_approvals(request):
 
 # ================================================ USER REGISTRATION / LOGIN ================================================
 
+
+
+# ================================================ ACCOUNT CREATION ================================================
+def create_account_view(reqeust):
+    return render(request, 'users/create_account_request.html')
+
+
+
+
+
+
+# ================================================ ACCOUNT CREATION ================================================
 @login_required
 def profile(request):
 
