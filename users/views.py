@@ -10,17 +10,15 @@ from django.contrib import messages
 from datetime import datetime
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
-<<<<<<< HEAD
 from .forms import *
-=======
+
 from .forms import UserUpdateForm, BankingUserUpdateForm
-# users/views.py
 from django.db.models import Sum
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.db.models import Q
 from .models import Transactions, BankingUser
->>>>>>> main
+
 
 from .forms import DebitForm, CreditForm
 from django.shortcuts import render, redirect
@@ -31,74 +29,75 @@ from .models import Transactions
 from django.db import transaction
 
 from django.shortcuts import render, get_object_or_404, redirect
+from django.conf import settings
+from django.core.mail import send_mail
 
-
-from .models import Transactions
-
-
-from django.db.models import Q
-
-# users/views.py
-from django.shortcuts import render, get_object_or_404, redirect
-from .models import Transactions
-from .forms import TransactionsForm
 
 def home(request):
-<<<<<<< HEAD
     return render(request, 'users/home.html')
 
-
+# ================================================ USER REGISTRATION / LOGIN ================================================
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
-            print(form.cleaned_data)
-            messages.info(request, f"You can SignIn once System Administrator approves your account")
-            request.session['register_form'] = form.cleaned_data
-            return redirect('login')
-            if form.cleaned_data('user_approval') == 'approved':
-                form.save()
-                email_id = form.cleaned_data.get('email')
-                messages.success(request, f'Welcome to Lappy Manage, {email_id}. You can now Log In using your set username and password')
+            registration_forms = request.session.get('registration_forms', [])   
+            registration_forms.append(form.cleaned_data)
+            request.session['registration_forms'] = registration_forms
+            messages.info(request, "Your registration request has been submitted for approval.")
             return redirect('login')
     else:
         form = UserRegistrationForm()
     return render(request, 'users/register.html', {'form':form})
-=======
-   # laptopo = LaptopO.objects.all().order_by('-laptop_id')[:12]
-   # context = {
-   #      'laptopo': laptopo,
-   #  }
-  
-   return render(request, 'users/home.html')
 
+ 
+# Send mail to user once account has been created or denied
+@login_required
+def view_account_approvals(request):
+    registration_forms = request.session.get('registration_forms', [])
+    user_types = UserRegistrationForm.User_types
+    if request.method == 'POST':
+        for form_data in registration_forms:
+            print(form_data)
+            status = request.POST.get(form_data['username'])
+            if status  == 'approved' or status == 'rejected':
+                if status == 'approved':
+                    form_data['user_approval'] = request.POST.get(form_data['username'])
+                    u = User(username = form_data['username'], first_name = form_data['username'], last_name = form_data['username'], 
+                             email = form_data['email'])
+                    # user_type = form_data['user_type'], user_approval = form_data['user_approval']
+                    u.set_password(form_data['password1'])
+                    u.save()
+                    bu = BankingUser(user = u, usertype = form_data['usertype'])
+                    bu.save()
+                    registration_forms.remove(form_data)
 
+                    subject = 'Account Created Succesfully'
+                    message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [u.email, ]
+                    send_mail( subject, message, email_from, recipient_list )
 
+                elif status == 'rejected':
+                    subject = 'Account Creation Denied'
+                    message = f"Hi {form_data['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
+                    email_from = settings.EMAIL_HOST_USER
+                    recipient_list = [form_data['email'], ]
+                    send_mail( subject, message, email_from, recipient_list )
+                    registration_forms.remove(form_data)
+                else:
+                    pass
+        # Update session with modified registration_forms
+        request.session['registration_forms'] = registration_forms
+        return redirect('account-approvals')  # Redirect to the same page to display updated status
+    
+    return render(request, 'users/approve_registrations.html', {'registration_forms': registration_forms, 'user_types': user_types})
 
-# class UpdateBankingUserView(LoginRequiredMixin, UserPassesTestMixin, SuccessMessageMixin, UpdateView):
-#     model = BankingUser
-#     form_class = BankingUserUpdateForm
-#     success_message = 'Details updated successfully'
-  
-#     def test_func(self):
-#         if self.request.user.is_authenticated:
-#             return True
-#         return False
-  
-#     def get_object(self, *args, **kwargs):
-#         return BankingUser.objects.get(user = self.kwargs['pk'])
-
-
-#     def get_success_url(self):
-#         return reverse("profile", kwargs={"pk": self.kwargs['pk']})
-
->>>>>>> main
-
-
+# ================================================ USER REGISTRATION / LOGIN ================================================
 
 @login_required
 def profile(request):
-<<<<<<< HEAD
+
     u = request.user
     banking_user = BankingUser.objects.get(user = u)
     if request.method == 'POST':
@@ -168,32 +167,6 @@ def credit(request, *args, **kwargs):
 def view_accounts(request):
     users = User.objects.all()
     return render(request, 'users/view_accounts.html', {'users':users})
-
-@login_required
-def view_account_approvals(request):
-    form_data = request.session.pop('register_form')
-    print(form_data)
-    return render(request, 'users/account_approvals.html')
-=======
-   if request.method == 'POST':
-       u_form = UserUpdateForm(request.POST, instance = request.user)
-       b_form = BankingUserUpdateForm(request.POST, instance = request.user.bankinguser)
-       if u_form.is_valid() and b_form.is_valid():
-           u_form.save()
-           b_form.save()
-           messages.success(request, 'Profile Updated Successfully')
-           return redirect('profile')
-   u_form = UserUpdateForm(instance = request.user)
-   b_form = BankingUserUpdateForm(instance = request.user.bankinguser)
-
-
-   context = {
-       'u_form': u_form,
-       'b_form': b_form,
-   }
-   return render(request, 'users/profile.html', context)
-
-
 
 
 # User create transaction
@@ -395,4 +368,4 @@ def modify_transaction(request, transaction_id):
     else:
         # If the transaction is approved or declined, redirect to a page indicating it cannot be modified
         return HttpResponse('<script>alert("Cannot modify. Transaction is already approved or declined."); window.history.back();</script>')
->>>>>>> main
+

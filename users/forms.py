@@ -21,16 +21,17 @@ class UserRegistrationForm(UserCreationForm):
     }
 
     email = forms.EmailField()
-    user_type = forms.ChoiceField(choices = User_types)
+    usertype = forms.ChoiceField(choices = User_types)
     user_approval = forms.ChoiceField(choices = user_approval)
 
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'user_type']
+        fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'usertype']
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user_approval'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
+
 
 class UserUpdateForm(ModelForm):
     class Meta:
@@ -63,7 +64,6 @@ class AccountUpdateForm(ModelForm):
         # fields = '__all__'
         # exclude = ['user', 'closed_on']
     
-<<<<<<< HEAD
     def __init__(self, *args, **kwargs):
         super(AccountUpdateForm, self).__init__(*args, **kwargs)
 
@@ -71,12 +71,9 @@ class AccountUpdateForm(ModelForm):
             self.fields['account_type'].disabled = True
             self.fields['account_bal'].disabled = True
             self.fields['account_status'].disabled = True
-
-=======
     
 from django import forms
 from .models import Transactions
->>>>>>> main
 
 class Transactions_form(forms.ModelForm):
     class Meta:
@@ -116,3 +113,4 @@ class TransactionsForm(forms.ModelForm):
     class Meta:
         model = Transactions
         fields = ['amount']
+

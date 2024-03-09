@@ -21,14 +21,14 @@ class BankingUser(models.Model):
 
     user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'user')
     usertype = models.CharField(max_length = 256, choices = User_types)
-    dob = models.DateField(default = None, blank = True)
-    mobile_number = models.CharField(max_length = 256, default=None, blank=True)
-    street_address = models.CharField(max_length = 512, default=None, blank=True)
-    city = models.CharField(max_length = 128, default=None, blank=True)
-    state = models.CharField(max_length = 128, default=None, blank=True)
-    zip_code = models.CharField(max_length = 10, default=None, blank=True)
-    country = models.CharField(max_length = 256, default=None, blank=True)
-    account_created = models.DateTimeField(auto_now_add = True)
+    dob = models.DateField(default = None, blank = True, null = True)
+    mobile_number = models.CharField(max_length = 256, default=None, blank=True, null = True)
+    street_address = models.CharField(max_length = 512, default=None, blank=True, null = True)
+    city = models.CharField(max_length = 128, default=None, blank=True, null = True)
+    state = models.CharField(max_length = 128, default=None, blank=True, null = True)
+    zip_code = models.CharField(max_length = 10, default=None, blank=True, null = True)
+    country = models.CharField(max_length = 256, default=None, blank=True, null = True)
+    account_created = models.DateTimeField(auto_now_add = True, null = True)
     user_handler = models.ForeignKey("BankingUser", on_delete = models.CASCADE, related_name = 'internal_user', blank=True, null = True)
     pd_modification_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
     pd_modified = models.DateTimeField(auto_now = True, blank=True, null = True)
@@ -65,7 +65,7 @@ class Account(models.Model):
     closed_on = models.DateTimeField(blank = True, null = True)
 
     def __str__(self):
-        return self.user.user.first_name + '-' + self.account_type
+        return self.banking_user.user.first_name + '-' + self.account_type
     
 
 class Transactions(models.Model):
@@ -81,9 +81,6 @@ class Transactions(models.Model):
 
     transaction_status = models.CharField(max_length = 128, choices = transaction_status)
     transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE, related_name = 'transaction_handler')
-
-    transaction_status = models.CharField(max_length = 128, choices = transaction_status,default='pending')
-    transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE)
 
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)
