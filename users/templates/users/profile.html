@@ -12,6 +12,7 @@
                 {% csrf_token %}
                 {{ u_form|crispy }}
                 {{ b_form|crispy }}
+                {{ a_form|crispy }}
                 <button type="submit" class="btn btn-primary mt-3">Update</button>
                 <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
             </form>  
