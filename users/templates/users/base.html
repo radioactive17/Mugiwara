@@ -21,18 +21,21 @@
                         class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
-                        <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                    class="fa fa-user-circle-o"></i>&nbsp;Portfolio</a></li> -->
                         {% if user.is_authenticated %}
                                 {% if user.user.usertype == 'eu_cust' %}
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
-                                        <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
-                                                class="fa fa-money"></i>&nbsp;Withdraw</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                                    class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
-                                                    class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                                    {% if user.user.banking_user.exists %}
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
+                                            <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
+                                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li>
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                                        class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
+                                                        class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                                    {% endif %}
+                                    
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href=""><i
+                                        class="fa fa-user"></i>&nbsp;Request New Account</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                                     <li class="nav-item">

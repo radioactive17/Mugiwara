@@ -14,7 +14,6 @@ class BankingUser(models.Model):
     }
 
     modification_status = {
-       'pending': 'Waiting for approval',
        'rejected': 'Rejected',
        'approved': 'Approved'
     }

@@ -54,7 +54,7 @@ class BankingUserUpdateForm(ModelForm):
         super(BankingUserUpdateForm, self).__init__(*args, **kwargs)
 
         if self.instance.id:
-            self.fields['user_type'].disabled = True
+            self.fields['usertype'].disabled = True
             
     
 class AccountUpdateForm(ModelForm):

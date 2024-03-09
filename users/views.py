@@ -98,7 +98,7 @@ def view_account_approvals(request):
 
 
 # ================================================ ACCOUNT CREATION ================================================
-def create_account_view(reqeust):
+def create_account_view(request):
     return render(request, 'users/create_account_request.html')
 
 
