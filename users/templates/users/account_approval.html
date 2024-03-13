@@ -10,10 +10,16 @@
             </div>
             <form id = "create_blog"  method = "POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ form|crispy }}
+                {% for account, form in accounts %}
+                    <li>
+                    <!-- {{ account.banking_user.user.first_name }} - {{ account.account_type }} -->
+                    {{ form.as_p }}
+                    </li>
+                {% endfor %}
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
             </form>  
+            
         </div>
         
 

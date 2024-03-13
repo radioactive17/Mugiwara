@@ -53,7 +53,7 @@ def register(request):
  
 # Send mail to user once account has been created or denied
 @login_required
-def view_account_approvals(request):
+def user_approvals(request):
     registration_forms = request.session.get('registration_forms', [])
     user_types = UserRegistrationForm.User_types
     if request.method == 'POST':
@@ -89,31 +89,56 @@ def view_account_approvals(request):
                     pass
         # Update session with modified registration_forms
         request.session['registration_forms'] = registration_forms
-        return redirect('account-approvals')  # Redirect to the same page to display updated status
+        return redirect('user-approvals')  # Redirect to the same page to display updated status
     
     return render(request, 'users/approve_registrations.html', {'registration_forms': registration_forms, 'user_types': user_types})
 
 # ================================================ USER REGISTRATION / LOGIN ================================================
 
 
-
 # ================================================ ACCOUNT CREATION ================================================
+#Redirect here if no account
+@login_required
 def create_account_view(request):
-    return render(request, 'users/create_account_request.html')
+    if request.method == 'POST':
+        form = AccountCreationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('mugiwara')  # Redirect to a success page or URL
+    else:
+        # Assuming you have some logic to retrieve the appropriate BankingUser instance
+        banking_user_instance = BankingUser.objects.get(user=request.user)  # Assuming you have user authentication
 
+        # Pass the pre-filled instance to the form
+        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
 
+    return render(request, 'users/create_account_request.html', {'form': form})
 
-
-
+@login_required
+def approve_accounts(request):
+    accounts = Account.objects.filter(modification_status='pending')
+    if request.method == 'POST':
+        forms = [AccountApprovalForm(request.POST, instance=account) for account in accounts]
+        if all(form.is_valid() for form in forms):
+            for form in forms:
+                if form.cleaned_data['modification_status'] == 'approved':
+                    form.save()
+                elif form.cleaned_data['modification_status'] == 'rejected':
+                    a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
+                    a.delete()
+                else:
+                    pass
+            return redirect('mugiwara')  # Redirect to the same page after updating
+    else:
+        forms = [AccountApprovalForm(instance=account) for account in accounts]
+    context = {'accounts': zip(accounts, forms)}
+    return render(request, 'users/account_approval.html', context)
 
 # ================================================ ACCOUNT CREATION ================================================
 @login_required
 def profile(request):
-
-    u = request.user
-    banking_user = BankingUser.objects.get(user = u)
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance = request.user)
+        u_form = UserUpdateForm(request.POST)
         b_form = BankingUserUpdateForm(request.POST, instance = banking_user)
         if u_form.is_valid() and b_form.is_valid():
             u_form.save()
@@ -121,7 +146,7 @@ def profile(request):
             messages.success(request, 'Profile Updated Successfully')
             return redirect('profile')
     u_form = UserUpdateForm(instance = request.user)
-    b_form = BankingUserUpdateForm(instance = banking_user)
+    b_form = BankingUserUpdateForm()
     context = {
         'u_form': u_form,
         'b_form': b_form,

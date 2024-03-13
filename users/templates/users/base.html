@@ -34,7 +34,7 @@
                                                         class="fa fa-user"></i>&nbsp;Accounts</a></li>
                                     {% endif %}
                                     
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href=""><i
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'create-account' %}"><i
                                         class="fa fa-user"></i>&nbsp;Request New Account</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
@@ -47,7 +47,7 @@
                                         <!-- -->
                                     </li>
                                 {% elif user.user.usertype == 'iu_sa' %}
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'view-accounts' %}">
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'user-approvals' %}">
                                         <i class="fa fa-money"></i>&nbsp;Users/Accounts</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'account-approvals' %}"><i
                                                 class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
