@@ -62,6 +62,7 @@ class Account(models.Model):
     created_on = models.DateTimeField(auto_now_add = True)
     account_status = models.CharField(max_length = 32, choices = account_status, default = 'o')
     closed_on = models.DateTimeField(blank = True, null = True)
+    modification_status = models.CharField(max_length = 32, choices = modification_status, default = 'pending')    
 
     def __str__(self):
         return self.banking_user.user.first_name + '-' + self.account_type

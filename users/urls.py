@@ -19,8 +19,9 @@ urlpatterns = [
    path('credit/<int:pk>/', views.credit, name = 'credit'),
 
    path('view_accounts/', views.view_accounts, name = 'view-accounts'),
-   path('account_approvals/', views.view_account_approvals, name = 'account-approvals'),
-
+   path('user_approvals/', views.user_approvals, name = 'user-approvals'),
+   path('create_account/', views.create_account_view, name = 'create-account'),
+   path('account_approvals/', views.approve_accounts, name = 'account-approvals'),
 
    path('', views.home, name = 'mugiwara'),
    path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),

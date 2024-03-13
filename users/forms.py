@@ -32,6 +32,41 @@ class UserRegistrationForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['user_approval'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
 
+# Account Creation Form
+class AccountCreationForm(ModelForm):
+    class Meta:
+        model = Account
+        fields = ['banking_user', 'account_type', 'modification_status']
+    
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['modification_status'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
+
+# Account Approval Form
+class AccountApprovalForm(ModelForm):
+    class Meta:
+        model = Account
+        fields = ['banking_user', 'account_type', 'modification_status']
+        # widgets = {
+        #     'modification_status': forms.Select(choices=Account.modification_status.items())
+        # }
+
+    def __init__(self, *args, **kwargs):
+        super(AccountApprovalForm, self).__init__(*args, **kwargs)
+        self.fields['banking_user'].disabled = True
+        self.fields['account_type'].disabled = True
+        self.fields['modification_status'].label = "New Status for Account"
+        self.fields['modification_status'].required = True
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     if 'modification_status' in cleaned_data:
+    #         new_status = cleaned_data['modification_status']
+    #         if new_status == 'approved':
+    #             # Additional validation for 'approved' status if needed
+    #             pass
+    #     return cleaned_data
+
 
 class UserUpdateForm(ModelForm):
     class Meta:
