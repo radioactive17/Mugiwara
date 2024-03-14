@@ -115,10 +115,10 @@ def create_account(request):
 
 @login_required
 def approve_accounts(request):
-    AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm)
+    AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm, extra = 0)
     formset = AccountApprovalFormSet(queryset = Account.objects.filter(modification_status = 'pending'))
     if request.method == 'POST':
-        formset = AccountApprovalFormSet(request.POST)
+        formset = AccountApprovalFormSet(request.POST or None)
         if formset.is_valid():
             for form in formset:
                 if form.cleaned_data['modification_status'] == 'approved':
@@ -152,26 +152,28 @@ def request_profile_deletion(request, *args, **kwargs):
 
 @login_required
 def approve_profile_deletion(request, *args, **kwargs):
-    banking_users = BankingUser.objects.filter(deletion='yes')
-    forms = []
-    
+    UserDeletionFormSet = modelformset_factory(BankingUser, form = UserDeletionApprovalForm, extra = 0)
+    formset = UserDeletionFormSet(queryset = BankingUser.objects.filter(deletion = 'yes'))
     if request.method == 'POST':
-        for user in banking_users:
-            form = UserDeletionApprovalForm(request.POST, instance=user)
-            if form.is_valid():
+        formset = UserDeletionFormSet(request.POST or None)
+        if formset.is_valid():
+            for form in formset:
                 print(form.cleaned_data)
-                #form.save()
-                # Handle any additional logic here, such as sending notifications
-                # Redirect after processing all forms
-                # return redirect('success_page')
-            else:
-                forms.append(form)
-    else:
-        for user in banking_users:
-            form = UserDeletionApprovalForm(instance=user)
-            forms.append(form)
-
-    return render(request, 'users/approve_profile_deletion.html', {'forms': forms})
+                if form.cleaned_data['deletion_status'] == 'approved':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.delete()
+                    us = User.objects.get(username = u.username)
+                    us.delete()
+                elif form.cleaned_data['deletion_status'] == 'rejected':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.deletion = 'no'
+                    bu.save()
+                else:
+                    pass
+            return redirect('mugiwara')
+    return render(request, 'users/approve_profile_deletion.html', {'formset': formset})
 # ================================================ PROFILE DELETION ================================================
 
 
