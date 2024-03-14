@@ -10,7 +10,23 @@
             </div>
             <form id = "create_blog"  method = "POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ formset.as_p }}
+                {% for form in forms %}
+            <fieldset>
+                <legend>User: {{ form.instance.user }}</legend>
+                {% for field in form %}
+                    <div>
+                        {{ field.label_tag }}: {{ field }}
+                        {% if field.errors %}
+                            <ul>
+                            {% for error in field.errors %}
+                                <li>{{ error }}</li>
+                            {% endfor %}
+                            </ul>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </fieldset>
+        {% endfor %}
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
             </form>  

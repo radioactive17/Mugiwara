@@ -20,8 +20,11 @@ urlpatterns = [
 
    path('view_accounts/', views.view_accounts, name = 'view-accounts'),
    path('user_approvals/', views.user_approvals, name = 'user-approvals'),
-   path('create_account/', views.create_account_view, name = 'create-account'),
+   path('create_account/', views.create_account, name = 'create-account'),
    path('account_approvals/', views.approve_accounts, name = 'account-approvals'),
+
+   path('profile_deletion/', views.request_profile_deletion, name = 'profile-deletion'),
+   path('approve_profile_deletion/', views.approve_profile_deletion, name = 'approve-profile-deletion'),
 
    path('', views.home, name = 'mugiwara'),
    path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),

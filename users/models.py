@@ -14,8 +14,14 @@ class BankingUser(models.Model):
     }
 
     modification_status = {
-       'rejected': 'Rejected',
-       'approved': 'Approved'
+        'pending': 'Waiting for Approval',
+        'rejected': 'Rejected',
+        'approved': 'Approved'
+    }
+
+    requesting_deletion = {
+        'yes': 'Yes',
+        'no': 'No'
     }
 
     user = models.OneToOneField(User, on_delete = models.CASCADE, related_name = 'user')
@@ -31,8 +37,9 @@ class BankingUser(models.Model):
     user_handler = models.ForeignKey("BankingUser", on_delete = models.CASCADE, related_name = 'internal_user', blank=True, null = True)
     pd_modification_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
     pd_modified = models.DateTimeField(auto_now = True, blank=True, null = True)
-
-
+    deletion = models.CharField(max_length = 128, choices = requesting_deletion, blank=True, null = True, default = 'no')
+    deletion_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
+    
     def __str__(self):
         return self.user.get_username() 
 
