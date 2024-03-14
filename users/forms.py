@@ -4,7 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.forms import ModelForm
 from .models import *
 
-
+# User Registration Form
 class UserRegistrationForm(UserCreationForm):
     user_approval = {
        'pending': 'Waiting for approval',
@@ -58,14 +58,36 @@ class AccountApprovalForm(ModelForm):
         self.fields['modification_status'].label = "New Status for Account"
         self.fields['modification_status'].required = True
 
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     if 'modification_status' in cleaned_data:
-    #         new_status = cleaned_data['modification_status']
-    #         if new_status == 'approved':
-    #             # Additional validation for 'approved' status if needed
-    #             pass
-    #     return cleaned_data
+
+# BankingUser Deletion Request Form
+class UserDeletionRequestForm(ModelForm):
+    class Meta:
+        model = BankingUser
+        fields = ['deletion', 'deletion_status']
+
+    def __init__(self, *args, **kwargs):
+        super(UserDeletionRequestForm, self).__init__(*args, **kwargs)
+        self.fields['deletion'].label = 'Are you sure you want to delete your profile'
+        self.fields['deletion_status'].initial = 'pending'  
+        self.fields['deletion_status'].widget = forms.HiddenInput()  # Hide the field
+        # self.fields['deletion_status'].required = False  # Set the field as not required
+
+# BankingUser Deletion Approval Form
+class UserDeletionApprovalForm(ModelForm):
+    class Meta:
+        model = BankingUser
+        fields = ['user', 'usertype', 'deletion_status']
+
+    def __init__(self, *args, **kwargs):
+        super(UserDeletionApprovalForm, self).__init__(*args, **kwargs)
+        self.fields['user'].disabled = True
+        self.fields['usertype'].disabled = True
+        self.fields['deletion_status'].label = "Approve Deletion?"
+        self.fields['deletion_status'].required = True
+
+
+
+
 
 
 class UserUpdateForm(ModelForm):
@@ -76,14 +98,13 @@ class UserUpdateForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
 
-        if self.instance.id:
-            self.fields['username'].disabled = True
+        
 
 class BankingUserUpdateForm(ModelForm):
     class Meta:
         model = BankingUser
         fields = "__all__"
-        exclude = ['user', 'user_handler', 'pd_modification_status']
+        exclude = ['user_handler', 'pd_modification_status']
         
     def __init__(self, *args, **kwargs):
         super(BankingUserUpdateForm, self).__init__(*args, **kwargs)

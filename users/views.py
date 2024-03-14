@@ -13,6 +13,8 @@ from django.core.paginator import Paginator
 from .forms import *
 
 from .forms import UserUpdateForm, BankingUserUpdateForm
+from django.forms import formset_factory
+from django.forms import modelformset_factory
 from django.db.models import Sum
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -99,54 +101,99 @@ def user_approvals(request):
 # ================================================ ACCOUNT CREATION ================================================
 #Redirect here if no account
 @login_required
-def create_account_view(request):
+def create_account(request):
     if request.method == 'POST':
         form = AccountCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('mugiwara')  # Redirect to a success page or URL
+            return redirect('mugiwara')
     else:
-        # Assuming you have some logic to retrieve the appropriate BankingUser instance
-        banking_user_instance = BankingUser.objects.get(user=request.user)  # Assuming you have user authentication
-
-        # Pass the pre-filled instance to the form
+        banking_user_instance = BankingUser.objects.get(user=request.user)  
         form = AccountCreationForm(initial={'banking_user': banking_user_instance})
 
     return render(request, 'users/create_account_request.html', {'form': form})
 
 @login_required
 def approve_accounts(request):
-    accounts = Account.objects.filter(modification_status='pending')
+    AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm, extra = 0)
+    formset = AccountApprovalFormSet(queryset = Account.objects.filter(modification_status = 'pending'))
     if request.method == 'POST':
-        forms = [AccountApprovalForm(request.POST, instance=account) for account in accounts]
-        if all(form.is_valid() for form in forms):
-            for form in forms:
+        formset = AccountApprovalFormSet(request.POST or None)
+        if formset.is_valid():
+            for form in formset:
                 if form.cleaned_data['modification_status'] == 'approved':
                     form.save()
                 elif form.cleaned_data['modification_status'] == 'rejected':
                     a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
                     a.delete()
                 else:
-                    pass
-            return redirect('mugiwara')  # Redirect to the same page after updating
-    else:
-        forms = [AccountApprovalForm(instance=account) for account in accounts]
-    context = {'accounts': zip(accounts, forms)}
-    return render(request, 'users/account_approval.html', context)
+                    pass    
+    return render(request, 'users/account_approval.html', {'formset':formset})
 
 # ================================================ ACCOUNT CREATION ================================================
+
+# ================================================ PROFILE DELETION ================================================
+@login_required
+def request_profile_deletion(request, *args, **kwargs):
+    if request.method == 'POST':
+        form = UserDeletionRequestForm(request.POST, instance = BankingUser.objects.get(user = request.user))
+        if form.is_valid():
+            form.cleaned_data['deletion_status'] = 'pending'
+            print(form.cleaned_data)
+            messages.info(request, "Your request for Deletion has been submitted for approval")
+            form.save()
+
+            return redirect('mugiwara')
+        else:
+            print(form.errors)  # Print form errors for debugging
+    else:
+        form = UserDeletionRequestForm(instance = BankingUser.objects.get(user = request.user))
+    return render(request, 'users/request_profile_deletion.html', {'form': form})
+
+@login_required
+def approve_profile_deletion(request, *args, **kwargs):
+    UserDeletionFormSet = modelformset_factory(BankingUser, form = UserDeletionApprovalForm, extra = 0)
+    formset = UserDeletionFormSet(queryset = BankingUser.objects.filter(deletion = 'yes'))
+    if request.method == 'POST':
+        formset = UserDeletionFormSet(request.POST or None)
+        if formset.is_valid():
+            for form in formset:
+                print(form.cleaned_data)
+                if form.cleaned_data['deletion_status'] == 'approved':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.delete()
+                    us = User.objects.get(username = u.username)
+                    us.delete()
+                elif form.cleaned_data['deletion_status'] == 'rejected':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.deletion = 'no'
+                    bu.save()
+                else:
+                    pass
+            return redirect('mugiwara')
+    return render(request, 'users/approve_profile_deletion.html', {'formset': formset})
+# ================================================ PROFILE DELETION ================================================
+
+
+
+
+
+# ================================================ PROFILE UPDATE ================================================
+
 @login_required
 def profile(request):
     if request.method == 'POST':
         u_form = UserUpdateForm(request.POST)
-        b_form = BankingUserUpdateForm(request.POST, instance = banking_user)
+        b_form = BankingUserUpdateForm(request.POST, instance = BankingUser.objects.get(user = request.user))
         if u_form.is_valid() and b_form.is_valid():
             u_form.save()
             b_form.save()
             messages.success(request, 'Profile Updated Successfully')
             return redirect('profile')
     u_form = UserUpdateForm(instance = request.user)
-    b_form = BankingUserUpdateForm()
+    b_form = BankingUserUpdateForm(instance = BankingUser.objects.get(user = request.user))
     context = {
         'u_form': u_form,
         'b_form': b_form,

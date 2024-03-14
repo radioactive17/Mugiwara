@@ -10,11 +10,10 @@
             </div>
             <form id = "create_blog"  method = "POST" enctype="multipart/form-data">
                 {% csrf_token %}
-                {{ formset.as_p }}
+                {{ form|crispy }}
                 <button type="submit" class="btn btn-primary mt-3">Submit</button>
                 <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
             </form>  
-            
         </div>
         
 
