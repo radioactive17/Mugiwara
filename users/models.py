@@ -82,13 +82,19 @@ class Transactions(models.Model):
         'approved': 'Approved'
     }
 
+    transaction_type = {
+        'transfer': 'transfer',
+        'credit': 'credit',
+        'debit': 'debit'
+    }
+
     from_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'from_account')
     to_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'to_account')
     amount = models.BigIntegerField()
 
     transaction_status = models.CharField(max_length = 128, choices = transaction_status)
     transaction_handler = models.ForeignKey(BankingUser, on_delete = models.CASCADE, related_name = 'transaction_handler')
-
+    transaction_type= models.CharField(max_length = 128, choices = transaction_type,default = 'Error')
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)
 

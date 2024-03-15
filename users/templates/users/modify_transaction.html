@@ -9,11 +9,11 @@
     <form method="post">
         {% csrf_token %}
         <label for="id_from_account">From Account:</label>
-        {{ form.instance.from_account.user.user.first_name }} <!-- Assuming 'user' is a field in your User model -->
+        {{ form.instance.from_account }} <!-- Assuming 'user' is a field in your User model -->
         <br>
 
         <label for="id_to_account">To Account:</label>
-        {{ form.instance.to_account.user.user.first_name  }}
+        {{ form.instance.to_account  }}
         <br>
 
         {{ form.as_p }}

@@ -24,9 +24,8 @@ from .models import Transactions, BankingUser
 
 from .forms import DebitForm, CreditForm
 from django.shortcuts import render, redirect
-from .forms import Transactions_form
 
-from .forms import Transactions_form
+from .forms import Transactions_Form
 from .models import Transactions
 from django.db import transaction
 
@@ -257,16 +256,22 @@ def view_accounts(request):
 @login_required
 def create_transaction(request):
     if request.method == 'POST':
-        form = Transactions_form(request.POST)
+        form = Transactions_Form(request.POST)
         if form.is_valid():
+            user_pk = request.user.pk
+            banking_user = BankingUser.objects.get(user_id=user_pk)
+            form.instance.from_account =  Account.objects.get(banking_user=request.user.user)
             form.instance.transaction_status = 'pending'
-            form.instance.transaction_handler = request.user.bankinguser
+            form.instance.transaction_handler = banking_user
             form.save()
             return redirect('user_transactions')
     else:
-        current_user_account = request.user.bankinguser.account_set.first()
-        initial_data = {'from_account': current_user_account}
-        form = Transactions_form(initial=initial_data)
+            user_pk = request.user.pk
+            banking_user = BankingUser.objects.get(user_id=user_pk)
+            current_user_account = Account.objects.get(banking_user=request.user.user)
+            initial_data = {'from_account': current_user_account}
+            form = Transactions_Form(initial=initial_data)
+
 
     return render(request, 'users/create_transaction.html', {'form': form})
 
@@ -279,22 +284,41 @@ def all_transactions(request):
    # Filter transactions where the current user is either the sender or the receiver
    transactions = Transactions.objects.all()
 
-
    return render(request, 'users/all_transactions.html', {'transactions': transactions})
 
 
+from django.shortcuts import render
+from django.contrib import messages
+from django.http import HttpResponseRedirect
+from .models import BankingUser, Transactions
 
-# user view for all transactions
-@login_required
 def user_transactions(request):
-   transactions = Transactions.objects.filter(
-       Q(from_account__user=request.user.bankinguser) | Q(to_account__user=request.user.bankinguser)
-   ).distinct()
+    # Get the primary key (pk) of the currently logged-in user
+    user_pk = request.user.pk
 
-   banking_user = request.user.bankinguser
-   Account_user = Account.objects.get(user=banking_user)
-   account_balance=Account_user.account_bal
-   return render(request, 'users/user_transactions.html', {'transactions': transactions, 'account_balance': account_balance})
+    try:
+        # Get the associated BankingUser instance
+        banking_user = BankingUser.objects.get(user_id=user_pk)
+
+        # Get the account balance for the user
+        Account_user = Account.objects.get(banking_user=banking_user)
+        account_balance=Account_user.account_bal
+        # Filter transactions where the user is either the sender or receiver
+        user_transactions = Transactions.objects.filter(
+            from_account__banking_user_id=user_pk
+        ) | Transactions.objects.filter(
+            to_account__banking_user_id=user_pk
+        )
+
+        # You might want to order the transactions by date or ID
+        user_transactions = user_transactions.order_by('-initiated')
+
+        return render(request, 'users/user_transactions.html', {'transactions': user_transactions, 'account_balance': account_balance})
+
+    except BankingUser.DoesNotExist:
+        messages.error(request, "Something went wrong.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+
 
 
 
@@ -306,16 +330,17 @@ def debit_view(request):
     if request.method == 'POST' and form.is_valid():
         amount = form.cleaned_data['amount']
 
-        user = request.user.bankinguser
-        account = Account.objects.get(user=user)
+        user_pk = request.user.pk
+        banking_user = BankingUser.objects.get(user_id=user_pk)
+        account = Account.objects.get(banking_user=banking_user)
 
         if account.account_bal < amount:
             messages.error(request, "Insufficient funds.")
             return redirect('debit_view')
 
         # Deduct the amount from the account balance
-        account.account_bal -= amount
-        account.save()
+        # account.account_bal -= amount
+        # account.save()
 
         # Create a debit transaction record
         transaction_handler = BankingUser.objects.get(user=request.user)
@@ -325,6 +350,7 @@ def debit_view(request):
             amount=amount,
             transaction_status='pending',
             transaction_handler=transaction_handler,
+            transaction_type='debit',
         )
         return redirect('/user_transactions')
 
@@ -340,22 +366,23 @@ def credit_view(request):
 
     if request.method == 'POST' and form.is_valid():
         amount = form.cleaned_data['amount']
-
-        user = request.user.bankinguser
-        account = Account.objects.get(user=user)
+        user_pk = request.user.pk
+        banking_user = BankingUser.objects.get(user_id=user_pk)
+        account = Account.objects.get(banking_user=banking_user)
 
         # Add the amount to the account balance
-        account.account_bal += amount
-        account.save()
+        # account.account_bal += amount
+        # account.save()
 
         # Create a credit transaction record
         transaction_handler = BankingUser.objects.get(user=request.user)
         Transactions.objects.create(
             from_account=account,
             to_account=account,
-            amount=amount,
+            amount=+amount,
             transaction_status='pending',
             transaction_handler=transaction_handler,
+            transaction_type='credit',
         )
 
 
@@ -376,28 +403,32 @@ def approve_transaction(request, transaction_id):
    if request.method == 'POST':
        if transaction.transaction_status == 'pending':
            # Update the transaction status to 'approved'
+            if transaction.transaction_type == 'transfer':
+           # Perform deduction from "From_account" and add to "To_account"
+                from_account = transaction.from_account
+                from_account.account_bal -= transaction.amount
+                to_account = transaction.to_account
+                to_account.account_bal+=transaction.amount
+                from_account.save()
+                to_account.save()
+
+            elif transaction.transaction_type == 'credit':
+                from_account= transaction.from_account
+                from_account.account_bal +=transaction.amount
+                from_account.save()
+
+            elif transaction.transaction_type == 'debit':
+                from_account= transaction.from_account
+                from_account.account_bal -=transaction.amount
+                from_account.save()                
+
+            transaction.transaction_status = 'approved'
+            user_pk = request.user.pk
+            banking_user = BankingUser.objects.get(user_id=user_pk)
+            transaction.transaction_handler = banking_user
+            transaction.save()
 
 
-
-           # Perform deduction from "From_account"
-           from_account = transaction.from_account
-           from_account.account_bal -= transaction.amount
-           to_account = transaction.to_account
-           to_account.account_bal+=transaction.amount
-           from_account.save()
-           to_account.save()
-           transaction.transaction_status = 'approved'
-           transaction.transaction_handler = request.user.bankinguser
-           transaction.save()
-
-
-           # Perform additional actions if needed
-
-
-           # Redirect or render a response as needed
-
-
-   # Render a page for approving transactions (optional)
    return redirect('/all_transactions', transaction_id=transaction_id)
 
 
@@ -412,14 +443,11 @@ def decline_transaction(request, transaction_id):
        if transaction.transaction_status == 'pending':
        # Update the transaction status to 'rejected'
            transaction.transaction_status = 'rejected'
-           transaction.transaction_handler = request.user.bankinguser
+           user_pk = request.user.pk
+           banking_user = BankingUser.objects.get(user_id=user_pk)
+           transaction.transaction_handler = banking_user
            transaction.save()
 
-
-       # Redirect or render a response as needed
-
-
-   # Render a page for declining transactions (optional)
    return redirect('/all_transactions', transaction_id=transaction_id)
 
 
@@ -435,7 +463,7 @@ def modify_transaction(request, transaction_id):
     transaction = get_object_or_404(Transactions, id=transaction_id)
 
     # Check if the transaction status is neither approved nor declined
-    if transaction.transaction_status not in ['approved', 'declined']:
+    if transaction.transaction_status not in ['approved', 'rejected']:
         # Process modification logic here
 
         # For example, you can create a form instance and render a template

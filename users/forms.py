@@ -129,23 +129,22 @@ class AccountUpdateForm(ModelForm):
             self.fields['account_status'].disabled = True
     
 from django import forms
-from .models import Transactions
+from .models import Transactions, Account
 
-class Transactions_form(forms.ModelForm):
+class Transactions_Form(forms.ModelForm):
     class Meta:
         model = Transactions
-        fields = ['from_account', 'to_account', 'amount']
+        fields = ['to_account', 'amount']
 
     def __init__(self, *args, **kwargs):
-        super(Transactions_form, self).__init__(*args, **kwargs)
+        current_user = kwargs.pop('current_user', None)
+        super().__init__(*args, **kwargs)
+        
+        # Exclude the current user's account from the options
+        if current_user:
+            self.fields['to_account'].queryset = Account.objects.exclude(banking_user=current_user)
 
-        # Remove the drop-down in the 'from_account' field
-        self.fields['from_account'].widget = forms.HiddenInput()
 
-        # Exclude the current user from the 'to_account' choices
-        current_user_account = kwargs.get('initial', {}).get('from_account')
-        if current_user_account:
-            self.fields['to_account'].queryset = self.fields['to_account'].queryset.exclude(pk=current_user_account.pk)
 
 
 class DebitForm(forms.Form):

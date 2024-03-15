@@ -1,90 +1,57 @@
-<!-- users/transaction_list.html -->
-{% if user.bankinguser.user_type == 'iu_re' or user.bankinguser.user_type == 'iu_sm' or user.bankinguser.user_type == 'iu_sa' %}
-    {# Code visible to Regular Employee, System Manager, and System Administrator #}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>All Transactions</title>
-    </head>
-    <body>
-        <h1>All Transactions</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Transactions</title>
+</head>
+<body>
+    <h1>All Transactions</h1>
 
-        <table border="1">
-            <thead>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>From Account</th>
+                <th>To Account</th>
+                <th>Status</th>
+                <th>Transaction Handler</th>
+                <th>Initiated</th>
+                <th>Status Changed</th>
+                <th>Amount</th>
+                <th>Actions</th>
+                <th>Transaction Type</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for transaction in transactions %}
                 <tr>
-                    <th>From Account</th>
-                    <th>To Account</th>
-                    <th>Status</th>
-                    <th>Transaction Handler</th>
-                    <th>Initiated</th>
-                    <th>Status Changed</th>
-                    <th>Amount</th>
-                    <th>Actions</th>
-                    <th>Modify</th>  {# Add this column header for the Modify button #}
+                    <td>{{ transaction.from_account }}</td>
+                    <td>{{ transaction.to_account }}</td>
+                    <td>{{ transaction.transaction_status }}</td>
+                    <td>{{ transaction.transaction_handler }}</td>
+                    <td>{{ transaction.initiated }}</td>
+                    <td>{{ transaction.status_changed }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    
+                    <td>
+                        <form method="post" action="{% url 'approve_transaction' transaction.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Approve</button>
+                        </form>
+                        <form method="post" action="{% url 'decline_transaction' transaction.id %}">
+                            {% csrf_token %}
+                            <button type="submit">Decline</button>
+                        </form>
+                    </td>
+                    <td>
+                        <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
+                    </td>
                 </tr>
-            </thead>
-            <tbody>
-                {% for transaction in transactions %}
-                    {% if transaction.amount > 10000 and user.bankinguser.user_type == 'iu_sm'  %}
-                    <tr>
-                        <td>{{ transaction.from_account }}</td>
-                        <td>{{ transaction.to_account }}</td>
-                        <td>{{ transaction.transaction_status }}</td>
-                        <td>{{ transaction.transaction_handler }}</td>
-                        <td>{{ transaction.initiated }}</td>
-                        <td>{{ transaction.status_changed }}</td>
-                        <td>{{ transaction.amount }}</td>
-                        
-                        <td>
-                            <form method="post" action="{% url 'approve_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Approve</button>
-                            </form>
-                            <form method="post" action="{% url 'decline_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Decline</button>
-                            </form>
-                        </td>
-                        <td>
-                            <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
-                        </td>
-                    </tr>
-                    {% elif transaction.amount <= 10000 %}  
-                        {% if user.bankinguser.user_type == 'iu_re'%}
-                    <tr>
-                        <td>{{ transaction.from_account }}</td>
-                        <td>{{ transaction.to_account }}</td>
-                        <td>{{ transaction.transaction_status }}</td>
-                        <td>{{ transaction.transaction_handler }}</td>
-                        <td>{{ transaction.initiated }}</td>
-                        <td>{{ transaction.status_changed }}</td>
-                        <td>{{ transaction.amount }}</td>
-                        
-                        <td>
-                            <form method="post" action="{% url 'approve_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Approve</button>
-                            </form>
-                            <form method="post" action="{% url 'decline_transaction' transaction.id %}">
-                                {% csrf_token %}
-                                <button type="submit">Decline</button>
-                            </form>
-                        </td>
-                        <td>
-                            <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
-                        </td>
-                    </tr>                        
-                        {% endif %}
-                    {% endif %}
-                {% endfor %}
-            </tbody>
-        </table>
-    </body>
-    </html>
-
-{% else %}
-    <h1>Access Denied</h1>
-{% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
