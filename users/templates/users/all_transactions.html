@@ -26,32 +26,66 @@
         </thead>
         <tbody>
             {% for transaction in transactions %}
-                <tr>
-                    <td>{{ transaction.from_account }}</td>
-                    <td>{{ transaction.to_account }}</td>
-                    <td>{{ transaction.transaction_status }}</td>
-                    <td>{{ transaction.transaction_handler }}</td>
-                    <td>{{ transaction.initiated }}</td>
-                    <td>{{ transaction.status_changed }}</td>
-                    <td>{{ transaction.transaction_type }}</td>
-                    <td>{{ transaction.amount }}</td>
-                    
-                    <td>
-                        <form method="post" action="{% url 'approve_transaction' transaction.id %}">
-                            {% csrf_token %}
-                            <button type="submit">Approve</button>
-                        </form>
-                        <form method="post" action="{% url 'decline_transaction' transaction.id %}">
-                            {% csrf_token %}
-                            <button type="submit">Decline</button>
-                        </form>
-                    </td>
-                    <td>
-                        <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
-                    </td>
-                </tr>
+                {% if user.is_authenticated %}
+                    {% if transaction.amount > 10000 and  user.user.usertype == 'iu_sm' %}
+                        <tr>
+                            <td>{{ transaction.from_account }}</td>
+                            <td>{{ transaction.to_account }}</td>
+                            <td>{{ transaction.transaction_status }}</td>
+                            <td>{{ transaction.transaction_handler }}</td>
+                            <td>{{ transaction.initiated }}</td>
+                            <td>{{ transaction.status_changed }}</td>
+                            <td>{{ transaction.transaction_type }}</td>
+                            <td>{{ transaction.amount }}</td>
+                            
+                            <td>
+                                <form method="post" action="{% url 'approve_transaction' transaction.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Approve</button>
+                                </form>
+                                <form method="post" action="{% url 'decline_transaction' transaction.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit">Decline</button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
+                            </td>
+                        </tr>
+                    {% elif transaction.amount <= 10000 %}  
+                        {% if user.user.usertype == 'iu_re' %}
+                            <tr>
+                                <td>{{ transaction.from_account }}</td>
+                                <td>{{ transaction.to_account }}</td>
+                                <td>{{ transaction.transaction_status }}</td>
+                                <td>{{ transaction.transaction_handler }}</td>
+                                <td>{{ transaction.initiated }}</td>
+                                <td>{{ transaction.status_changed }}</td>
+                                <td>{{ transaction.transaction_type }}</td>
+                                <td>{{ transaction.amount }}</td>
+                                
+                                <td>
+                                    <form method="post" action="{% url 'approve_transaction' transaction.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Approve</button>
+                                    </form>
+                                    <form method="post" action="{% url 'decline_transaction' transaction.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Decline</button>
+                                    </form>
+                                </td>
+                                <td>
+                                    <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}   
+                {% endif %}   
+                 
             {% endfor %}
         </tbody>
     </table>
+
+    
 </body>
 </html>

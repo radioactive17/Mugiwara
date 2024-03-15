@@ -1,5 +1,5 @@
 Regular employee:
-    create/modify/delete transactions upon user necessary auth from user(DONE)
+    create/modify/decline transactions upon user necessary auth from user(DONE)
         -Here instead of delete we go with decline because it is essential to keep a track of all transactions
         -In modify we have decided that once the transaction is created it only can be updated when not approved or declined and the update will be only amount no person change
     can access transactions with necessary auth from user/merch or sys admin
