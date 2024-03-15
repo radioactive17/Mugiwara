@@ -12,8 +12,10 @@
                 <h5 class="text-white mt-3 mb-4" data-aos="fade-right">Banking Beyond Boundaries: Your Partner in
                     Every Journey</h5>
                 <div data-aos="fade-up" data-aos-delay="50">
-                    <a href="#" class="btn btn-brand me-2">Sign Up</a>
-                    <a href="#" class="btn btn-light ms-2">Login</a>
+                    {% if not user.is_authenticated %}
+                    <a href="{% url 'signup' %}" class="btn btn-brand me-2">Sign Up</a>
+                    <a href="{% url 'login' %}" class="btn btn-light ms-2">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </div>
