@@ -1,0 +1,24 @@
+Regular employee:
+    create/modify/decline transactions upon user necessary auth from user(DONE)
+        -Here instead of delete we go with decline because it is essential to keep a track of all transactions
+        -In modify we have decided that once the transaction is created it only can be updated when not approved or declined and the update will be only amount no person change
+    can access transactions with necessary auth from user/merch or sys admin
+
+System Manager:
+    can auth critical transactions(amount > 10000)(DONE)
+    can access transactions with necessary auth from user/merch or sys admin
+
+System Admin:
+    can verify user's request for transactions
+
+
+
+A Merchant/Organization
+    can submit an individual users/merchants’ payment to the bank with
+    proper authorization from users/merchants
+    can view, debit, credit and transfer money from merchants’ bank
+    account
+    can initiate modification personal information change or transactional
+    review
+    can authorize bank official requests to review transactions on accounts
+    the merchant is responsible for

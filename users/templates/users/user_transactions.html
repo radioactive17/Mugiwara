@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>All Transactions</title>
+    <title>User Transactions</title>
 </head>
 <body>
     <h1>All Transactions</h1>
@@ -20,6 +20,7 @@
                 <th>Status</th>
                 <th>Initiated</th>
                 <th>Status Changed</th>
+                <th>Transaction Type</th>
             </tr>
         </thead>
         <tbody>
@@ -31,6 +32,7 @@
                 <td>{{ transaction.transaction_status }}</td>
                 <td>{{ transaction.initiated }}</td>
                 <td>{{ transaction.status_changed }}</td>
+                <td>{{ transaction.transaction_type }}</td>     
             </tr>
             {% endfor %}
         </tbody>
