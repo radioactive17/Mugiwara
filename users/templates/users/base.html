@@ -5,127 +5,89 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Mugiwara</title>
+    <title>Lappy-Manage</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="{% static 'users/assets1/css/styles.min.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="{% static 'users/asset/css/style.css' %}">
 </head>
 
 <body><!-- Start: Dark NavBar -->
     <div>
         <nav class="navbar navbar-light navbar-expand-md sticky-top navigation-clean-button"
             style="height:80px;background-color:#37434d;color:#ffffff;">
-            <div class="container-fluid"><a class="navbar-brand" href="{% url  'mugiwara' %}">Mugiwara</a><button
-                    data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1"><span
-                        class="visually-hidden">Toggle navigation</span><span
-                        class="navbar-toggler-icon"></span></button>
+            <div class="container-fluid">
+                <a class="navbar-brand" href="{% url 'mugiwara' %}">Mugiwara</a>
+                <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-1">
+                    <span class="visually-hidden">Toggle navigation</span>
+                    <span class="navbar-toggler-icon"></span>
+                </button>
                 <div class="collapse navbar-collapse" id="navcol-1">
                     <ul class="navbar-nav ms-auto">
                         {% if user.is_authenticated %}
-                                {% if user.user.usertype == 'eu_cust' %}
-                                    {% if user.user.banking_user.exists %}
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
-                                            <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
-                                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li>
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                                        class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
-                                                        class="fa fa-user"></i>&nbsp;Accounts</a></li>
-                                    {% endif %}
-                                    
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'create-account' %}"><i
-                                        class="fa fa-user"></i>&nbsp;Request New Account</a></li>
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                          Profile
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                          <li><a class="dropdown-item" href="{% url 'profile' %}">Update</a></li>
-                                          <li><a class="dropdown-item" href="{% url 'profile-deletion' %}">Delete</a></li>
-                                        </ul>
-                                      </li>
-                                    <li class="nav-item">
-                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
-                                            {% csrf_token %}
-                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
-                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
-                                        </form>
-                                        <!-- -->
-                                    </li>
-                                {% elif user.user.usertype == 'iu_sa' %}
-                                    <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'user-approvals' %}">
-                                        <i class="fa fa-money"></i>&nbsp;Users/Accounts</a></li> -->
-                                    <li class="nav-item dropdown">
-                                        <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                            Users
-                                        </a>
-                                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                            <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration Approvals</a></li>
-                                            <li><a class="dropdown-item" href="{% url 'approve-profile-deletion' %}">Deletion Approvals</a></li>
-                                        </ul>
-                                        </li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'account-approvals' %}"><i
-                                                class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                                    class="fa fa-exchange"></i>&nbsp;Transactions</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                                    class="fa fa-user"></i>&nbsp;TransactionApprovals</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
-                                                    class="fa fa-user"></i>&nbsp;Profile</a></li>
-                                    <li class="nav-item">
-                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
-                                            {% csrf_token %}
-                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
-                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
-                                        </form>
-                                        <!-- -->
-                                    </li>
-                                {% else %}
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#">
-                                        <i class="fa fa-money"></i>&nbsp;Transactions Approval</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
-                                                class="fa fa-money"></i>&nbsp;Profile Approval</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
-                                        class="fa fa-user"></i>&nbsp;Profile</a></li>
-                                    <li class="nav-item">
-                                        <form id="frm_logout" class ="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
-                                            {% csrf_token %}
-                                            <a style="color:#ffffff;" href="javascript:{}" onclick="document.getElementById('frm_logout').submit(); return false;">
-                                                <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>             
-                                        </form>
-                                        <!-- -->
-                                    </li>
-                                {% endif %}
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#ffffff;" href="#"><i
+                                    class="fa fa-money"></i>&nbsp;Deposit</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#ffffff;" href="#"><i
+                                    class="fa fa-money"></i>&nbsp;Withdraw</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#ffffff;" href="#"><i
+                                    class="fa fa-exchange"></i>&nbsp;Transfer</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
+                                    class="fa fa-user"></i>&nbsp;Profile</a>
+                        </li>
+                        {% endif %}
+                        {% if user.is_authenticated %}
+                        <li class="nav-item">
+                            <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}"
+                                method="post">
+                                {% csrf_token %}
+                                <a style="color:#ffffff;" href="javascript:{}"
+                                    onclick="document.getElementById('frm_logout').submit(); return false;">
+                                    <i class="fa fa-sign-in"></i>&nbsp;Logout</a>
+                            </form>
+                        </li>
                         {% else %}
-                            <li class="nav-item dropdown"><a class="nav-link" style="color:#ffffff;" href="{% url 'login' %}"><i
-                                class="fa fa-sign-in"></i>&nbsp;Sign In</a>
-                            </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" style="color:#ffffff;" href="{% url 'login' %}">
+                                <i class="fa fa-sign-in"></i>&nbsp;Sign In</a>
+                        </li>
                         {% endif %}
                     </ul>
                 </div>
             </div>
         </nav>
     </div><!-- End: Dark NavBar -->
-    
-    
     {% if messages %}
-      {% for message in messages %}
-        {% if message.tags == 'error' %}
-          <div class="alert alert-danger">
+    {% for message in messages %}
+    {% if message.tags == 'error' %}
+    <div class="alert alert-danger">
         {% else %}
-          <div class="alert alert-{{ message.tags }}">
-        {% endif %}
-        {{ message }}
+        <div class="alert alert-{{ message.tags }}">
+            {% endif %}
+            {{ message }}
         </div>
-      {% endfor %}
-    {% endif %}
+        {% endfor %}
+        {% endif %}
 
-    {% block content %}
-    {% endblock %}
-    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{% static 'users/assets1/js/script.min.js' %}"></script>
+        {% block content %}
+        {% endblock %}
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="{% static 'users/assets1/js/script.min.js' %}"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+        <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+        <script src="{% static 'users/asset/js/main.js' %}"></script>
 </body>
 
 </html>
