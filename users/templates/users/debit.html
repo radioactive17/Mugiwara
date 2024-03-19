@@ -1,3 +1,6 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -5,12 +8,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debit Form</title>
-    <link rel="stylesheet" href="../../static/users/assets1/css/debit.css">
+    <link rel="stylesheet" href="../../static/users/asset/css/debit.css">
 </head>
 
 <body>
-    <div class="debit-container">
-        <h2 class="balance">Current Balance: $0</h2>
+    <!-- <div class="debit-container">
+        <h2 class="balance">Current Account Balance: ${{ account_balance }}</h2>
         <form class="debit-form">
             <div class="form-group">
                 <label for="withdrawAmount">Withdraw Amount:</label>
@@ -18,7 +21,39 @@
             </div>
             <button type="submit" class="withdraw-button">Withdraw</button>
         </form>
+    </div> -->
+
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/Debit Money.jpeg" alt="car-key" border="0">
+                            <h2 class="text-center">Debit Money</h2>
+                            <p>Current Account Balance: ${{ account_balance }}</p>
+                            <form class="debit-form">
+                                <!-- <div class="form-group">
+                                    <label for="withdrawAmount">Withdraw Amount:</label>
+                                    <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
+                                </div> -->
+                                <div class="input-group mb-3">
+                                    
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                </div>
+                                <button type="submit" class="withdraw-button">Withdraw</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+
+    
 </body>
 
 </html>
+
+{% endblock %}
