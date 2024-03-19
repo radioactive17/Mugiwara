@@ -92,3 +92,18 @@ img {
     color: #007bff;
     /* Change text color to blue on hover */
 }
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+select {
+    /* Additional styles for select element */
+    height: 40px;
+    /* Example height */
+}
