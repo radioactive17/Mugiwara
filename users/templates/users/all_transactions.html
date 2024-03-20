@@ -1,3 +1,6 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,12 +8,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>All Transactions</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/all_transactions.css">
 </head>
 <body>
-    <h1>All Transactions</h1>
+    <div class="container mt-5">
+    <h1 class="mt-5 title">All Transactions</h1>
 
-    <table border="1">
-        <thead>
+    <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
+        <thead class="table-dark">
             <tr>
                 <th>From Account</th>
                 <th>To Account</th>
@@ -38,18 +43,18 @@
                             <td>{{ transaction.transaction_type }}</td>
                             <td>{{ transaction.amount }}</td>
                             
-                            <td>
+                            <td class="d-flex">
                                 <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                     {% csrf_token %}
-                                    <button type="submit">Approve</button>
+                                    <button type="submit" class="btn btn-primary me-1">Approve</button>
                                 </form>
                                 <form method="post" action="{% url 'decline_transaction' transaction.id %}">
                                     {% csrf_token %}
-                                    <button type="submit">Decline</button>
+                                    <button type="submit" class="btn btn-danger">Decline</button>
                                 </form>
                             </td>
                             <td>
-                                <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
+                                <a href="{% url 'modify_transaction' transaction.id %}" class="btn btn-warning">Modify</a>
                             </td>
                         </tr>
                     {% elif transaction.amount <= 10000 %}  
@@ -64,18 +69,18 @@
                                 <td>{{ transaction.transaction_type }}</td>
                                 <td>{{ transaction.amount }}</td>
                                 
-                                <td>
+                                <td class="d-flex">
                                     <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                         {% csrf_token %}
-                                        <button type="submit">Approve</button>
+                                        <button type="submit" class="btn btn-primary me-1 approve">Approve</button>
                                     </form>
                                     <form method="post" action="{% url 'decline_transaction' transaction.id %}">
                                         {% csrf_token %}
-                                        <button type="submit">Decline</button>
+                                        <button type="submit" class="btn btn-danger">Decline</button>
                                     </form>
                                 </td>
                                 <td>
-                                    <a href="{% url 'modify_transaction' transaction.id %}">Modify</a>
+                                    <a href="{% url 'modify_transaction' transaction.id %}" class="btn btn-warning">Modify</a>
                                 </td>
                             </tr>
                         {% endif %}
@@ -86,6 +91,8 @@
         </tbody>
     </table>
 
-    
+</div>
 </body>
 </html>
+
+{% endblock %}

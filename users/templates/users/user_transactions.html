@@ -1,4 +1,6 @@
-<!-- users/transaction_list.html -->
+{% extends 'users/base.html' %}
+{% load static %}
+{% block content %}
 
 <!DOCTYPE html>
 <html lang="en">
@@ -6,13 +8,15 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/user_transactions.css">
     <title>User Transactions</title>
 </head>
 <body>
-    <h1>All Transactions</h1>
-    <p>Current Account Balance: ${{ account_balance }}</p>
-    <table border="1">
-        <thead>
+    <div class="container mt-5">
+    <h1 class="mt-5">All Transactions</h1>
+    <p class="account_balance lead align-middle">Current Account Balance: ${{ account_balance }}</p>
+    <table id="user_transactions" class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
+        <thead class="table-dark">
             <tr>
                 <th>From Account</th>
                 <th>To Account</th>
@@ -37,5 +41,13 @@
             {% endfor %}
         </tbody>
     </table>
+</div>
+<!-- <script>
+    $(document).ready(function () {
+        // Apply animation to the table after the page is loaded
+        $('#user_transactions').fadeIn(1000);
+    });
+</script> -->
 </body>
 </html>
+{% endblock %}

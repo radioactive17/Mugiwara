@@ -1,15 +1,19 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="../../static/users/asset/css/modify_transaction.css">
     <!-- Add your meta tags and title here -->
 </head>
 <body>
-    <h1>Modify Transaction</h1>
+    <!-- <h1>Modify Transaction</h1>
 
     <form method="post">
         {% csrf_token %}
         <label for="id_from_account">From Account:</label>
-        {{ form.instance.from_account }} <!-- Assuming 'user' is a field in your User model -->
+        {{ form.instance.from_account }}
         <br>
 
         <label for="id_to_account">To Account:</label>
@@ -18,6 +22,57 @@
 
         {{ form.as_p }}
         <button type="submit">Save Changes</button>
-    </form>
+    </form> -->
+
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/modify_transactions.jpeg" alt="car-key" border="0">
+                            <h2 class="text-center">Modify Transaction</h2>
+                            <!-- <form class="debit-form">
+                                        <div class="form-group">
+                                                <label for="withdrawAmount">Withdraw Amount:</label>
+                                                <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
+                                            </div>
+                                        <div class="input-group mb-3">
+            
+                                            <span class="input-group-text">$</span>
+                                            <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                        </div>
+                                        <button type="submit" class="withdraw-button">Withdraw</button>
+                                    </form> -->
+                            <!-- <form class="debit-form" method="post" action="{% url 'debit_view' %}">
+                                {% csrf_token %}
+                                <div class="form-group">
+    
+                                    {{ form.as_p }}
+                                </div>
+                                <button type="submit" class="withdraw-button">Debit</button>
+                            </form> -->
+                            <form class="withdraw-form" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                <label for="id_from_account">From Account:</label>
+                                {{ form.instance.from_account }}
+                                <br>
+                            
+                                <label for="id_to_account">To Account:</label>
+                                {{ form.instance.to_account }}
+                                <br>
+                            
+                                {{ form.as_p }}
+                                <button type="submit" class="withdraw-button">Save Changes</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+{% endblock %}

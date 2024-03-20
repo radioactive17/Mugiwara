@@ -1,0 +1,18 @@
+
+
+.table {
+    color: #000;
+}
+
+.account_balance {
+    color: black;
+}
+
+.approve:hover {
+    color: #fff;
+    /* Set button text color to white */
+    background-color: #007bff;
+    /* Set button background color on hover */
+    border-color: #007bff;
+    /* Set button border color on hover */
+}
