@@ -31,10 +31,14 @@
                         
                                 {% if user.user.usertype == 'eu_cust' %}
                                     {% if user.user.banking_user.exists %}
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
-                                            <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
-                                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li>
+                                        <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
+                                            <i class="fa fa-money"></i>&nbsp;Deposit</a></li> -->
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/credit">
+                                                <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
+                                        <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
+                                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li> -->
+                                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/debit">
+                                                <i class="fa fa-money"></i>&nbsp;Withdraw</a></li>
                                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/create_transaction"><i
                                                         class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
                                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
@@ -76,7 +80,7 @@
                                                 class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
                                                     class="fa fa-exchange"></i>&nbsp;Transactions</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/all_transactions"><i
                                                     class="fa fa-user"></i>&nbsp;TransactionApprovals</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
@@ -89,9 +93,9 @@
                                         <!-- -->
                                     </li>
                                 {% else %}
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#">
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="all_transactions">
                                         <i class="fa fa-money"></i>&nbsp;Transactions Approval</a></li>
-                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                                    <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="approve_profile_deletion"><i
                                                 class="fa fa-money"></i>&nbsp;Profile Approval</a></li>
                                     <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                         class="fa fa-user"></i>&nbsp;Profile</a></li>

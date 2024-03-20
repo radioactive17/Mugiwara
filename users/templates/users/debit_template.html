@@ -10,11 +10,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debit Account</title>
     <!-- Bootstrap CSS -->
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../static/users/asset/css/debit.css">
 </head>
 
 <body>
-    <div class="container mt-5">
+    <!-- <div class="container mt-5">
         <div class="row justify-content-center">
             <div class="col-md-6">
                 <div class="card">
@@ -33,7 +33,42 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
+        <div class="container forget-password">
+            <div class="row">
+                <div class="col-md-12 col-md-offset-4">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="text-center">
+                                <img src="../../static/users/asset/images/Debit Money.jpeg" alt="car-key" border="0">
+                                <h2 class="text-center">Debit Money</h2>
+                                <p>Current Account Balance: ${{ account_balance }}</p>
+                                <!-- <form class="debit-form">
+                                    <div class="form-group">
+                                            <label for="withdrawAmount">Withdraw Amount:</label>
+                                            <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
+                                        </div>
+                                    <div class="input-group mb-3">
+        
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                    </div>
+                                    <button type="submit" class="withdraw-button">Withdraw</button>
+                                </form> -->
+                                <form class="debit-form" method="post" action="{% url 'debit_view' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        
+                                        {{ form.as_p }}
+                                    </div>
+                                    <button type="submit" class="withdraw-button">Debit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
