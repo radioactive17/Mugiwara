@@ -35,6 +35,7 @@ urlpatterns = [
    path('decline_transaction/<int:transaction_id>', views.decline_transaction, name='decline_transaction'),
    path('user_transactions',views.user_transactions,name='user_transactions'),
    path('create_transaction', create_transaction, name='create_transaction'),
+   path('verify_otp/<int:transaction_id>/', views.verify_otp, name='verify_otp'),
    path('debit', debit_view, name='debit_view'),
    path('credit', credit_view, name='credit_view'),
    path('modify_transaction/<int:transaction_id>/', modify_transaction, name='modify_transaction'),
