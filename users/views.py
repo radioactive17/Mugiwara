@@ -11,7 +11,13 @@ from datetime import datetime
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator
 from .forms import *
-
+# views.py
+from django.shortcuts import render, redirect
+from django.core.mail import send_mail
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .models import Transactions
 
 from .forms import UserUpdateForm, BankingUserUpdateForm
 from django.forms import formset_factory
@@ -283,6 +289,20 @@ def view_accounts(request):
    return render(request, 'users/view_accounts.html', {'users':users})
 
 
+import random
+
+def generate_otp(length=6):
+    """Generate a random numeric OTP."""
+    digits = [str(random.randint(0, 9)) for _ in range(length)]
+    return ''.join(digits)
+
+
+def send_otp_email(email, otp):
+    subject = 'Your OTP for transaction confirmation'
+    message = f'Your OTP for transaction confirmation is: {otp}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [email]
+    send_mail(subject, message, from_email, recipient_list)
 
 
 # User create transaction
@@ -290,6 +310,7 @@ def view_accounts(request):
 def create_transaction(request):
    if request.method == 'POST':
        form = Transactions_Form(request.POST)
+       otp = generate_otp()
        if form.is_valid():
            user_pk = request.user.pk
            banking_user = BankingUser.objects.get(user_id=user_pk)
@@ -297,8 +318,11 @@ def create_transaction(request):
            form.instance.transaction_status = 'pending'
            form.instance.transaction_handler = banking_user
            form.instance.transaction_type='transfer'
+           form.instance.otp=otp
            form.save()
-           return redirect('user_transactions')
+           send_otp_email(request.user.email, otp)
+           transaction_id = form.instance.pk
+           return redirect('verify_otp', transaction_id=transaction_id)
    else:
            user_pk = request.user.pk
            banking_user = BankingUser.objects.get(user_id=user_pk)
@@ -306,13 +330,31 @@ def create_transaction(request):
            initial_data = {'from_account': current_user_account}
            form = Transactions_Form(initial=initial_data)
 
-
-
-
    return render(request, 'users/create_transaction.html', {'form': form})
 
 
-
+@login_required
+def verify_otp(request, transaction_id):
+    transaction = Transactions.objects.get(pk=transaction_id)
+    print(transaction)
+    if request.method == 'POST':
+        entered_otp = request.POST['otp']
+        # print(type(transaction.otp))
+        # print(type(entered_otp))
+        # if int(transaction.otp) == int(entered_otp):
+        #     print('SAME')
+        # else:
+        #     print('NOT SAME')
+        if int(transaction.otp) == int(entered_otp):
+            # OTP verified, confirm the transaction
+            transaction.otp_verified='yes'
+            transaction.save()
+            messages.success(request, 'Transaction verified successfully.')
+            return redirect('user_transactions')
+        else:
+            # Incorrect OTP entered
+            return HttpResponse('<script>alert("Wrong OTP"); window.history.back();</script>')   
+    return render(request, 'users/verify_otp.html', {'transaction': transaction})
 
 
 
@@ -394,7 +436,7 @@ def debit_view(request):
            messages.error(request, "Insufficient funds.")
            return redirect('debit_view')
 
-
+       otp = generate_otp()
        # Deduct the amount from the account balance
        # account.account_bal -= amount
        # account.save()
@@ -402,16 +444,18 @@ def debit_view(request):
 
        # Create a debit transaction record
        transaction_handler = BankingUser.objects.get(user=request.user)
-       Transactions.objects.create(
+       transaction=Transactions.objects.create(
            from_account=account,
            to_account=account,
            amount=amount,
            transaction_status='pending',
            transaction_handler=transaction_handler,
            transaction_type='debit',
+           otp=otp
        )
-       return redirect('/user_transactions')
-
+       send_otp_email(request.user.email, otp)
+       return redirect('verify_otp', transaction_id=transaction.pk)
+       
 
    return render(request, 'users/debit_template.html', {'form': form})
 
@@ -438,23 +482,23 @@ def credit_view(request):
        # Add the amount to the account balance
        # account.account_bal += amount
        # account.save()
-
+       otp = generate_otp()
 
        # Create a credit transaction record
        transaction_handler = BankingUser.objects.get(user=request.user)
-       Transactions.objects.create(
+       transaction=Transactions.objects.create(
            from_account=account,
            to_account=account,
            amount=+amount,
            transaction_status='pending',
            transaction_handler=transaction_handler,
            transaction_type='credit',
+           otp=otp,
        )
 
 
-
-
-       return redirect('/user_transactions')
+       send_otp_email(request.user.email, otp)
+       return redirect('verify_otp', transaction_id=transaction.pk)
 
 
    return render(request, 'users/credit_template.html', {'form': form})
@@ -476,7 +520,7 @@ def approve_transaction(request, transaction_id):
 
 
   if request.method == 'POST':
-      if transaction.transaction_status == 'pending':
+    if transaction.transaction_status == 'pending' and transaction.otp_verified == 'yes':
           # Update the transaction status to 'approved'
            if transaction.transaction_type == 'transfer':
           # Perform deduction from "From_account" and add to "To_account"
@@ -506,14 +550,14 @@ def approve_transaction(request, transaction_id):
 
            else:
                return HttpResponse('<script>alert("Cannot approve. Transaction Type is Error"); window.history.back();</script>')               
-
-
+      
            transaction.transaction_status = 'approved'
            user_pk = request.user.pk
            banking_user = BankingUser.objects.get(user_id=user_pk)
            transaction.transaction_handler = banking_user
            transaction.save()
-
+    else:
+        return HttpResponse('<script>alert("OTP verification is Incomplete"); window.history.back();</script>')               
 
 
 

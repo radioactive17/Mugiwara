@@ -69,7 +69,9 @@ class Account(models.Model):
     created_on = models.DateTimeField(auto_now_add = True)
     account_status = models.CharField(max_length = 32, choices = account_status, default = 'o')
     closed_on = models.DateTimeField(blank = True, null = True)
-    modification_status = models.CharField(max_length = 32, choices = modification_status, default = 'pending')    
+    modification_status = models.CharField(max_length = 32, choices = modification_status, default = 'pending') 
+ 
+
 
     def __str__(self):
         return self.banking_user.user.first_name + '-' + self.account_type
@@ -88,6 +90,11 @@ class Transactions(models.Model):
         'debit': 'debit'
     }
 
+    otp_type={
+        'yes':'yes',
+        'no':'no'
+    }
+
     from_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'from_account')
     to_account = models.ForeignKey('Account', on_delete = models.CASCADE, related_name = 'to_account')
     amount = models.BigIntegerField()
@@ -97,7 +104,8 @@ class Transactions(models.Model):
     transaction_type= models.CharField(max_length = 128, choices = transaction_type,default = 'Error')
     initiated = models.DateTimeField(auto_now_add = True)
     status_changed = models.DateTimeField(auto_now = True)
-
+    otp = models.BigIntegerField(default = 0)
+    otp_verified = models.CharField(max_length = 128, choices = otp_type,default = 'No Action')
 
     def __str__(self):
         return str(self.from_account) + '-' + str(self.to_account)
