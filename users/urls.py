@@ -13,23 +13,23 @@ urlpatterns = [
    path('register/', views.register, name = 'signup'),
    path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),
    path('logout/', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},  name = 'logout'),
-   path('profile/', views.profile, name = 'profile'),
    path('accounts/', views.accounts, name = 'accounts'),
    path('debit/<int:pk>', views.debit, name = 'debit'),
    path('credit/<int:pk>/', views.credit, name = 'credit'),
 
-   path('view_accounts/', views.view_accounts, name = 'view-accounts'),
+   path('view_accounts/', views.view_accounts, name = 'view-accounts'), # display along with profile information
+   # Approve User Registration
    path('user_approvals/', views.user_approvals, name = 'user-approvals'),
+   # Create Account
    path('create_account/', views.create_account, name = 'create-account'),
    path('account_approvals/', views.approve_accounts, name = 'account-approvals'),
-
+   # Delete Profile
    path('profile_deletion/', views.request_profile_deletion, name = 'profile-deletion'),
    path('approve_profile_deletion/', views.approve_profile_deletion, name = 'approve-profile-deletion'),
-
-   path('', views.home, name = 'mugiwara'),
-   path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),
-   path('logout/', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},  name = 'logout'),
-   path('profile', views.profile, name = 'profile'),
+   # Update Profile
+   path('update_profile/', views.request_profile_update, name = 'update-profile'),
+   path('profile_approvals/', views.approve_profile_update, name = 'profile-approvals'),
+   
    path('all_transactions', views.all_transactions, name='all_transactions'),
    path('approve_transaction/<int:transaction_id>/', approve_transaction, name='approve_transaction'),
    path('decline_transaction/<int:transaction_id>', views.decline_transaction, name='decline_transaction'),

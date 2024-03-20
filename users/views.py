@@ -200,36 +200,103 @@ def approve_profile_deletion(request, *args, **kwargs):
    return render(request, 'users/approve_profile_deletion.html', {'formset': formset})
 # ================================================ PROFILE DELETION ================================================
 
-
-
-
-
-
-
-
-
-
-# ================================================ PROFILE UPDATE ================================================
-
-
+# ------------------------------------------------------ PROFILE UPDATE ------------------------------------------------------
+profile_update_requests = []
 @login_required
-def profile(request):
-   if request.method == 'POST':
-       u_form = UserUpdateForm(request.POST)
-       b_form = BankingUserUpdateForm(request.POST, instance = BankingUser.objects.get(user = request.user))
-       if u_form.is_valid() and b_form.is_valid():
-           u_form.save()
-           b_form.save()
-           messages.success(request, 'Profile Updated Successfully')
-           return redirect('profile')
-   u_form = UserUpdateForm(instance = request.user)
-   b_form = BankingUserUpdateForm(instance = BankingUser.objects.get(user = request.user))
-   context = {
-       'u_form': u_form,
-       'b_form': b_form,
-   }
-   return render(request, 'users/profile.html', context)
+def request_profile_update(request):
+    banking_user_instance = BankingUser.objects.get(user=request.user)
+    if request.method == 'POST':
+        form = BankingUserUpdateForm(request.POST)
+        if form.is_valid():
+            print(form.cleaned_data)
+            profile_update_requests.append({
+                'user': request.user,
+                'data': form.cleaned_data,
+                'approved': False
+            })
+            messages.success(request, 'Your update request has been submitted for approval')
+            # # Redirect to profile or any other appropriate URL after successful submission
+        else:
+            print(form.errors)
+            # Handle form errors if needed
+            # return render(request, 'users/profile.html', {'b_form': b_form})
+    else:
+        initial_data = {
+            'first_name': banking_user_instance.user.first_name,
+            'last_name': banking_user_instance.user.last_name,
+            'username': banking_user_instance.user.username,
+            'dob': banking_user_instance.dob,
+            'mobile_number': banking_user_instance.mobile_number,
+            'street_address': banking_user_instance.street_address,
+            'city': banking_user_instance.city,
+            'state': banking_user_instance.state,
+            'zip_code': banking_user_instance.zip_code,
+            'country': banking_user_instance.country,
+        }
+        form = BankingUserUpdateForm(initial=initial_data)
+    context = {
+        'form': form,
+    }
+    return render(request, 'users/profile.html', context)
 
+# def approve_profile_update(request, *args, **kwargs):
+#     if request.method == 'POST':
+#         for key, value in request.POST.items():
+#             print(key, value)
+#         # request_index = int(request.POST.get('request_index'))
+#         # action = request.POST.get('status')
+#         # if action == 'approved':
+#         #     print('approved')
+#         #     # profile_update_requests[request_index]['approved'] = True
+#         #     # messages.success(request, 'Profile update request approved successfully.')
+#         # elif action == 'rejected':
+#         #     print('denied')
+#             # del profile_update_requests[request_index]
+#             # messages.error(request, 'Profile update request denied.')
+
+#         # return redirect('profile_update_requests')
+
+#     context = {
+#         'update_requests': profile_update_requests,
+#     }
+#     return render(request, 'users/approve_profile_update.html', context)
+
+def approve_profile_update(request):
+    if request.method == 'POST':
+        request_id = int(request.POST.get('request_id'))
+        action = request.POST.get('action')
+        print(request_id, action)
+        if action == 'approve':
+            user = User.objects.get(username = profile_update_requests[request_id]['user'])
+            banking_user = BankingUser.objects.get(user = user)
+            user.first_name = profile_update_requests[request_id]['data']['first_name']
+            user.last_name = profile_update_requests[request_id]['data']['last_name']
+            banking_user.dob = profile_update_requests[request_id]['data']['dob']
+            banking_user.mobile_number = profile_update_requests[request_id]['data']['mobile_number']
+            banking_user.street_address = profile_update_requests[request_id]['data']['street_address']
+            banking_user.city = profile_update_requests[request_id]['data']['city']
+            banking_user.state = profile_update_requests[request_id]['data']['state']
+            banking_user.zip_code = profile_update_requests[request_id]['data']['zip_code']
+            banking_user.country = profile_update_requests[request_id]['data']['country']
+            user.save()
+            banking_user.save()
+            profile_update_requests.pop(int(request_id))
+            messages.success(request, 'Request approved successfully.')
+        elif action == 'reject':
+            print('reject')
+            # Code to reject request
+            profile_update_requests.pop(int(request_id))
+            messages.success(request, 'Request rejected successfully.')
+        else:
+            messages.error(request, 'Invalid action.')
+
+    context = {
+        'profile_update_requests': profile_update_requests,
+    }
+    return render(request, 'users/approve_profile_update.html', context)
+
+
+# ------------------------------------------------------ PROFILE UPDATE ------------------------------------------------------
 
 @login_required
 def accounts(request):
