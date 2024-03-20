@@ -139,5 +139,5 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "MY APP"
-EMAIL_HOST_USER = os.environ.get('HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('HOST_PASS')
+EMAIL_HOST_USER = 'mugiwarabank@gmail.com'
+EMAIL_HOST_PASSWORD = 'hwje wozn ofoi ychf'

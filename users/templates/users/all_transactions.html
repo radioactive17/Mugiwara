@@ -23,9 +23,9 @@
                 <th>Transaction Handler</th>
                 <th>Initiated</th>
                 <th>Status Changed</th>
+                <th>Transaction Type</th>
                 <th>Amount</th>
                 <th>Actions</th>
-                <th>Transaction Type</th>
                 <th>Modify</th>
             </tr>
         </thead>
@@ -42,7 +42,6 @@
                             <td>{{ transaction.status_changed }}</td>
                             <td>{{ transaction.transaction_type }}</td>
                             <td>{{ transaction.amount }}</td>
-                            
                             <td class="d-flex">
                                 <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                     {% csrf_token %}
