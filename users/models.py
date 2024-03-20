@@ -1,10 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
-
-
-class BankingUser(models.Model):   
-   
+class BankingUser(models.Model):      
     User_types = {
         'iu_re': 'Regular Employee',
         'iu_sm': 'System Manager',

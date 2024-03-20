@@ -85,32 +85,45 @@ class UserDeletionApprovalForm(ModelForm):
         self.fields['deletion_status'].label = "Approve Deletion?"
         self.fields['deletion_status'].required = True
 
-
-
-
-
-
+# User Update Form 
 class UserUpdateForm(ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'username', ]
+        fields = ['first_name', 'last_name', 'username']
     
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
-
+        self.fields['username'].required = False
+        self.fields['username'].disabled = True
         
+# Banking User Form
+class BankingUserUpdateForm(forms.Form):
+    choices = {
+        'pending': 'Pending',
+        'approved': 'Approved',
+        'rejected': 'Rejected',
+    }
 
-class BankingUserUpdateForm(ModelForm):
-    class Meta:
-        model = BankingUser
-        fields = "__all__"
-        exclude = ['user_handler', 'pd_modification_status']
-        
+    first_name = forms.CharField(max_length = 256, required = False)
+    last_name = forms.CharField(max_length = 256, required = False)
+    username = forms.CharField(max_length = 256, required = False)
+    dob = forms.DateField(required = False)
+    mobile_number = forms.CharField(max_length = 256, required = False)
+    street_address = forms.CharField(max_length = 512, required = False)
+    city = forms.CharField(max_length = 128, required = False)
+    state = forms.CharField(max_length = 128, required = False)
+    zip_code = forms.CharField(max_length = 10, required = False)
+    country = forms.CharField(max_length = 256, required = False)
+    status = forms.ChoiceField(choices = choices, required = False)
+
     def __init__(self, *args, **kwargs):
         super(BankingUserUpdateForm, self).__init__(*args, **kwargs)
+        self.fields['status'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
 
-        if self.instance.id:
-            self.fields['usertype'].disabled = True
+
+
+        
+    
             
     
 class AccountUpdateForm(ModelForm):
