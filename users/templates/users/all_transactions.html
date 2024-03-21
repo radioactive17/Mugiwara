@@ -25,6 +25,7 @@
                 <th>Status Changed</th>
                 <th>Transaction Type</th>
                 <th>Amount</th>
+                <th>OTP Verified</th>
                 <th>Actions</th>
                 <th>Modify</th>
             </tr>
@@ -42,6 +43,7 @@
                             <td>{{ transaction.status_changed }}</td>
                             <td>{{ transaction.transaction_type }}</td>
                             <td>{{ transaction.amount }}</td>
+                            <td>{{transaction.otp_verified}}</td>
                             <td class="d-flex">
                                 <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                     {% csrf_token %}
@@ -67,6 +69,7 @@
                                 <td>{{ transaction.status_changed }}</td>
                                 <td>{{ transaction.transaction_type }}</td>
                                 <td>{{ transaction.amount }}</td>
+                                <td>{{transaction.otp_verified}}</td>
                                 
                                 <td class="d-flex">
                                     <form method="post" action="{% url 'approve_transaction' transaction.id %}">
