@@ -237,7 +237,7 @@ def request_profile_update(request):
     context = {
         'form': form,
     }
-    return render(request, 'users/profile.html', context)
+    return render(request, 'users/profile_update.html', context)
 
 # def approve_profile_update(request, *args, **kwargs):
 #     if request.method == 'POST':
