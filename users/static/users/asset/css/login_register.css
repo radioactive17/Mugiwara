@@ -1,0 +1,14 @@
+.btn-custom {
+    display: block; /* Make the button a block element */
+    width: auto; /* Let the width be determined by the content, or you can set a specific width */
+    margin: 0 auto; /* Auto margin on both sides to center it */
+    background-color: #007bff; /* Bootstrap primary color, you can change it */
+    color: white; /* Text color */
+    border: none; /* Removes the border */
+    padding: 10px 20px; /* Adds some padding */
+}
+
+.btn-custom:hover {
+    background-color: #0056b3; /* Darker shade on hover, feel free to adjust */
+    color: #fff; /* Keeps text color white on hover */
+}
