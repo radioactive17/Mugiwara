@@ -13,8 +13,8 @@
 </head>
 <body>
     <div class="container mt-5">
-    <h1 class="mt-5">All Transactions</h1>
-    <p class="account_balance lead align-middle">Current Account Balance: ${{ account_balance }}</p>
+    <h1 class="mt-5 all_transactions">All Transactions</h1>
+    <p class="account_balance lead align-middle balance">Current Account Balance: ${{ account_balance }}</p>
     <table id="user_transactions" class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
         <thead class="table-dark">
             <tr>
@@ -25,6 +25,7 @@
                 <th>Initiated</th>
                 <th>Status Changed</th>
                 <th>Transaction Type</th>
+                <th>OTP Verified</th>
             </tr>
         </thead>
         <tbody>
@@ -36,7 +37,8 @@
                 <td>{{ transaction.transaction_status }}</td>
                 <td>{{ transaction.initiated }}</td>
                 <td>{{ transaction.status_changed }}</td>
-                <td>{{ transaction.transaction_type }}</td>     
+                <td>{{ transaction.transaction_type }}</td>  
+                <td>{{transaction.otp_verified}}</td>
             </tr>
             {% endfor %}
         </tbody>

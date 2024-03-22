@@ -1,12 +1,16 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/verify_otp.css">
 </head>
 <body>
-    <h1>Verify OTP</h1>
+    <!-- <h1>Verify OTP</h1>
 
     <p>Please enter the OTP sent to your email to confirm the transaction.</p>
 
@@ -16,6 +20,41 @@
         <input type="text" id="otp" name="otp">
         <br>
         <button type="submit">Verify OTP</button>
-    </form>
+    </form> -->
+
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/otp.jpeg" alt="car-key" border="0">
+                            <h2 class="text-center">Verify OTP</h2>
+                            <p>Enter the OTP you received via Email</p>
+                            <!-- <form class="debit-form">
+                                <div class="input-group mb-3">
+                            
+                                    <span class="input-group-text">$</span>
+                                    <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                </div>
+                                <button type="submit" class="withdraw-button">Withdraw</button>
+                            </form> -->
+
+                            <form method="post" class="debit-form">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                <label for="otp">Enter OTP:</label>
+                                <input type="text" id="otp" name="otp">
+                                
+                                <button type="submit" class="withdraw-button">Verify OTP</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
+{% endblock %}

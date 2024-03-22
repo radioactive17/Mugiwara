@@ -1,6 +1,18 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Approve Registration</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/approve_registrations.css">
+</head>
+<body>
+    
+</body>
+</html>
     <form method="post">
         {% csrf_token %}
         <ul>
@@ -22,4 +34,28 @@
         </ul>
         <button type="submit">Submit</button>
     </form>
+    <!-- <form method="post">
+        {% csrf_token %}
+        <ul class="registration-form">
+            {% for form_data in registration_forms %}
+            <li>
+                <label for="{{ form_data.username }}">{{ form_data.username }}</label>
+                <span>-</span>
+                <span>
+                    {% for key, value in user_types.items %}
+                    {% if key == form_data.usertype %}
+                    {{ value }}
+                    {% endif %}
+                    {% endfor %}
+                </span>
+                <select name="{{ form_data.username }}" id="{{ form_data.username }}">
+                    <option value="pending">Pending</option>
+                    <option value="approved">Approve</option>
+                    <option value="rejected">Deny</option>
+                </select>
+            </li>
+            {% endfor %}
+        </ul>
+        <button type="submit" class="submit-button">Submit</button>
+    </form> -->
 {% endblock %}

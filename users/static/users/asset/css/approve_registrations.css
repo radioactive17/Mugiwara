@@ -1,0 +1,31 @@
+.registration-form {
+    list-style: none;
+    padding: 0;
+}
+
+.registration-form li {
+    margin-bottom: 20px;
+}
+
+.registration-form label {
+    font-weight: bold;
+}
+
+.registration-form select {
+    padding: 5px;
+    border-radius: 5px;
+}
+
+.submit-button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.submit-button:hover {
+    background-color: #45a049;
+}

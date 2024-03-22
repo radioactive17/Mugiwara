@@ -67,7 +67,7 @@ class UserDeletionRequestForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(UserDeletionRequestForm, self).__init__(*args, **kwargs)
-        self.fields['deletion'].label = 'Are you sure you want to delete your profile'
+        self.fields['deletion'].label = 'Are you sure you want to delete your profile?'
         self.fields['deletion_status'].initial = 'pending'  
         self.fields['deletion_status'].widget = forms.HiddenInput()  # Hide the field
         # self.fields['deletion_status'].required = False  # Set the field as not required
