@@ -70,6 +70,8 @@
                                 <td>{{ transaction.transaction_type }}</td>
                                 <td>{{ transaction.amount }}</td>
                                 <td>{{transaction.otp_verified}}</td>
+
+                                {%if transaction.transaction_status == 'pending'%}
                                 
                                 <td class="d-flex">
                                     <form method="post" action="{% url 'approve_transaction' transaction.id %}">
@@ -84,6 +86,10 @@
                                 <td>
                                     <a href="{% url 'modify_transaction' transaction.id %}" class="btn btn-warning">Modify</a>
                                 </td>
+                                {%else%}
+                                    <td></td>
+                                    <td></td>
+                                {%endif%}
                             </tr>
                         {% endif %}
                     {% endif %}   
