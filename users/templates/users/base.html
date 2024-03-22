@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="{% static 'users/asset/css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'users/asset/css/login_register.css' %}">
 
 </head>
 
@@ -43,8 +44,6 @@
                                     class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
                                     class="fa fa-user"></i>&nbsp;Accounts</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/user_transactions"><i
-                                    class="fa fa-exchange"></i>&nbsp;My Transactions</a></li>
                         {% endif %}
 
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
@@ -59,7 +58,6 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{% url 'update-profile' %}">Update</a></li>
                                 <li><a class="dropdown-item" href="{% url 'profile-deletion' %}">Delete</a></li>
-                                <li><a class="dropdown-item" href="#">View</a></li>
                             </ul>
                         </li>
                         <li class="nav-item">
@@ -115,7 +113,7 @@
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
                                 href="approve_profile_deletion"><i class="fa fa-money"></i>&nbsp;Profile Approval</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{ }"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{#}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item">
                             <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}"

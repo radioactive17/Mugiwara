@@ -1,0 +1,44 @@
+.btn-custom {
+    display: block; /* Make the button a block element */
+    width: auto; /* Let the width be determined by the content, or you can set a specific width */
+    margin: 0 auto; /* Auto margin on both sides to center it */
+    background-color: #007bff; /* Bootstrap primary color, you can change it */
+    color: white; /* Text color */
+    border: none; /* Removes the border */
+    padding: 10px 20px; /* Adds some padding */
+}
+
+.btn-custom:hover {
+    background-color: #0056b3; /* Darker shade on hover, feel free to adjust */
+    color: #fff; /* Keeps text color white on hover */
+}
+
+#login-box::-webkit-scrollbar {
+    width: 10px;
+}
+
+#login-box::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+#login-box::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+#login-box::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+#login-box {
+    margin-top: 2vh;
+    margin-bottom: 2vh;
+    padding: 20px;
+    overflow-y: auto; /* Keeps it scrollable */
+}
+
+#login-box {
+    padding: 30px; /* Adjust padding as needed */
+    margin-top: 50px; /* Ensure there's space at the top */
+    margin-bottom: 50px; /* Ensure there's space at the bottom */
+    overflow-y: auto; /* Add scroll to the box */
+}
