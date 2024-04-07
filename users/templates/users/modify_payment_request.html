@@ -1,0 +1,26 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Modify Payment Request</h2>
+    <div class="card">
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="id_client1">Client 1:</label>
+                    {{ form.client1 }}
+                </div>
+                <div class="form-group">
+                    <label for="id_client2">Client 2:</label>
+                    {{ form.client2 }}
+                </div>
+                <div class="form-group">
+                    {{ form.as_p }}
+                </div>
+                <button type="submit" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

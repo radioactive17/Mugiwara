@@ -1,0 +1,31 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Client Dashboard</h2>
+    <h4>Pending Authorization Requests</h4>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Merchant</th>
+                <th>Amount</th>
+                <th>To Client</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in pending_requests %}
+            <tr>
+                <td>{{ request.merchant.user.username }}</td>
+                <td>{{ request.amount }}</td>
+                <td>{{ request.to_client.user.username }}</td>
+                <td>
+                    <a href="{% url 'authorize_payment_request' request.id %}" class="btn btn-primary btn-sm">Authorize</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No pending authorization requests.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

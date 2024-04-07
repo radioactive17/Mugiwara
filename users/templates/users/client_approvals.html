@@ -1,0 +1,19 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Pending Payment Requests</h2>
+    <div class="list-group">
+        {% for request in pending_requests %}
+        <div class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            From: {{ request.merchant.user.username }} - Amount: {{ request.amount }}
+            <div>
+                <a href="{% url 'approve_payment_request' request.id %}?action=approve" class="btn btn-success">Approve</a>
+                <a href="{% url 'approve_payment_request' request.id %}?action=reject" class="btn btn-danger">Reject</a>
+            </div>
+        </div>
+        {% empty %}
+        <p>No pending payment requests.</p>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

@@ -1,3 +1,4 @@
+from urllib import request
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.http import HttpResponse
@@ -56,7 +57,7 @@ def register(request):
    if request.method == 'POST':
        form = UserRegistrationForm(request.POST)
        if form.is_valid():
-           registration_forms = request.session.get('registration_forms', [])  
+           registration_forms = request.session.get('registration_forms', [])
            registration_forms.append(form.cleaned_data)
            request.session['registration_forms'] = registration_forms
            messages.info(request, "Your registration request has been submitted for approval.")
@@ -107,7 +108,7 @@ def user_approvals(request):
        # Update session with modified registration_forms
        request.session['registration_forms'] = registration_forms
        return redirect('user-approvals')  # Redirect to the same page to display updated status
-  
+
    return render(request, 'users/approve_registrations.html', {'registration_forms': registration_forms, 'user_types': user_types})
 
 
@@ -126,7 +127,7 @@ def create_account(request):
            form.save()
            return redirect('mugiwara')
    else:
-       banking_user_instance = BankingUser.objects.get(user=request.user) 
+       banking_user_instance = BankingUser.objects.get(user=request.user)
        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
 
 
@@ -147,7 +148,7 @@ def approve_accounts(request):
                    a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
                    a.delete()
                else:
-                   pass   
+                   pass
    return render(request, 'users/account_approval.html', {'formset':formset})
 
 
@@ -420,7 +421,7 @@ def verify_otp(request, transaction_id):
             return redirect('user_transactions')
         else:
             # Incorrect OTP entered
-            return HttpResponse('<script>alert("Wrong OTP"); window.history.back();</script>')   
+            return HttpResponse('<script>alert("Wrong OTP"); window.history.back();</script>')
     return render(request, 'users/verify_otp.html', {'transaction': transaction})
 
 
@@ -432,9 +433,13 @@ def verify_otp(request, transaction_id):
 def all_transactions(request):
   # Filter transactions where the current user is either the sender or the receiver
   transactions = Transactions.objects.all()
+  payment_requests = PaymentRequest.objects.filter(awaiting_internal_approval=True)
 
 
-  return render(request, 'users/all_transactions.html', {'transactions': transactions})
+  return render(request, 'users/all_transactions.html', {
+        'transactions': transactions,
+        'payment_requests': payment_requests
+    })
 
 
 
@@ -522,7 +527,7 @@ def debit_view(request):
        )
        send_otp_email(request.user.email, otp)
        return redirect('verify_otp', transaction_id=transaction.pk)
-       
+
 
    return render(request, 'users/debit_template.html', {'form': form})
 
@@ -574,7 +579,7 @@ def credit_view(request):
 
 
 
-
+from django.http import HttpResponseForbidden
 
 
 # Internal user approve transactions from users
@@ -591,11 +596,11 @@ def approve_transaction(request, transaction_id):
           # Update the transaction status to 'approved'
            if transaction.transaction_type == 'transfer':
           # Perform deduction from "From_account" and add to "To_account"
-          
+
                 from_account = transaction.from_account
                 from_account.account_bal -= transaction.amount
                 if from_account.account_bal<0:
-                    return HttpResponse('<script>alert("Cannot approve. Account does not have sufficient funds."); window.history.back();</script>')   
+                    return HttpResponse('<script>alert("Cannot approve. Account does not have sufficient funds."); window.history.back();</script>')
                 to_account = transaction.to_account
                 to_account.account_bal+=transaction.amount
                 from_account.save()
@@ -612,19 +617,19 @@ def approve_transaction(request, transaction_id):
                 from_account= transaction.from_account
                 from_account.account_bal -=transaction.amount
                 if from_account.account_bal<0:
-                    return HttpResponse('<script>alert("Cannot approve. Account does not have sufficient funds."); window.history.back();</script>')   
-                from_account.save()   
+                    return HttpResponse('<script>alert("Cannot approve. Account does not have sufficient funds."); window.history.back();</script>')
+                from_account.save()
 
            else:
-               return HttpResponse('<script>alert("Cannot approve. Transaction Type is Error"); window.history.back();</script>')               
-      
+               return HttpResponse('<script>alert("Cannot approve. Transaction Type is Error"); window.history.back();</script>')
+
            transaction.transaction_status = 'approved'
            user_pk = request.user.pk
            banking_user = BankingUser.objects.get(user_id=user_pk)
            transaction.transaction_handler = banking_user
            transaction.save()
     else:
-        return HttpResponse('<script>alert("OTP verification is Incomplete"); window.history.back();</script>')               
+        return HttpResponse('<script>alert("OTP verification is Incomplete"); window.history.back();</script>')
 
 
 
@@ -695,8 +700,385 @@ def modify_transaction(request, transaction_id):
        return HttpResponse('<script>alert("Cannot modify. Transaction is already approved or declined."); window.history.back();</script>')
 
 
+from django.shortcuts import render
+from .models import *
+from django.http import HttpResponseForbidden
+
+
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
+from .forms import PaymentRequestForm
+from .models import PaymentRequest, BankingUser
+
+
+@login_required
+def submit_payment_request(request):
+    if request.method == 'POST':
+        form = PaymentRequestForm(request.POST)
+        if form.is_valid():
+            payment_request = form.save(commit=False)
+            # Retrieve the BankingUser instance associated with the logged-in User
+            # Use request.user.user due to the unconventional related_name='user'
+            payment_request.merchant = request.user.user
+            payment_request.otp = generate_otp()
+            payment_request.save()
+
+            send_otp_email(payment_request.client1.user.email, payment_request.otp)
+            return redirect('verify_payment_otp', payment_request_id=payment_request.id)
+    else:
+        form = PaymentRequestForm()
+    return render(request, 'users/submit_payment_request.html', {'form': form})
+
+
+@login_required
+def verify_payment_otp(request, payment_request_id):
+    payment_request = get_object_or_404(PaymentRequest, id=payment_request_id)
+    if request.method == 'POST':
+        form = OTPVerificationForm(request.POST)
+        if form.is_valid() and payment_request.otp == form.cleaned_data['otp']:
+            payment_request.otp_verified = True
+            payment_request.awaiting_internal_approval = True  # Indicate it's awaiting internal approval
+            payment_request.save()
+            messages.success(request, 'OTP verified successfully. Your payment request is pending internal approval.')
+            return redirect('/')
+        else:
+            messages.error(request, 'Incorrect OTP. Please try again.')
+    else:
+        form = OTPVerificationForm()
+    return render(request, 'users/verify_payment_otp.html', {'form': form, 'payment_request': payment_request})
+
+
+from django.db import transaction as db_transaction
+
+
+@login_required
+def approve_payment_request(request, request_id):
+    payment_request = get_object_or_404(PaymentRequest, id=request_id)
+
+    if payment_request.status == 'pending' and payment_request.otp_verified:
+        # Ensure that the request is a POST request
+        if request.method == 'POST':
+
+            critical_transaction_amount = 10000
+
+            # Check if it's a critical transaction and if the user is a system manager
+            if payment_request.amount > critical_transaction_amount and request.user.usertype != 'iu_sm':
+                messages.error(request, "Only system managers can authorize critical transactions over USD 10,000.")
+                return redirect('all_transactions')
+
+
+            with db_transaction.atomic():
+                client1_accounts = payment_request.client1.banking_user.all()
+                if client1_accounts.exists():
+                    client1_account = client1_accounts.first()  # Assuming client1 has at least one account
+
+                    if payment_request.transaction_type == 'deposit':
+                        client1_account.account_bal += payment_request.amount
+                        client1_account.save()
+
+                    elif payment_request.transaction_type == 'withdraw':
+                        if client1_account.account_bal >= payment_request.amount:
+                            client1_account.account_bal -= payment_request.amount
+                            client1_account.save()
+                        else:
+                            messages.error(request, "Insufficient funds in the account for withdrawal.")
+                            return redirect('all_transactions')
+
+                    elif payment_request.transaction_type == 'transfer' and payment_request.client2:
+                        client2_accounts = payment_request.client2.banking_user.all()
+                        if client2_accounts.exists():
+                            client2_account = client2_accounts.first()  # Assuming client2 has at least one account
+                            if client1_account.account_bal >= payment_request.amount:
+                                client1_account.account_bal -= payment_request.amount
+                                client2_account.account_bal += payment_request.amount
+                                client1_account.save()
+                                client2_account.save()
+                            else:
+                                messages.error(request, "Insufficient funds in the account for transfer.")
+                                return redirect('all_transactions')
+
+                    # Mark the payment request as approved
+                    payment_request.status = 'approved'
+                    payment_request.save()
+
+                    messages.success(request, "Payment request approved successfully.")
+                else:
+                    messages.error(request, "Client1 does not have an account.")
+            return redirect('all_transactions')
+    else:
+        messages.error(request, "This payment request cannot be approved or is already processed.")
+
+    # Redirect for GET requests or if the request cannot be approved
+    return redirect('all_transactions')
+
+@login_required
+def decline_payment_request(request, request_id):
+    payment_request = get_object_or_404(PaymentRequest, id=request_id)
+
+    # Ensure that only pending requests can be declined
+    if payment_request.status == 'pending':
+        if request.method == 'POST':
+            payment_request.status = 'declined'
+            payment_request.save()
+            messages.success(request, 'Payment request declined.')
+            return redirect('all_transactions')  # Adjust the redirect as needed
+        else:
+            # Show a confirmation page for GET requests
+            return render(request, 'users/decline_payment_request.html', {'payment_request': payment_request})
+    else:
+        messages.error(request, 'This payment request cannot be declined.')
+        return redirect('users/all_transactions')  # Adjust the redirect as needed
+
+
+@login_required
+def modify_payment_request(request, request_id):
+    payment_request = get_object_or_404(PaymentRequest, id=request_id)
+
+    # Only allow modification if the payment request is pending
+    if payment_request.status == 'pending':
+        if request.method == 'POST':
+            form = PaymentRequestForm(request.POST, instance=payment_request)
+            if form.is_valid():
+                form.save()
+                return redirect('all_transactions')  # Adjust as needed
+        else:
+            form = PaymentRequestForm(instance=payment_request)
+        return render(request, 'users/modify_payment_request.html', {'form': form, 'payment_request': payment_request})
+    else:
+        return HttpResponse('<script>alert("Cannot modify. Payment request is already approved or declined."); window.history.back();</script>')
+
+
+
+# @login_required
+# def create_payment_request(request):
+#     if request.method == 'POST':
+#         form = PaymentRequestForm(request.POST, user=request.user)
+#         if form.is_valid():
+#             payment_request = form.save(commit=False)
+#             payment_request.merchant = BankingUser.objects.get(user=request.user)
+
+#             # Generate and assign OTP
+#             otp = generate_otp()
+#             payment_request.otp = otp
+#             payment_request.save()
+
+#             # Send OTP to Client1's email
+#             send_otp_email(payment_request.client1.user.email, otp)
+
+#             # Redirect to OTP verification page, passing the ID of the newly created payment request
+#             return redirect('verify_otp', transaction_id=payment_request.id)
+#     else:
+#         form = PaymentRequestForm(user=request.user)
+
+#     return render(request, 'users/create_payment_request.html', {'form': form})
+
+# from django.views.decorators.cache import never_cache
+
+
+# @never_cache
+# @login_required
+# def verify_merchant_payment_otp(request, payment_request_id):
+#     payment_request = get_object_or_404(PaymentRequest, id=payment_request_id, merchant__user=request.user)
+
+#     if request.method == 'POST':
+#         entered_otp2 = request.POST['otp'] # Strip whitespace
+
+#         # Ensure both OTPs are strings for comparison, log values for debugging
+#         stored_otp = str(payment_request.otp)
+#         print(f"Verifying OTP: Stored OTP='{payment_request.otp}', Entered OTP='{entered_otp2}'")
+
+
+#         if int(payment_request.otp) == int(entered_otp2):
+#             payment_request.otp_verified = 'yes'
+#             payment_request.status = 'approved'  # Adjust according to your application logic
+#             payment_request.save()
+#             messages.success(request, 'Payment request verified successfully.')
+#             return redirect('merchant_dashboard')  # Redirect to the desired URL
+#         else:
+#             messages.error(request, 'Incorrect OTP. Please try again.')
+
+#     return render(request, 'users/verify_merchant_payment_otp.html', {'payment_request': payment_request})
+
+# @login_required
+# def approve_payment_request(request, request_id):
+#     payment_request = get_object_or_404(PaymentRequest, id=request_id, client1__user=request.user)
+
+#     if request.method == 'POST':
+#         if 'approve' in request.POST:
+#             payment_request.status = 'approved'
+#             # Implement logic to process the payment here
+#         elif 'reject' in request.POST:
+#             payment_request.status = 'rejected'
+#         payment_request.save()
+#         return redirect('payment_approval_success')
+
+#     return render(request, 'users/approve_payment_request.html', {'payment_request': payment_request})
+
+@login_required
+def merchant_dashboard(request):
+    if not request.user.userprofile.is_merchant:  # Assuming you have a way to identify merchant users
+        return HttpResponseForbidden('Access Denied')
+
+    payment_requests = PaymentRequest.objects.filter(merchant=request.user)
+    return render(request, 'merchant_dashboard.html', {'payment_requests': payment_requests})
+
+# @login_required
+# def payment_requests_status(request):
+#     if request.user.user.usertype != 'eu_mo':
+#         return HttpResponseForbidden('Access Denied')
+
+#     payment_requests = PaymentRequest.objects.filter(merchant__user=request.user)
+#     return render(request, 'users/payment_requests_status.html', {'payment_requests': payment_requests})
+
+
+
+# from django.core.mail import send_mail
+# from django.conf import settings
+
+
+
+# @login_required
+# def merchant_dashboard(request):
+#     if request.user.user.usertype != 'eu_mo':
+#         return HttpResponseForbidden("You are not authorized to view this page.")
+
+#     accounts = Account.objects.filter(banking_user=request.user.user)
+#     payment_requests = PaymentRequest.objects.filter(merchant=request.user.user)
+#     recent_transactions = Transactions.objects.filter(from_account__in=accounts).order_by('-initiated')[:5]
+
+#     context = {
+#         'accounts': accounts,
+#         'payment_requests': payment_requests,
+#         'recent_transactions': recent_transactions,
+#     }
+#     return render(request, 'users/merchant_dashboard.html', context)
+
+# from django import forms
+# from .models import PaymentRequest
+
+# class PaymentRequestForm(forms.ModelForm):
+#     class Meta:
+#         model = PaymentRequest
+#         fields = ['client_name', 'amount', 'description']
+
+# from django.core.mail import send_mail
+# from django.urls import reverse
+# from django.contrib.auth.decorators import login_required
+# from django.http import HttpResponseForbidden
+# from django.shortcuts import render, redirect
+# from .forms import *
+# from .models import PaymentRequest
+
+
+# @login_required
+# def submit_payment_request(request):
+#     if request.user.user.usertype != 'eu_mo':
+#         return HttpResponseForbidden("You are not authorized to access this page.")
+
+#     if request.method == 'POST':
+#         form = PaymentSubmissionForm(request.POST)
+#         if form.is_valid():
+#             payment_request = form.save(commit=False)
+#             payment_request.merchant = request.user.user  # Set the current merchant as the requester
+#             payment_request.status = 'pending'
+#             payment_request.save()
+#             # Redirect to a confirmation page or the dashboard
+#             return redirect('merchant_dashboard')
+#     else:
+#         form = PaymentSubmissionForm()
+
+#     return render(request, 'users/submit_payment_request.html', {'form': form})
+
+
+# @login_required
+# def submit_payment_request(request):
+#     if request.user.user.usertype != 'eu_mo':
+#         return HttpResponseForbidden("You are not authorized to access this page.")
+
+#     if request.method == 'POST':
+#         form = PaymentSubmissionForm(request.POST)
+#         if form.is_valid():
+#             payment_request = form.save(commit=False)
+#             payment_request.merchant = request.user.user  # Set the current merchant as the requester
+#             payment_request.status = 'pending'
+#             payment_request.save()
+
+#             # Construct the authorization URL
+#             auth_url = request.build_absolute_uri(reverse("authorize_payment_request", args=[payment_request.id]))
+
+#             # Send the authorization email to the from_client
+#             send_mail(
+#                 'Payment Request Authorization',
+#                 f'Please authorize the payment request by clicking on the link: {auth_url}',
+#                 {settings.DEFAULT_FROM_EMAIL},  # Replace with your actual email
+#                 [payment_request.from_client.user.email],  # Ensure from_client has a related user with an email
+#                 fail_silently=False,
+#             )
+
+#             # Redirect to a confirmation page or the dashboard
+#             return redirect('merchant_dashboard')
+#     else:
+#         form = PaymentSubmissionForm()
+
+#     return render(request, 'users/submit_payment_request.html', {'form': form})
+
+# from django.http import HttpResponseForbidden, HttpResponseNotFound
+
+# @login_required
+# def client_dashboard(request):
+#     if request.user.user.usertype != 'eu_cust':
+#         return HttpResponseForbidden("You are not authorized to access this page.")
+
+#     pending_requests = PaymentRequest.objects.filter(from_client=request.user.user, status='pending')
+
+#     return render(request, 'users/client_dashboard.html', {'pending_requests': pending_requests})
+
+
+
+# @login_required
+# def authorize_payment_request(request, payment_request_id):
+#     try:
+#         payment_request = PaymentRequest.objects.get(id=payment_request_id, from_client=request.user.user, status='pending')
+#     except PaymentRequest.DoesNotExist:
+#         return HttpResponseNotFound("Payment request not found or you're not authorized to view this page.")
+
+#     if request.method == 'POST':
+#         payment_request.status = 'authorized'
+#         payment_request.save()
+#         # Redirect to a confirmation page, the client's dashboard, or a success message
+#         return redirect('client_dashboard')  # Make sure to define this URL
+
+#     return render(request, 'users/authorize_payment_request.html', {'payment_request': payment_request})
+
+# # from django.core.mail import send_mail
+# # from django.urls import reverse
 
 
 
 
+
+# @login_required
+# def create_payment_request(request):
+#     if request.method == 'POST':
+#         form = PaymentRequestForm(request.POST)
+#         if form.is_valid():
+#             payment_request = form.save(commit=False)
+#             payment_request.merchant = request.user.user
+#             payment_request.status = 'pending'
+#             payment_request.save()
+#             return redirect('merchant_dashboard')
+#     else:
+#         form = PaymentRequestForm()
+
+#     return render(request, 'users/create_payment_request.html', {'form': form})
+
+
+# @login_required
+# def view_payment_requests(request):
+#     if request.user.user.usertype != 'eu_mo':
+#         return HttpResponseForbidden("You are not authorized to access this page.")
+
+#     payment_requests = PaymentRequest.objects.filter(merchant=request.user.user)
+
+#     return render(request, 'users/payment_requests.html', {'payment_requests': payment_requests})
 

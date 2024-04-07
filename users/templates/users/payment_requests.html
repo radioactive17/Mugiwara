@@ -1,0 +1,32 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Payment Requests</h2>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>Client Name</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in payment_requests %}
+            <tr>
+                <td>{{ request.client_name }}</td>
+                <td>{{ request.amount }}</td>
+                <td>{{ request.get_status_display }}</td> <!-- Using get_FOO_display for readable choice fields -->
+                <td>
+                    <!-- Example action: View Details (ensure you have a corresponding URL and view) -->
+                    <a href="{% url 'payment_request_detail' request.id %}" class="btn btn-info btn-sm">View</a>
+                    <!-- You can add more action buttons here like Edit or Delete as needed, ensuring proper permissions and security -->
+                </td>
+            </tr>
+            {% empty %}
+            <tr><td colspan="4">No payment requests found.</td></tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

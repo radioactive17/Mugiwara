@@ -34,16 +34,10 @@
                         {% if user.user.banking_user.exists %}
                         <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
                                             <i class="fa fa-money"></i>&nbsp;Deposit</a></li> -->
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/credit">
-                                <i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                        <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'debit' user.id %}"><i
-                                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li> -->
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/debit">
-                                <i class="fa fa-money"></i>&nbsp;Withdraw</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/create_transaction"><i
-                                    class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
-                                    class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/credit"><i class="fa fa-money"></i>&nbsp;Deposit</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/debit"><i class="fa fa-money"></i>&nbsp;Withdraw</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/create_transaction"><i class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i class="fa fa-user"></i>&nbsp;Accounts</a></li>
                         {% endif %}
 
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"

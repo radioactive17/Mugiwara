@@ -27,7 +27,7 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'email', 'username', 'password1', 'password2', 'usertype']
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['user_approval'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
@@ -37,7 +37,7 @@ class AccountCreationForm(ModelForm):
     class Meta:
         model = Account
         fields = ['banking_user', 'account_type', 'modification_status']
-    
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['modification_status'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
@@ -68,7 +68,7 @@ class UserDeletionRequestForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super(UserDeletionRequestForm, self).__init__(*args, **kwargs)
         self.fields['deletion'].label = 'Are you sure you want to delete your profile?'
-        self.fields['deletion_status'].initial = 'pending'  
+        self.fields['deletion_status'].initial = 'pending'
         self.fields['deletion_status'].widget = forms.HiddenInput()  # Hide the field
         # self.fields['deletion_status'].required = False  # Set the field as not required
 
@@ -85,17 +85,17 @@ class UserDeletionApprovalForm(ModelForm):
         self.fields['deletion_status'].label = "Approve Deletion?"
         self.fields['deletion_status'].required = True
 
-# User Update Form 
+# User Update Form
 class UserUpdateForm(ModelForm):
     class Meta:
         model = User
         fields = ['first_name', 'last_name', 'username']
-    
+
     def __init__(self, *args, **kwargs):
         super(UserUpdateForm, self).__init__(*args, **kwargs)
         self.fields['username'].required = False
         self.fields['username'].disabled = True
-        
+
 # Banking User Form
 class BankingUserUpdateForm(forms.Form):
     choices = {
@@ -122,17 +122,17 @@ class BankingUserUpdateForm(forms.Form):
 
 
 
-        
-    
-            
-    
+
+
+
+
 class AccountUpdateForm(ModelForm):
     class Meta:
         model = Account
         fields = ['account_number', 'account_type', 'account_bal', 'account_status']
         # fields = '__all__'
         # exclude = ['user', 'closed_on']
-    
+
     def __init__(self, *args, **kwargs):
         super(AccountUpdateForm, self).__init__(*args, **kwargs)
 
@@ -140,7 +140,7 @@ class AccountUpdateForm(ModelForm):
             self.fields['account_type'].disabled = True
             self.fields['account_bal'].disabled = True
             self.fields['account_status'].disabled = True
-    
+
 from django import forms
 from .models import Transactions, Account
 
@@ -152,7 +152,7 @@ class Transactions_Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         current_user = kwargs.pop('current_user', None)
         super().__init__(*args, **kwargs)
-        
+
         # Exclude the current user's account from the options
         if current_user:
             self.fields['to_account'].queryset = Account.objects.exclude(banking_user=current_user)
@@ -182,3 +182,27 @@ class TransactionsForm(forms.ModelForm):
         model = Transactions
         fields = ['amount']
 
+from django import forms
+from .models import PaymentRequest, BankingUser
+
+class PaymentRequestForm(forms.ModelForm):
+    client1 = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'))
+    client2 = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'), required=False)
+
+    class Meta:
+        model = PaymentRequest
+        fields = ['transaction_type', 'client1', 'client2', 'amount']
+
+class OTPVerificationForm(forms.Form):
+    otp = forms.CharField(max_length=6)
+
+# class PaymentRequestForm(forms.ModelForm):
+#     class Meta:
+#         model = PaymentRequest
+#         fields = ['from_client', 'to_client', 'amount']  # Ensure these fields exist in your model
+
+#     def __init__(self, *args, **kwargs):
+#         super(PaymentRequestForm, self).__init__(*args, **kwargs)
+#         # Filter 'from_client' and 'to_client' to only include external individual users
+#         self.fields['from_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
+#         self.fields['to_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')

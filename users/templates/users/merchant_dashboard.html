@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Merchant Dashboard</h2>
+    <h4>Account Balance: {{ account_balance }}</h4>
+    <h4>Payment Requests</h4>
+    <ul class="list-group">
+        {% for request in payment_requests %}
+        <li class="list-group-item">To: {{ request.client1.user.username }} - Amount: {{ request.amount }} - Status: {{ request.get_status_display }}</li>
+        {% endfor %}
+    </ul>
+</div>
+{% endblock %}

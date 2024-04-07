@@ -6,6 +6,7 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.conf.urls.static import static
 from .views import all_transactions
+from .views import *
 
 
 urlpatterns = [
@@ -29,7 +30,7 @@ urlpatterns = [
    # Update Profile
    path('update_profile/', views.request_profile_update, name = 'update-profile'),
    path('profile_approvals/', views.approve_profile_update, name = 'profile-approvals'),
-   
+
    path('all_transactions', views.all_transactions, name='all_transactions'),
    path('approve_transaction/<int:transaction_id>/', approve_transaction, name='approve_transaction'),
    path('decline_transaction/<int:transaction_id>', views.decline_transaction, name='decline_transaction'),
@@ -39,6 +40,34 @@ urlpatterns = [
    path('debit', debit_view, name='debit_view'),
    path('credit', credit_view, name='credit_view'),
    path('modify_transaction/<int:transaction_id>/', modify_transaction, name='modify_transaction'),
+
+   path('submit_payment_request/', submit_payment_request, name='submit_payment_request'),
+   path('verify_payment_otp/<int:payment_request_id>/', verify_payment_otp, name='verify_payment_otp'),
+   path('merchant_dashboard/', merchant_dashboard, name='merchant_dashboard'),
+   path('decline_payment_request/<int:request_id>/', views.decline_payment_request, name='decline_payment_request'),
+   path('modify_payment_request/<int:request_id>/', views.modify_payment_request, name='modify_payment_request'),
+   path('approve_payment_request/<int:request_id>/', views.approve_payment_request, name='approve_payment_request'),
+
+
+
+   # path('create_payment_request/', views.create_payment_request, name='create_payment_request'),
+   # path('payment_requests_status/', views.payment_requests_status, name='payment_requests_status'),
+   # path('approve_payment_request/<int:request_id>/', views.approve_payment_request, name='approve_payment_request'),
+   # path('verify_merchant_payment_otp/<int:payment_request_id>/', views.verify_merchant_payment_otp, name='verify_merchant_payment_otp'),
+
+
+
+
+   # path('merchant/dashboard/', merchant_dashboard, name='merchant_dashboard'),
+   # path('payment/request/new/', views.create_payment_request, name='create_payment_request'),
+
+
+   # path('payment_requests/', views.view_payment_requests, name='view_payment_requests'),
+   # path('submit_payment_request/', views.submit_payment_request, name='submit_payment_request'),
+
+   # path('authorize_payment/<int:payment_request_id>/', views.authorize_payment_request, name='authorize_payment_request'),
+   # path('client/dashboard/', views.client_dashboard, name='client_dashboard'),
+
 
 ]
 

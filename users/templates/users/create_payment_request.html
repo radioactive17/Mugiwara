@@ -1,0 +1,31 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Submit Payment Request</h2>
+    <form method="POST">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <div id="client2Field" style="display: none;">
+            {{ form.client2|as_crispy_field }}
+        </div>
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+        <a href="{% url 'mugiwara' %}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const transactionType = document.querySelector("#id_transaction_type");
+        const client2Field = document.querySelector("#client2Field");
+        transactionType.addEventListener("change", function() {
+            if (this.value === "transfer") {
+                client2Field.style.display = "block";
+            } else {
+                client2Field.style.display = "none";
+            }
+        });
+    });
+</script>
+{% endblock %}

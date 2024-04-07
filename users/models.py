@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User, Group
 
-class BankingUser(models.Model):      
+class BankingUser(models.Model):
     User_types = {
         'iu_re': 'Regular Employee',
         'iu_sm': 'System Manager',
@@ -36,9 +36,9 @@ class BankingUser(models.Model):
     pd_modified = models.DateTimeField(auto_now = True, blank=True, null = True)
     deletion = models.CharField(max_length = 128, choices = requesting_deletion, blank=True, null = True, default = 'no')
     deletion_status = models.CharField(max_length = 128, choices = modification_status, blank=True, null = True)
-    
+
     def __str__(self):
-        return self.user.get_username() 
+        return self.user.get_username()
 
 
 class Account(models.Model):
@@ -66,13 +66,13 @@ class Account(models.Model):
     created_on = models.DateTimeField(auto_now_add = True)
     account_status = models.CharField(max_length = 32, choices = account_status, default = 'o')
     closed_on = models.DateTimeField(blank = True, null = True)
-    modification_status = models.CharField(max_length = 32, choices = modification_status, default = 'pending') 
- 
+    modification_status = models.CharField(max_length = 32, choices = modification_status, default = 'pending')
+
 
 
     def __str__(self):
         return self.banking_user.user.first_name + '-' + self.account_type
-    
+
 
 class Transactions(models.Model):
     transaction_status = {
@@ -104,5 +104,30 @@ class Transactions(models.Model):
     otp = models.BigIntegerField(default = 0)
     otp_verified = models.CharField(max_length = 128, choices = otp_type,default = 'No Action')
 
+    initiated_by_merchant = models.ForeignKey(BankingUser, on_delete=models.SET_NULL, null=True, blank=True, related_name='initiated_transactions')
+
     def __str__(self):
         return str(self.from_account) + '-' + str(self.to_account)
+
+
+class PaymentRequest(models.Model):
+    TRANSACTION_CHOICES = [
+        ('deposit', 'Deposit'),
+        ('withdraw', 'Withdraw'),
+        ('transfer', 'Transfer')
+    ]
+
+    merchant = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='submitted_payments')
+    transaction_type = models.CharField(max_length=8, choices=TRANSACTION_CHOICES)
+    client1 = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='client1_payments')
+    client2 = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='client2_payments', null=True, blank=True)
+    amount = models.DecimalField(max_digits=10, decimal_places=2)
+    otp = models.CharField(max_length=6, blank=True)
+    otp_verified = models.BooleanField(default=False)
+    transaction_approved = models.BooleanField(default=False)
+    status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('declined', 'Declined')], default='pending')
+
+    awaiting_internal_approval = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.merchant.user.username} payment request for {self.amount}"
