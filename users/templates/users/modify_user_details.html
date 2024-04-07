@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>Modify User Details</h2>
+    <p>Modifying details for: {{ banking_user.user.username }}</p>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Submit Modification Request</button>
+    </form>
+</div>
+{% endblock %}

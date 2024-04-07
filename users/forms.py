@@ -184,6 +184,7 @@ class TransactionsForm(forms.ModelForm):
 
 from django import forms
 from .models import PaymentRequest, BankingUser
+from django.core.exceptions import ValidationError
 
 class PaymentRequestForm(forms.ModelForm):
     client1 = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'))
@@ -193,8 +194,43 @@ class PaymentRequestForm(forms.ModelForm):
         model = PaymentRequest
         fields = ['transaction_type', 'client1', 'client2', 'amount']
 
+    # def __init__(self, *args, **kwargs):
+    #     super(PaymentRequestForm, self).__init__(*args, **kwargs)
+    #     self.fields['client1'].disabled = True
+    #     self.fields['transaction_type'].disabled = True
+
+    # def clean(self):
+    #     cleaned_data = super().clean()
+    #     transaction_type = cleaned_data.get('transaction_type')
+    #     client2 = cleaned_data.get('client2')
+
+    #     if transaction_type == 'transfer' and not client2:
+    #         # Raise a ValidationError if transaction_type is 'transfer' and client2 is not provided
+    #         self.add_error('client2', ValidationError("Client 2 is required for transfer transactions."))
+
+    #     return cleaned_data
+
 class OTPVerificationForm(forms.Form):
     otp = forms.CharField(max_length=6)
+
+class UserModificationForm(forms.ModelForm):
+
+    first_name = forms.CharField(required=False)
+    last_name = forms.CharField(required=False)
+
+    class Meta:
+        model = BankingUser
+        fields = ['first_name', 'last_name', 'mobile_number', 'street_address', 'city', 'state', 'zip_code', 'country']
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(UserModificationForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['first_name'].initial = user.first_name
+            self.fields['last_name'].initial = user.last_name
+
+class SelectUserForm(forms.Form):
+    external_user = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'), label="Select User")
 
 # class PaymentRequestForm(forms.ModelForm):
 #     class Meta:

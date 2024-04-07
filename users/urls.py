@@ -47,6 +47,12 @@ urlpatterns = [
    path('decline_payment_request/<int:request_id>/', views.decline_payment_request, name='decline_payment_request'),
    path('modify_payment_request/<int:request_id>/', views.modify_payment_request, name='modify_payment_request'),
    path('approve_payment_request/<int:request_id>/', views.approve_payment_request, name='approve_payment_request'),
+   path('merchant_transaction_history/', views.merchant_transaction_history, name='merchant_transaction_history'),
+   path('modify_payment_request_amount/<int:request_id>/', modify_payment_request_amount, name='modify_payment_request_amount'),
+
+   path('modify_user_personal_data/', views.modify_user_personal_data, name='modify_user_personal_data'),
+   path('modify_user_details/<int:user_id>/', views.modify_user_details, name='modify_user_details'),
+   path('approve_modifications/', views.approve_modifications, name='approve_modifications'),
 
 
 

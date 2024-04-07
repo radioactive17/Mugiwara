@@ -9,18 +9,48 @@
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="id_client1">Client 1:</label>
-                    {{ form.client1 }}
+                    <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ form.client1.value }}">
                 </div>
+
                 <div class="form-group">
+                    <label for="id_transaction_type">Transaction Type:</label>
+                    <input type="text" readonly class="form-control-plaintext" id="id_transaction_type" value="{{ form.transaction_type.value }}">
+                </div>
+
+                <!-- Client 2 Field, initially hidden -->
+                <div class="form-group" id="client2FormGroup" style="display: none;">
                     <label for="id_client2">Client 2:</label>
                     {{ form.client2 }}
                 </div>
+
                 <div class="form-group">
-                    {{ form.as_p }}
+                    <label for="id_amount">Amount:</label>
+                    {{ form.amount }}
                 </div>
+
                 <button type="submit" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
     </div>
 </div>
+
+<script type="text/javascript">
+document.addEventListener('DOMContentLoaded', function () {
+    const transactionType = document.getElementById('id_transaction_type').value;
+    const client2FormGroup = document.getElementById('client2FormGroup');
+
+    // Function to show/hide client2 field based on transaction type
+    function updateClient2Visibility() {
+        if (transactionType === 'transfer') {
+            client2FormGroup.style.display = 'block';
+        } else {
+            client2FormGroup.style.display = 'none';
+        }
+    }
+
+    // Update visibility on page load
+    updateClient2Visibility();
+});
+</script>
+
 {% endblock %}

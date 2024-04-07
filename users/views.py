@@ -433,7 +433,7 @@ def verify_otp(request, transaction_id):
 def all_transactions(request):
   # Filter transactions where the current user is either the sender or the receiver
   transactions = Transactions.objects.all()
-  payment_requests = PaymentRequest.objects.filter(awaiting_internal_approval=True)
+  payment_requests = PaymentRequest.objects.all()
 
 
   return render(request, 'users/all_transactions.html', {
@@ -450,37 +450,43 @@ from django.http import HttpResponseRedirect
 from .models import BankingUser, Transactions
 
 
+@login_required
 def user_transactions(request):
-   # Get the primary key (pk) of the currently logged-in user
-   user_pk = request.user.pk
+    user_pk = request.user.pk
 
+    try:
+        banking_user = BankingUser.objects.get(user__pk=user_pk)
 
-   try:
-       # Get the associated BankingUser instance
-       banking_user = BankingUser.objects.get(user_id=user_pk)
+        # Get the account balance for the user
+        account_balance = Account.objects.filter(banking_user=banking_user).first().account_bal if Account.objects.filter(banking_user=banking_user).exists() else 0
 
+        # Transactions where the user is either the sender or receiver
+        user_transactions = Transactions.objects.filter(
+            from_account__banking_user=banking_user
+        ) | Transactions.objects.filter(
+            to_account__banking_user=banking_user
+        )
+        user_transactions = user_transactions.order_by('-initiated')
 
-       # Get the account balance for the user
-       Account_user = Account.objects.get(banking_user=banking_user)
-       account_balance=Account_user.account_bal
-       # Filter transactions where the user is either the sender or receiver
-       user_transactions = Transactions.objects.filter(
-           from_account__banking_user_id=user_pk
-       ) | Transactions.objects.filter(
-           to_account__banking_user_id=user_pk
-       )
+        # Payment requests where the user is either client1 or client2
+        payment_requests = PaymentRequest.objects.filter(
+            client1=banking_user
+        ) | PaymentRequest.objects.filter(
+            client2=banking_user
+        )
+        payment_requests = payment_requests.order_by('-id')
 
+        context = {
+            'transactions': user_transactions,
+            'account_balance': account_balance,
+            'payment_requests': payment_requests,
+        }
 
-       # You might want to order the transactions by date or ID
-       user_transactions = user_transactions.order_by('-initiated')
+        return render(request, 'users/user_transactions.html', context)
 
-
-       return render(request, 'users/user_transactions.html', {'transactions': user_transactions, 'account_balance': account_balance})
-
-
-   except BankingUser.DoesNotExist:
-       messages.error(request, "Something went wrong.")
-       return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
+    except BankingUser.DoesNotExist:
+        messages.error(request, "Something went wrong.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
 
@@ -740,7 +746,7 @@ def verify_payment_otp(request, payment_request_id):
             payment_request.awaiting_internal_approval = True  # Indicate it's awaiting internal approval
             payment_request.save()
             messages.success(request, 'OTP verified successfully. Your payment request is pending internal approval.')
-            return redirect('/')
+            return redirect('merchant_transaction_history')
         else:
             messages.error(request, 'Incorrect OTP. Please try again.')
     else:
@@ -756,59 +762,53 @@ def approve_payment_request(request, request_id):
     payment_request = get_object_or_404(PaymentRequest, id=request_id)
 
     if payment_request.status == 'pending' and payment_request.otp_verified:
-        # Ensure that the request is a POST request
         if request.method == 'POST':
+            # critical_transaction_amount = 10000
 
-            critical_transaction_amount = 10000
+            # if payment_request.amount > critical_transaction_amount and request.user.banking_user.usertype != 'iu_sm':
+            #     messages.error(request, "Only system managers can authorize critical transactions over USD 10,000.")
+            #     return redirect('all_transactions')
 
-            # Check if it's a critical transaction and if the user is a system manager
-            if payment_request.amount > critical_transaction_amount and request.user.usertype != 'iu_sm':
-                messages.error(request, "Only system managers can authorize critical transactions over USD 10,000.")
-                return redirect('all_transactions')
+            client1_accounts = payment_request.client1.banking_user.all()  # Use the 'banking_user' related_name
+            if client1_accounts.exists():
+                client1_account = client1_accounts.first()  # Assuming client1 has at least one account
 
+                if payment_request.transaction_type == 'deposit':
+                    client1_account.account_bal += payment_request.amount
+                    client1_account.save()
 
-            with db_transaction.atomic():
-                client1_accounts = payment_request.client1.banking_user.all()
-                if client1_accounts.exists():
-                    client1_account = client1_accounts.first()  # Assuming client1 has at least one account
-
-                    if payment_request.transaction_type == 'deposit':
-                        client1_account.account_bal += payment_request.amount
+                elif payment_request.transaction_type == 'withdraw':
+                    if client1_account.account_bal >= payment_request.amount:
+                        client1_account.account_bal -= payment_request.amount
                         client1_account.save()
+                    else:
+                        messages.error(request, "Insufficient funds in the account for withdrawal.")
+                        return redirect('all_transactions')
 
-                    elif payment_request.transaction_type == 'withdraw':
+                elif payment_request.transaction_type == 'transfer' and payment_request.client2:
+                    client2_accounts = payment_request.client2.banking_user.all()  # Use the 'banking_user' related_name
+                    if client2_accounts.exists():
+                        client2_account = client2_accounts.first()  # Assuming client2 has at least one account
                         if client1_account.account_bal >= payment_request.amount:
                             client1_account.account_bal -= payment_request.amount
+                            client2_account.account_bal += payment_request.amount
                             client1_account.save()
+                            client2_account.save()
                         else:
-                            messages.error(request, "Insufficient funds in the account for withdrawal.")
+                            messages.error(request, "Insufficient funds in the account for transfer.")
                             return redirect('all_transactions')
 
-                    elif payment_request.transaction_type == 'transfer' and payment_request.client2:
-                        client2_accounts = payment_request.client2.banking_user.all()
-                        if client2_accounts.exists():
-                            client2_account = client2_accounts.first()  # Assuming client2 has at least one account
-                            if client1_account.account_bal >= payment_request.amount:
-                                client1_account.account_bal -= payment_request.amount
-                                client2_account.account_bal += payment_request.amount
-                                client1_account.save()
-                                client2_account.save()
-                            else:
-                                messages.error(request, "Insufficient funds in the account for transfer.")
-                                return redirect('all_transactions')
+                payment_request.status = 'approved'
+                payment_request.save()
 
-                    # Mark the payment request as approved
-                    payment_request.status = 'approved'
-                    payment_request.save()
-
-                    messages.success(request, "Payment request approved successfully.")
-                else:
-                    messages.error(request, "Client1 does not have an account.")
-            return redirect('all_transactions')
+                messages.success(request, "Payment request approved successfully.")
+                return redirect('all_transactions')
+            else:
+                messages.error(request, "Client1 does not have an account.")
+                return redirect('all_transactions')
     else:
-        messages.error(request, "This payment request cannot be approved or is already processed.")
+        messages.error(request, "This payment request cannot be approved or OTP is not verified.")
 
-    # Redirect for GET requests or if the request cannot be approved
     return redirect('all_transactions')
 
 @login_required
@@ -833,21 +833,160 @@ def decline_payment_request(request, request_id):
 @login_required
 def modify_payment_request(request, request_id):
     payment_request = get_object_or_404(PaymentRequest, id=request_id)
-
-    # Only allow modification if the payment request is pending
     if payment_request.status == 'pending':
+        form = PaymentRequestForm(request.POST or None, instance=payment_request)
         if request.method == 'POST':
-            form = PaymentRequestForm(request.POST, instance=payment_request)
             if form.is_valid():
                 form.save()
-                return redirect('all_transactions')  # Adjust as needed
-        else:
-            form = PaymentRequestForm(instance=payment_request)
+                messages.success(request, 'Payment request modified successfully.')
+                return redirect('all_transactions')
+            else:
+                # Log or print form errors to debug
+                print(form.errors)
+                messages.error(request, 'Please correct the errors below.')
         return render(request, 'users/modify_payment_request.html', {'form': form, 'payment_request': payment_request})
     else:
-        return HttpResponse('<script>alert("Cannot modify. Payment request is already approved or declined."); window.history.back();</script>')
+        messages.error(request, "Modification is not allowed. Payment request is already approved or declined.")
+        return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
+@login_required
+def modify_payment_request_amount(request, request_id):
+
+    payment_request = get_object_or_404(PaymentRequest, id=request_id)
+
+    if payment_request.merchant.user != request.user:
+        messages.error(request, "You do not have permission to modify this payment request.")
+        return redirect('merchant_transaction_history')
+
+    if payment_request.status != 'pending':
+        messages.error(request, 'This payment request cannot be modified.')
+        return redirect('merchant_transaction_history')
+
+    if request.method == 'POST':
+        payment_request = get_object_or_404(PaymentRequest, id=request_id, merchant=request.user.user)
+        new_amount = request.POST.get('new_amount')
+
+        # Perform necessary validation on new_amount if required
+
+        payment_request.amount = new_amount
+        payment_request.save()
+
+        messages.success(request, 'Transaction amount updated successfully.')
+        return redirect('merchant_transaction_history')
+
+@login_required
+def merchant_transaction_history(request):
+    # Access the BankingUser instance associated with the logged-in User
+    banking_user = request.user.user
+
+    if banking_user.usertype != 'eu_mo':
+        return HttpResponseForbidden('You are not authorized to view this page.')
+
+    merchant_payment_requests = PaymentRequest.objects.filter(merchant=banking_user)
+
+    context = {
+        'payment_requests': merchant_payment_requests,
+    }
+
+    return render(request, 'users/merchant_transaction_history.html', context)
+
+@login_required
+def modify_user_personal_data(request):
+    if request.method == 'POST':
+        form = SelectUserForm(request.POST)
+        if form.is_valid():
+            selected_user_id = form.cleaned_data['external_user'].id
+            return redirect('modify_user_details', user_id=selected_user_id)
+    else:
+        form = SelectUserForm()
+    return render(request, 'users/modify_user_personal_data.html', {'form': form})
+
+@login_required
+def modify_user_details(request, user_id):
+    banking_user = get_object_or_404(BankingUser, pk=user_id)
+    user_instance = banking_user.user  # Assuming a ForeignKey to Django's User model
+
+    initial_data = {
+        'first_name': user_instance.first_name,
+        'last_name': user_instance.last_name,
+        'mobile_number': banking_user.mobile_number,
+        'street_address': banking_user.street_address,
+        'city': banking_user.city,
+        'state': banking_user.state,
+        'zip_code': banking_user.zip_code,
+        'country': banking_user.country,
+    }
+
+    if request.method == 'POST':
+        form = UserModificationForm(request.POST, initial=initial_data)
+        if form.is_valid():
+            user_instance.first_name = form.cleaned_data['first_name']
+            user_instance.last_name = form.cleaned_data['last_name']
+            # Save any other User model fields as needed
+            user_instance.save()
+
+            # Now update the BankingUser instance
+            banking_user.mobile_number = form.cleaned_data['mobile_number']
+            banking_user.street_address = form.cleaned_data['street_address']
+            banking_user.city = form.cleaned_data['city']
+            banking_user.state = form.cleaned_data['state']
+            banking_user.zip_code = form.cleaned_data['zip_code']
+            banking_user.country = form.cleaned_data['country']
+            # Save any other BankingUser fields as needed
+            banking_user.save()
+
+            # Create a modification request for approval
+            modification_data = form.cleaned_data.copy()
+            modification_data.pop('first_name', None)
+            modification_data.pop('last_name', None)
+            # Remove any other non-BankingUser fields as needed
+
+            UserModificationRequest.objects.create(
+                requested_by=request.user,
+                user_to_modify=banking_user,
+                data=modification_data
+            )
+
+            # Redirect or show success message
+            return redirect('/')  # Update this to your actual success URL
+    else:
+        form = UserModificationForm(initial=initial_data)
+
+    return render(request, 'users/modify_user_details.html', {'form': form, 'banking_user': banking_user})
+
+
+from django.contrib import messages
+from django.db import transaction
+
+@login_required
+def approve_modifications(request):
+    if not request.user.is_superuser:
+        return HttpResponseForbidden('Unauthorized')
+
+    if request.method == 'POST':
+        request_id = request.POST.get('request_id')
+        decision = request.POST.get('decision')
+        modification_request = get_object_or_404(UserModificationRequest, id=request_id)
+
+        with transaction.atomic():
+            if decision == 'approve':
+                modification_request.status = 'approved'
+                # Apply the modifications to the BankingUser instance
+                user_to_modify = modification_request.user_to_modify
+                for field, value in modification_request.data.items():
+                    setattr(user_to_modify, field, value)
+                user_to_modify.save()
+                messages.success(request, f'Modification request for {user_to_modify} approved.')
+
+            elif decision == 'decline':
+                modification_request.status = 'declined'
+                messages.info(request, f'Modification request for {user_to_modify} declined.')
+
+            modification_request.save()
+
+    modification_requests = UserModificationRequest.objects.filter(status='pending')
+    return render(request, 'users/approve_modifications.html', {'modification_requests': modification_requests})
 
 # @login_required
 # def create_payment_request(request):

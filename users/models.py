@@ -117,6 +117,7 @@ class PaymentRequest(models.Model):
         ('transfer', 'Transfer')
     ]
 
+
     merchant = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='submitted_payments')
     transaction_type = models.CharField(max_length=8, choices=TRANSACTION_CHOICES)
     client1 = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='client1_payments')
@@ -131,3 +132,9 @@ class PaymentRequest(models.Model):
 
     def __str__(self):
         return f"{self.merchant.user.username} payment request for {self.amount}"
+
+class UserModificationRequest(models.Model):
+    requested_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='modification_requests')
+    user_to_modify = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='modifications')
+    data = models.JSONField()  # Store the modified fields as a JSON object
+    status = models.CharField(max_length=10, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('declined', 'Declined')], default='pending')

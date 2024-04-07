@@ -1,0 +1,52 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<div class="container">
+    <h2>My Transaction History</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Client1</th>
+                <th>Client2</th>
+                <th>Transaction Type</th>
+                <th>Status</th>
+                <th>Amount</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in payment_requests %}
+            <tr>
+                <td>{{ request.client1.user.username }}</td>
+                <td>{% if request.client2 %}
+                        {{ request.client2.user.username }}
+                    {% else %}
+                        N/A
+                    {% endif %}
+                </td>
+                <td>{{ request.get_transaction_type_display }}</td>
+                <td>{{ request.status }}</td>
+                <td>{{ request.amount }}</td>
+                <td>
+                    <!-- Form for modifying the amount -->
+                    {% if request.status == 'pending' %}
+                        <form method="POST" action="{% url 'modify_payment_request_amount' request.id %}">
+                            {% csrf_token %}
+                            <input type="number" name="new_amount" value="{{ request.amount }}" min="1" step="0.01">
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </form>
+                    {% else %}
+                        <!-- Display the amount without the option to modify -->
+                        {{ request.amount }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No transactions found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
