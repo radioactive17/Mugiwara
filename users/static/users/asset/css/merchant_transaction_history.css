@@ -1,0 +1,20 @@
+.approve{
+    background-color: #007bff;
+    /* Default background color (blue) */
+    color: white;
+    /* Default text color (white) */
+    border: 1px solid #007bff;
+    /* Default border color (blue) */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.approve:hover{
+    
+    background-color: white;
+    /* Change background color to white on hover */
+    color: #007bff;
+    /* Change text color to blue on hover */
+
+}
