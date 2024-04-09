@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4">Decline Payment Request</h2>
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Payment Request Details</h5>
+            <p class="card-text">From: {{ payment_request.merchant.user.username }}</p>
+            <p class="card-text">Amount: {{ payment_request.amount }}</p>
+            <p class="card-text">Type: {{ payment_request.get_transaction_type_display }}</p>
+            {% if payment_request.transaction_type == 'transfer' %}
+            <p class="card-text">To: {{ payment_request.client2.user.username }}</p>
+            {% endif %}
+            <form method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Confirm Decline</button>
+                <a href="{% url 'all_transactions' %}" class="btn btn-secondary">Cancel</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

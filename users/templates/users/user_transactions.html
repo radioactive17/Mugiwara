@@ -15,6 +15,7 @@
     <div class="container mt-5">
     <h1 class="mt-5 all_transactions">All Transactions</h1>
     <p class="account_balance lead align-middle balance">Current Account Balance: ${{ account_balance }}</p>
+    <h2> Transactions </h2>
     <table id="user_transactions" class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
         <thead class="table-dark">
             <tr>
@@ -37,12 +38,49 @@
                 <td>{{ transaction.transaction_status }}</td>
                 <td>{{ transaction.initiated }}</td>
                 <td>{{ transaction.status_changed }}</td>
-                <td>{{ transaction.transaction_type }}</td>  
+                <td>{{ transaction.transaction_type }}</td>
                 <td>{{transaction.otp_verified}}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    <h2>Payment Requests</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Merchant</th>
+            <th>Client 1</th>
+            <th>Client 2</th>
+            <th>Transaction Type</th>
+            <th>Status</th>
+            <th>Amount</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for request in payment_requests %}
+        <tr>
+            <td>{{ request.merchant.user.username }}</td>
+            <td>{{ request.client1.user.username }}</td>
+            <td>{% if request.client2 %}
+                    {{ request.client2.user.username }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+            <td>{{ request.get_transaction_type_display }}</td>
+            <td>{{ request.status }}</td>
+            <td>{{ request.amount }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6">No payment requests found.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+
 </div>
 <!-- <script>
     $(document).ready(function () {

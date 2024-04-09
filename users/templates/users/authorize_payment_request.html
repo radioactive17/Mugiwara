@@ -1,0 +1,13 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2>Authorize Payment Request</h2>
+    <p>Request from Merchant: {{ payment_request.merchant.user.username }}</p>
+    <p>To Client: {{ payment_request.to_client.user.username }}</p>
+    <p>Amount: {{ payment_request.amount }}</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">Authorize Payment</button>
+    </form>
+</div>
+{% endblock %}

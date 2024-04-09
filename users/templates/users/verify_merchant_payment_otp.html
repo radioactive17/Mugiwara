@@ -1,0 +1,15 @@
+{% extends 'users/base.html' %}
+{% block content %}
+<div class="container mt-5">
+    <h2>Verify Payment Request OTP</h2>
+    <p>Please enter the OTP sent to the client's email to verify the payment request.</p>
+    <form method="POST">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="otp" class="form-label">OTP</label>
+            <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP">
+        </div>
+        <button type="submit" class="btn btn-primary">Verify OTP</button>
+    </form>
+</div>
+{% endblock %}
