@@ -34,10 +34,14 @@
                         {% if user.user.banking_user.exists %}
                         <!-- <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'credit' user.id %}">
                                             <i class="fa fa-money"></i>&nbsp;Deposit</a></li> -->
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/credit"><i class="fa fa-money"></i>&nbsp;Deposit</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/debit"><i class="fa fa-money"></i>&nbsp;Withdraw</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/create_transaction"><i class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/credit"><i
+                                    class="fa fa-money"></i>&nbsp;Deposit</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/debit"><i
+                                    class="fa fa-money"></i>&nbsp;Withdraw</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/create_transaction"><i
+                                    class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
+                                    class="fa fa-user"></i>&nbsp;Accounts</a></li>
                         {% endif %}
 
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
@@ -101,16 +105,33 @@
                             </form>
                             <!-- -->
                         </li>
-                        {% else %}
+                        {% elif user.user.usertype == 'eu_mo' %}
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/submit_payment_request/">
-                                <i class="fa fa-money"></i>&nbsp;Payment Request</a></li>
+                                <i class="fa fa-money"></i>&nbsp;Payment Requests</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/merchant_transaction_history/"><i
                                     class="fa fa-money"></i>&nbsp;Merchant Transaction History</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
-                                href="/modify_user_personal_data/"><i class="fa fa-money"></i>&nbsp;Modify User Data</a>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/modify_user_personal_data/"><i
+                                    class="fa fa-money"></i>&nbsp;Modify User Data</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <a style="color:#ffffff;" href="javascript:{}"
+                                    onclick="document.getElementById('frm_logout').submit(); return false;">
+                                    <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>
+                            </form>
+                            <!-- -->
+                        </li>
+                        {% else %}
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="all_transactions">
+                                <i class="fa fa-money"></i>&nbsp;Transactions Approval</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
+                                href="approve_profile_deletion"><i class="fa fa-money"></i>&nbsp;Profile Approval</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{#}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item">
                             <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}"
