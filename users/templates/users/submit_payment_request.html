@@ -1,0 +1,87 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/verify_otp.css">
+    <title>Submit Payment Request</title>
+</head>
+<body>
+    <!-- <div class="container">
+        <h2 class="mt-5">Submit Payment Request</h2>
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <form method="POST" class="mt-4">
+                    {% csrf_token %}
+                    {{ form|crispy }}
+                    <div id="client2FormGroup" style="display: none;">
+                        {{ form.client2|as_crispy_field }}
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Request</button>
+                    <a href="/" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/submit payment request.jpeg" alt="car-key" border="0">
+                            <h2 class="text-center">Submit Payment Request</h2>
+                            <!-- <form class="debit-form">
+                                    <div class="input-group mb-3">
+                                
+                                        <span class="input-group-text">$</span>
+                                        <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                    </div>
+                                    <button type="submit" class="withdraw-button">Withdraw</button>
+                                </form> -->
+    
+                            <form method="POST" class="debit-form">
+                                {% csrf_token %}
+                                {{ form|crispy }}
+                                <div id="client2FormGroup" style="display: none;">
+                                    {{ form.client2|as_crispy_field }}
+                                </div>
+                                <button type="submit" class="submit-button">Submit Request</button>
+                                <a href="/" class="cancel-button">Cancel</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const transactionTypeField = document.querySelector('[name="transaction_type"]');
+            const client2FormGroup = document.getElementById('client2FormGroup');
+
+            function updateClient2Visibility() {
+                if (transactionTypeField.value === 'transfer') {
+                    client2FormGroup.style.display = 'block';
+                } else {
+                    client2FormGroup.style.display = 'none';
+                }
+            }
+
+            // Update visibility based on current selection
+            updateClient2Visibility();
+
+            // Update visibility whenever the transaction type changes
+            transactionTypeField.addEventListener('change', updateClient2Visibility);
+        });
+    </script>
+</body>
+</html>
+
+
+{% endblock %}

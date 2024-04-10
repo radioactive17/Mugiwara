@@ -1,0 +1,10 @@
+<!-- approve_modifications.html -->
+
+{% for request in modification_requests %}
+<form method="POST">
+    {% csrf_token %}
+    <input type="hidden" name="request_id" value="{{ request.id }}">
+    <button type="submit" name="decision" value="approve">Approve</button>
+    <button type="submit" name="decision" value="decline">Decline</button>
+</form>
+{% endfor %}

@@ -13,7 +13,7 @@
 <body>
     <div class="container mt-5">
     <h1 class="mt-5 title">All Transactions</h1>
-
+    <h2>Transactions</h2>
     <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
         <thead class="table-dark">
             <tr>
@@ -25,6 +25,7 @@
                 <th>Status Changed</th>
                 <th>Transaction Type</th>
                 <th>Amount</th>
+                <th>OTP Verified</th>
                 <th>Actions</th>
                 <th>Modify</th>
             </tr>
@@ -42,6 +43,7 @@
                             <td>{{ transaction.status_changed }}</td>
                             <td>{{ transaction.transaction_type }}</td>
                             <td>{{ transaction.amount }}</td>
+                            <td>{{transaction.otp_verified}}</td>
                             <td class="d-flex">
                                 <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                     {% csrf_token %}
@@ -56,7 +58,7 @@
                                 <a href="{% url 'modify_transaction' transaction.id %}" class="btn btn-warning">Modify</a>
                             </td>
                         </tr>
-                    {% elif transaction.amount <= 10000 %}  
+                    {% elif transaction.amount <= 10000 %}
                         {% if user.user.usertype == 'iu_re' %}
                             <tr>
                                 <td>{{ transaction.from_account }}</td>
@@ -67,7 +69,10 @@
                                 <td>{{ transaction.status_changed }}</td>
                                 <td>{{ transaction.transaction_type }}</td>
                                 <td>{{ transaction.amount }}</td>
-                                
+                                <td>{{transaction.otp_verified}}</td>
+
+                                {%if transaction.transaction_status == 'pending'%}
+
                                 <td class="d-flex">
                                     <form method="post" action="{% url 'approve_transaction' transaction.id %}">
                                         {% csrf_token %}
@@ -81,14 +86,126 @@
                                 <td>
                                     <a href="{% url 'modify_transaction' transaction.id %}" class="btn btn-warning">Modify</a>
                                 </td>
+                                {%else%}
+                                    <td></td>
+                                    <td></td>
+                                {%endif%}
                             </tr>
                         {% endif %}
-                    {% endif %}   
-                {% endif %}   
-                 
+                    {% endif %}
+                {% endif %}
+
             {% endfor %}
         </tbody>
     </table>
+
+    <h1 class="mt-5 title">All Payment Transactions</h1>
+    <h2>Requests</h2>
+    <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
+        <thead class="table-dark">
+            <tr>
+                <th>From Merchant</th>
+                <th>To Client1</th>
+                <th>To Client2 (if transfer)</th>
+                <th>Status</th>
+                <th>Initiated</th>
+                <th>Amount</th>
+                <th>Transaction Type</th>
+                <th>OTP Verified</th>
+                <th>Actions</th>
+                <th>Modify</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in payment_requests %}
+                {% if user.is_authenticated %}
+                    {% if request.amount > 10000 and  user.user.usertype == 'iu_sm' %}
+                        <tr>
+                            <td>{{ request.merchant.user.username }}</td>
+                            <td>{{ request.client1.user.username }}</td>
+                            <td>
+                                {% if request.transaction_type == 'transfer' and request.client2 %}
+                                    {{ request.client2.user.username }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>{{ request.status }}</td>
+                            <td>{{ request.initiated|date:"F d, Y H:i" }}</td>
+                            <td>{{ request.amount }}</td>
+                            <td>{{ request.get_transaction_type_display }}</td>
+                            <td>{{ request.otp_verified}}</td>
+                            {% if request.status == 'pending' %}
+                            <td class="d-flex">
+                                <form method="POST" action="{% url 'approve_payment_request' request.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary me-1 approve">Approve</button>
+                                </form>
+                                <form method="POST" action="{% url 'decline_payment_request' request.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Decline</button>
+                                </form>
+                            </td>
+                            <td>
+                                <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning" >Modify</a>
+                            </td>
+                            {%else%}
+                                <td></td>
+                                <td></td>
+                            {%endif%}
+                            </td>
+                        </tr>
+
+                    {% elif request.amount <= 10000 %}
+                        {% if user.user.usertype == 'iu_re' %}
+                            <tr>
+                                <td>{{ request.merchant.user.username }}</td>
+                                <td>{{ request.client1.user.username }}</td>
+                                <td>
+                                    {% if request.transaction_type == 'transfer' and request.client2 %}
+                                        {{ request.client2.user.username }}
+                                    {% else %}
+                                        N/A
+                                    {% endif %}
+                                </td>
+                                <td>{{ request.status }}</td>
+                                <td>{{ request.initiated|date:"F d, Y H:i" }}</td>
+                                <td>{{ request.amount }}</td>
+                                <td>{{ request.get_transaction_type_display }}</td>
+                                <td>{{ request.otp_verified}}</td>
+                                {% if request.status == 'pending' %}
+                                <td class="d-flex">
+                                    <form method="POST" action="{% url 'approve_payment_request' request.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary me-1 approve">Approve</button>
+                                    </form>
+                                    <form method="POST" action="{% url 'decline_payment_request' request.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Decline</button>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning">Modify</a>
+                                </td>
+                                    {% else %}
+                                        ---
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endif %}
+
+            {% empty %}
+                <tr>
+                    <td colspan="9">No payment requests found.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
 
 </div>
 </body>
