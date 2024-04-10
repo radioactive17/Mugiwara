@@ -198,7 +198,7 @@ def approve_profile_deletion(request, *args, **kwargs):
                else:
                    pass
            return redirect('mugiwara')
-   return render(request, 'users/approve_profile_deletion.html', {'formset': formset})
+   return render(request, 'users/profile_approvals.html', {'formset': formset})
 # ================================================ PROFILE DELETION ================================================
 
 # ------------------------------------------------------ PROFILE UPDATE ------------------------------------------------------
@@ -834,14 +834,13 @@ def decline_payment_request(request, request_id):
 def modify_payment_request(request, request_id):
     payment_request = get_object_or_404(PaymentRequest, id=request_id)
     if payment_request.status == 'pending':
-        form = PaymentRequestForm(request.POST or None, instance=payment_request)
+        form = PaymentRequestForm(request.POST or None, instance=payment_request, modify=True)  # Pass modify=True
         if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 messages.success(request, 'Payment request modified successfully.')
                 return redirect('all_transactions')
             else:
-                # Log or print form errors to debug
                 print(form.errors)
                 messages.error(request, 'Please correct the errors below.')
         return render(request, 'users/modify_payment_request.html', {'form': form, 'payment_request': payment_request})

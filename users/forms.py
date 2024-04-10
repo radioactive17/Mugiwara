@@ -194,6 +194,17 @@ class PaymentRequestForm(forms.ModelForm):
         model = PaymentRequest
         fields = ['transaction_type', 'client1', 'client2', 'amount']
 
+    def __init__(self, *args, **kwargs):
+        # Check if the form is being used for modification
+        self.modify = kwargs.pop('modify', False)
+        super(PaymentRequestForm, self).__init__(*args, **kwargs)
+        if self.modify:
+            # Make client1 and transaction_type fields read-only and exclude them from validation
+            self.fields['client1'].disabled = True
+            self.fields['transaction_type'].disabled = True
+            self.fields['client1'].required = False
+            self.fields['transaction_type'].required = False
+
     # def __init__(self, *args, **kwargs):
     #     super(PaymentRequestForm, self).__init__(*args, **kwargs)
     #     self.fields['client1'].disabled = True
