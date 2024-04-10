@@ -108,3 +108,46 @@ select {
     height: 40px;
     /* Example height */
 }
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+/* Styles for danger button */
+.cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+
+
+.submit-button:hover {
+    background-color: #fff;
+    /* Change background color to white on hover */
+    color: #007bff;
+    /* Change text color to primary color */
+    border-color: #007bff;
+    /* Change border color to primary color */
+}
+
+/* Hover effect for cancel button */
+.cancel-button:hover {
+    background-color: #fff;
+    /* Change background color to white on hover */
+    color: #dc3545;
+    /* Change text color to danger color */
+    border-color: #dc3545;
+    /* Change border color to danger color */
+}
