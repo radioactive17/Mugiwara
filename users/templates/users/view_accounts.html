@@ -1,8 +1,11 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-    <table>
-        <tr>
+<div class="container mt-5">
+    <h1 class="mt-5 title">All Accounts</h1>
+    
+    <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
+        <tr class="table-dark">
             <td>Name</td>
             <td>User Type</td>
         </tr>
@@ -14,4 +17,5 @@
         </tr>
         
     </table>
+</div>
 {% endblock %}

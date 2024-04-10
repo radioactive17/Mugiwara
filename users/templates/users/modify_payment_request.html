@@ -1,56 +1,128 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="mb-4">Modify Payment Request</h2>
-    <div class="card">
-        <div class="card-body">
-            <form method="POST">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="id_client1">Client 1:</label>
-                    <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ form.client1.value }}">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/modify_transaction.css">
+    <title>Modify Payment Request</title>
+</head>
+<body>
+    <!-- <div class="container mt-5">
+        <h2 class="mb-4">Modify Payment Request</h2>
+        <div class="card">
+            <div class="card-body">
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="id_client1">Client 1:</label>
+                        <input type="text" readonly class="form-control-plaintext" id="id_client1"
+                            value="{{ form.client1.value }}">
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="id_transaction_type">Transaction Type:</label>
+                        <input type="text" readonly class="form-control-plaintext" id="id_transaction_type"
+                            value="{{ form.transaction_type.value }}">
+                    </div>
+    
+                    <div class="form-group" id="client2FormGroup" style="display: none;">
+                        <label for="id_client2">Client 2:</label>
+                        {{ form.client2 }}
+                    </div>
+    
+                    <div class="form-group">
+                        <label for="id_amount">Amount:</label>
+                        {{ form.amount }}
+                    </div>
+    
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div> -->
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/modify_transactions.jpeg" alt="car-key" border="0">
+                            <h2 class="text-center">Modify Payment Request</h2>
+                            <!-- <form class="debit-form">
+                                            <div class="form-group">
+                                                    <label for="withdrawAmount">Withdraw Amount:</label>
+                                                    <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
+                                                </div>
+                                            <div class="input-group mb-3">
+                
+                                                <span class="input-group-text">$</span>
+                                                <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
+                                            </div>
+                                            <button type="submit" class="withdraw-button">Withdraw</button>
+                                        </form> -->
+                            <!-- <form class="debit-form" method="post" action="{% url 'debit_view' %}">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+        
+                                        {{ form.as_p }}
+                                    </div>
+                                    <button type="submit" class="withdraw-button">Debit</button>
+                                </form> -->
+                            <form method="POST" class="debit-form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="id_client1">Client Name:</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ payment_request.client1.user.username }}">
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="id_transaction_type">Transaction Type:</label>
+                                    <input type="text" readonly class="form-control-plaintext" id="id_transaction_type"
+                                        value="{{ form.transaction_type.value }}">
+                                </div>
+                            
+                                <div class="form-group" id="client2FormGroup" style="display: none;">
+                                    <label for="id_client2">Client 2:</label>
+                                    {{ form.client2 }}
+                                </div>
+                            
+                                <div class="form-group">
+                                    <label for="id_amount">Amount:</label>
+                                    {{ form.amount }}
+                                </div>
+                            
+                                <button type="submit" class="withdraw-button">Save Changes</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-group">
-                    <label for="id_transaction_type">Transaction Type:</label>
-                    <input type="text" readonly class="form-control-plaintext" id="id_transaction_type" value="{{ form.transaction_type.value }}">
-                </div>
-
-                <!-- Client 2 Field, initially hidden -->
-                <div class="form-group" id="client2FormGroup" style="display: none;">
-                    <label for="id_client2">Client 2:</label>
-                    {{ form.client2 }}
-                </div>
-
-                <div class="form-group">
-                    <label for="id_amount">Amount:</label>
-                    {{ form.amount }}
-                </div>
-
-                <button type="submit" class="btn btn-primary">Save Changes</button>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+    
+    <script type="text/javascript">
+        document.addEventListener('DOMContentLoaded', function () {
+            const transactionType = document.getElementById('id_transaction_type').value;
+            const client2FormGroup = document.getElementById('client2FormGroup');
 
-<script type="text/javascript">
-document.addEventListener('DOMContentLoaded', function () {
-    const transactionType = document.getElementById('id_transaction_type').value;
-    const client2FormGroup = document.getElementById('client2FormGroup');
+            // Function to show/hide client2 field based on transaction type
+            function updateClient2Visibility() {
+                if (transactionType === 'transfer') {
+                    client2FormGroup.style.display = 'block';
+                } else {
+                    client2FormGroup.style.display = 'none';
+                }
+            }
 
-    // Function to show/hide client2 field based on transaction type
-    function updateClient2Visibility() {
-        if (transactionType === 'transfer') {
-            client2FormGroup.style.display = 'block';
-        } else {
-            client2FormGroup.style.display = 'none';
-        }
-    }
+            // Update visibility on page load
+            updateClient2Visibility();
+        });
+    </script>
+</body>
+</html>
 
-    // Update visibility on page load
-    updateClient2Visibility();
-});
-</script>
 
 {% endblock %}
