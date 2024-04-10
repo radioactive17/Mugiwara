@@ -1,13 +1,38 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<div class="container">
-    <h2>Modify User Details</h2>
-    <p>Modifying details for: {{ banking_user.user.username }}</p>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit" class="btn btn-success">Submit Modification Request</button>
-    </form>
-</div>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/update_user_detail.css">
+</head>
+
+<body>
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <!-- <img src="../../static/users/asset/images/update_user_personal_details.png" alt="car-key"> -->
+                            <h2>Modify User Details</h2>
+                            <!-- <p>Modifying details for: {{ banking_user.user.username }}</p> -->
+                            <form method="post">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <button type="submit" class="btn btn-success">Submit Modification Request</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
 {% endblock %}

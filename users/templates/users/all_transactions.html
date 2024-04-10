@@ -99,11 +99,9 @@
         </tbody>
     </table>
 
-
-
-    <h2>Payment Requests</h2>
-    <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down"
-        data-aos-delay="50">
+    <h1 class="mt-5 title">All Payment Transactions</h1>
+    <h2>Requests</h2>
+    <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down" data-aos-delay="50">
         <thead class="table-dark">
             <tr>
                 <th>From Merchant</th>
@@ -115,6 +113,7 @@
                 <th>Transaction Type</th>
                 <th>OTP Verified</th>
                 <th>Actions</th>
+                <th>Modify</th>
             </tr>
         </thead>
         <tbody>
@@ -136,21 +135,24 @@
                             <td>{{ request.amount }}</td>
                             <td>{{ request.get_transaction_type_display }}</td>
                             <td>{{ request.otp_verified}}</td>
+                            {% if request.status == 'pending' %}
+                            <td class="d-flex">
+                                <form method="POST" action="{% url 'approve_payment_request' request.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-primary me-1 approve">Approve</button>
+                                </form>
+                                <form method="POST" action="{% url 'decline_payment_request' request.id %}">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">Decline</button>
+                                </form>
+                            </td>
                             <td>
-                                {% if request.status == 'pending' %}
-                                    <form method="POST" action="{% url 'approve_payment_request' request.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-success">Approve</button>
-                                    </form>
-                                    <form method="POST" action="{% url 'decline_payment_request' request.id %}" style="margin-top: 10px;">
-                                        {% csrf_token %}
-                                        <button type="submit" class="btn btn-danger">Decline</button>
-                                    </form>
-                                    <!-- Modify action as a link -->
-                                    <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning" style="margin-top: 10px;">Modify</a>
-                                {% else %}
-                                    ---
-                                {% endif %}
+                                <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning" >Modify</a>
+                            </td>
+                            {%else%}
+                                <td></td>
+                                <td></td>
+                            {%endif%}
                             </td>
                         </tr>
 
@@ -171,18 +173,21 @@
                                 <td>{{ request.amount }}</td>
                                 <td>{{ request.get_transaction_type_display }}</td>
                                 <td>{{ request.otp_verified}}</td>
+                                {% if request.status == 'pending' %}
+                                <td class="d-flex">
+                                    <form method="POST" action="{% url 'approve_payment_request' request.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-primary me-1 approve">Approve</button>
+                                    </form>
+                                    <form method="POST" action="{% url 'decline_payment_request' request.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">Decline</button>
+                                    </form>
+
+                                </td>
                                 <td>
-                                    {% if request.status == 'pending' %}
-                                        <form method="POST" action="{% url 'approve_payment_request' request.id %}">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-success">Approve</button>
-                                        </form>
-                                        <form method="POST" action="{% url 'decline_payment_request' request.id %}" style="margin-top: 10px;">
-                                            {% csrf_token %}
-                                            <button type="submit" class="btn btn-danger">Decline</button>
-                                        </form>
-                                        <!-- Modify action as a link -->
-                                        <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning" style="margin-top: 10px;">Modify</a>
+                                    <a href="{% url 'modify_payment_request' request.id %}" class="btn btn-warning">Modify</a>
+                                </td>
                                     {% else %}
                                         ---
                                     {% endif %}
