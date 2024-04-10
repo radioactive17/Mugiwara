@@ -2,21 +2,32 @@
 
 {% block content %}
 {% if profile_update_requests %}
-        <ul>
-            {% for request in profile_update_requests %}
-                <li>
-                    User: {{ request.user }}
-                    Data: {{ request.data }}
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
-                        <button type="submit" name="action" value="approve">Approve</button>
-                        <button type="submit" name="action" value="reject">Reject</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        {% for request in profile_update_requests %}
+        <li>
+            User: {{ request.user }}
+            Data: {{ request.data }}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
+                <button type="submit" name="action" value="approve">Approve</button>
+                <button type="submit" name="action" value="reject">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
     {% else %}
-        <p>No profile update requests.</p>
+    <p>No profile update requests.</p>
     {% endif %}
+</body>
+</html>
+        
 {% endblock %}
