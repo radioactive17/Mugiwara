@@ -91,8 +91,7 @@
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
                                 href="{% url 'account-approvals' %}"><i
                                     class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/all_transactions"><i
-                                    class="fa fa-user"></i>&nbsp;TransactionApprovals</a></li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item">
@@ -106,12 +105,12 @@
                             <!-- -->
                         </li>
                         {% elif user.user.usertype == 'eu_mo' %}
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/submit_payment_request/">
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'submit_payment_request/'%}">
                                 <i class="fa fa-money"></i>&nbsp;Payment Requests</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/merchant_transaction_history/"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'merchant_transaction_history/'%}"><i
                                     class="fa fa-money"></i>&nbsp;Merchant Transaction History</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/modify_user_personal_data/"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'modify_user_personal_data/'%}"><i
                                     class="fa fa-money"></i>&nbsp;Modify User Data</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i class="fa fa-user"></i>&nbsp;Profile</a>
@@ -140,7 +139,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/all_transactions"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
@@ -175,7 +174,7 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/all_transactions"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i class="fa fa-user"></i>&nbsp;Profile</a>
                         </li>
