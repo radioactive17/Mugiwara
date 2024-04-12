@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -11,32 +11,6 @@
     <link rel="stylesheet" href="../../static/users/asset/css/accounts.css">
 </head>
 <body>
-    <!-- <div class="blog-slider" style="margin-top: 150px;height: 500px;">
-        <div class="blog-slider__wrp swiper-wrapper">
-            <div class="blog-slider__text">
-                <div class="blog-slider__title">
-                    <p>{{ user.username }}</p>
-                </div>
-                <form id="create_blog" method="POST" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    
-                        {{ a1_form.as_p }}
-                    
-                    
-                    {% if a2_form %}
-                    
-                        {{ a2_form.as_p }}
-                    
-                    {% endif %}
-                    <button type="submit" class="btn btn-primary mt-3">Update</button>
-                    <a class="btn btn-danger mt-3" href="{% url 'mugiwara' %}" role="button">Cancel</a>
-                </form>
-            </div>
-    
-    
-        </div>
-    </div> -->
 
     <div class="container forget-password">
         <div class="row">
@@ -46,19 +20,6 @@
                         <div class="text-center">
                             <img src="../../static/users/asset/images/profile.jpeg" alt="car-key" border="0">
                             <h2 class="text-center text-uppercase">{{ user.username }}</h2>
-                            
-                            <!-- <form class="debit-form">
-                                        <div class="form-group">
-                                                <label for="withdrawAmount">Withdraw Amount:</label>
-                                                <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
-                                            </div>
-                                        <div class="input-group mb-3">
-            
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
-                                        </div>
-                                        <button type="submit" class="withdraw-button">Withdraw</button>
-                                    </form> -->
                             <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
                                 {% csrf_token %}
                             
@@ -81,6 +42,10 @@
         </div>
     </div>
 </body>
-</html>
+</html> -->
+
+{% for account in accounts %}
+    {{account.account_type}}
+{% endfor %}
 
 {% endblock %}

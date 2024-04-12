@@ -120,12 +120,6 @@ class BankingUserUpdateForm(forms.Form):
         super(BankingUserUpdateForm, self).__init__(*args, **kwargs)
         self.fields['status'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
 
-
-
-
-
-
-
 class AccountUpdateForm(ModelForm):
     class Meta:
         model = Account
@@ -140,6 +134,22 @@ class AccountUpdateForm(ModelForm):
             self.fields['account_type'].disabled = True
             self.fields['account_bal'].disabled = True
             self.fields['account_status'].disabled = True
+
+class AccountDeletionRequestForm(ModelForm):
+    class Meta:
+        model = Account
+        fields = ['account_type', 'modification_status']
+
+    def __init__(self, user, *args, **kwargs):
+        super(AccountDeletionRequestForm, self).__init__(*args, **kwargs)
+        # Get unique account types for the user
+        account_types = Account.objects.filter(banking_user=user).values_list('account_type', flat=True).distinct()
+        # Create choices list
+        choices = [(account_type, Account.account_types[account_type]) for account_type in account_types]
+        # Set choices for account_type field
+        self.fields['account_type'].choices = choices
+        self.fields['modification_status'] = forms.CharField(initial='pending', widget=forms.HiddenInput())
+
 
 from django import forms
 from .models import Transactions, Account
