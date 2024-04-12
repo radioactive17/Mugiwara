@@ -52,3 +52,23 @@
     color: #007bff;
     border-color: #007bff;
 }
+
+.cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+/* Hover effect for cancel button */
+.cancel-button:hover {
+    background-color: #fff;
+    /* Change background color to white on hover */
+    color: #dc3545;
+    /* Change text color to danger color */
+    border-color: #dc3545;
+    /* Change border color to danger color */
+}
