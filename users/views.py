@@ -124,8 +124,17 @@ def create_account(request):
    if request.method == 'POST':
        form = AccountCreationForm(request.POST)
        if form.is_valid():
-           form.save()
-           return redirect('mugiwara')
+        try:
+            if Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'], modification_status = 'approved'):
+                print('yes')
+                messages.info(request, f'You already have this type of account. Please select a differnet account type')
+            else:
+                print('No account does not exist')
+        except:
+            print(form.cleaned_data)
+            form.save()
+            
+            
    else:
        banking_user_instance = BankingUser.objects.get(user=request.user)
        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
@@ -240,27 +249,6 @@ def request_profile_update(request):
     }
     return render(request, 'users/profile_update.html', context)
 
-# def approve_profile_update(request, *args, **kwargs):
-#     if request.method == 'POST':
-#         for key, value in request.POST.items():
-#             print(key, value)
-#         # request_index = int(request.POST.get('request_index'))
-#         # action = request.POST.get('status')
-#         # if action == 'approved':
-#         #     print('approved')
-#         #     # profile_update_requests[request_index]['approved'] = True
-#         #     # messages.success(request, 'Profile update request approved successfully.')
-#         # elif action == 'rejected':
-#         #     print('denied')
-#             # del profile_update_requests[request_index]
-#             # messages.error(request, 'Profile update request denied.')
-
-#         # return redirect('profile_update_requests')
-
-#     context = {
-#         'update_requests': profile_update_requests,
-#     }
-#     return render(request, 'users/approve_profile_update.html', context)
 
 def approve_profile_update(request):
     if request.method == 'POST':
@@ -299,42 +287,113 @@ def approve_profile_update(request):
 
 # ------------------------------------------------------ PROFILE UPDATE ------------------------------------------------------
 
+# ------------------------------------------------------ PROFILE VIEW ------------------------------------------------------
+def profile(request):
+    user = request.user
+    banking_user = BankingUser.objects.get(user = user)
+    context = {
+        'user': user,
+        'banking_user': banking_user,
+    }
+    return render(request, 'users/profile.html', context)
+
+# ------------------------------------------------------ PROFILE VIEW ------------------------------------------------------
+
+# ------------------------------------------------------ ACCOUNT VIEW ------------------------------------------------------
 @login_required
 def accounts(request):
-   u = request.user
-   banking_user = BankingUser.objects.get(user = u)
-   account = Account.objects.filter(banking_user = banking_user)
-   if len(account) == 1:
-       account1 = account[0]
-       if request.method == 'POST':
-           a1_form = AccountUpdateForm(request.POST, instance = account1)
-           if a1_form.is_valid():
-               a1_form.save()
-               messages.success(request, 'Profile Updated Successfully')
-               return redirect('accounts')
-       a1_form = AccountUpdateForm(request.POST, instance = account1)
-       context = {
-           'a1_form': a1_form,
-       }
-       return render(request, 'users/accounts.html', context)
-   else:
-       account1 = account[0]
-       account2 = account[1]
-       if request.method == 'POST':
-           a1_form = AccountUpdateForm(request.POST, instance = account1)
-           a2_form = AccountUpdateForm(request.POST, instance = account2)
-           if a1_form.is_valid() and a2_form.is_valid():
-               a1_form.save()
-               a2_form.save()
-               messages.success(request, 'Accounts Updated Successfully')
-               return redirect('accounts')
-       a1_form = AccountUpdateForm(request.POST, instance = account1)
-       a2_form = AccountUpdateForm(request.POST, instance = account2)
-       context = {
-           'a1_form': a1_form,
-           'a2_form': a2_form,
-       }
-       return render(request, 'users/accounts.html', context)
+    u = request.user
+    banking_user = BankingUser.objects.get(user = u)
+    accounts = Account.objects.filter(banking_user = banking_user)
+    context = {
+        'accounts': accounts,
+    }
+    return render(request, 'users/accounts.html', context)
+
+# ------------------------------------------------------ ACCOUNT VIEW ------------------------------------------------------
+
+# ------------------------------------------------------ ACCOUNT DELETE ------------------------------------------------------
+# @login_required
+# def accounts(request):
+#    u = request.user
+#    banking_user = BankingUser.objects.get(user = u)
+#    account = Account.objects.filter(banking_user = banking_user)
+#    if len(account) == 1:
+#        account1 = account[0]
+#        if request.method == 'POST':
+#            a1_form = AccountUpdateForm(request.POST, instance = account1)
+#            if a1_form.is_valid():
+#                a1_form.save()
+#                messages.success(request, 'Profile Updated Successfully')
+#                return redirect('accounts')
+#        a1_form = AccountUpdateForm(request.POST, instance = account1)
+#        context = {
+#            'a1_form': a1_form,
+#        }
+#        return render(request, 'users/accounts.html', context)
+#    else:
+#        account1 = account[0]
+#        account2 = account[1]
+#        if request.method == 'POST':
+#            a1_form = AccountUpdateForm(request.POST, instance = account1)
+#            a2_form = AccountUpdateForm(request.POST, instance = account2)
+#            if a1_form.is_valid() and a2_form.is_valid():
+#                a1_form.save()
+#                a2_form.save()
+#                messages.success(request, 'Accounts Updated Successfully')
+#                return redirect('accounts')
+#        a1_form = AccountUpdateForm(request.POST, instance = account1)
+#        a2_form = AccountUpdateForm(request.POST, instance = account2)
+#        context = {
+#            'a1_form': a1_form,
+#            'a2_form': a2_form,
+#        }
+#        return render(request, 'users/accounts.html', context)
+
+account_delete_requests = []
+def request_account_deletion(request):
+    bu = BankingUser.objects.get(user = request.user)
+    if request.method == 'POST':
+        form = AccountDeletionRequestForm(bu, request.POST)
+        if form.is_valid():
+            # print(form.cleaned_data)
+            account_delete_requests.append({
+                'user': request.user,
+                'data': form.cleaned_data,
+                'approved': False
+            })
+            print(account_delete_requests)
+            messages.success(request, 'Your request for account deletion has been submitted for approval')
+    else:
+        form = AccountDeletionRequestForm(bu)
+    return render(request, 'users/request_account_deletion.html', {'form': form})
+
+def approve_account_deletion(request):
+    if request.method == 'POST':
+        request_id = int(request.POST.get('request_id'))
+        action = request.POST.get('action')
+        print(request_id, action)
+        if action == 'approve':
+            user = User.objects.get(username = account_delete_requests[request_id]['user'])
+            banking_user = BankingUser.objects.get(user = user)
+            acc = Account.objects.get(banking_user = banking_user, account_type = account_delete_requests[request_id]['data']['account_type'])
+            acc.delete()
+            account_delete_requests.pop(int(request_id))
+            messages.success(request, 'Deletion Request approved successfully.')
+        elif action == 'reject':
+            print('reject')
+            account_delete_requests.pop(int(request_id))
+            messages.info(request, 'Deletion Request rejected successfully.')
+        else:
+            messages.error(request, 'Invalid action.')
+    context = {
+        'account_delete_requests': account_delete_requests,
+    }
+    return render(request, 'users/approve_account_deletion.html', context)
+
+
+# ------------------------------------------------------ ACCOUNT DELETE ------------------------------------------------------
+
 
 
 
