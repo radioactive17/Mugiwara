@@ -42,6 +42,8 @@
                                     class="fa fa-exchange"></i>&nbsp;Transfer</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'accounts' %}"><i
                                     class="fa fa-user"></i>&nbsp;Accounts</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/user_transactions"><i
+                                    class="fa fa-user"></i>&nbsp;My Transactions</a></li>
                         {% endif %}
 
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
@@ -89,8 +91,7 @@
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
                                 href="{% url 'account-approvals' %}"><i
                                     class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/all_transactions"><i
-                                    class="fa fa-user"></i>&nbsp;TransactionApprovals</a></li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item">
@@ -104,12 +105,12 @@
                             <!-- -->
                         </li>
                         {% elif user.user.usertype == 'eu_mo' %}
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/submit_payment_request/">
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'submit_payment_request/'%}">
                                 <i class="fa fa-money"></i>&nbsp;Payment Requests</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/merchant_transaction_history/"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'merchant_transaction_history/'%}"><i
                                     class="fa fa-money"></i>&nbsp;Merchant Transaction History</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="/modify_user_personal_data/"><i
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'modify_user_personal_data/'%}"><i
                                     class="fa fa-money"></i>&nbsp;Modify User Data</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i class="fa fa-user"></i>&nbsp;Profile</a>
@@ -123,11 +124,77 @@
                             </form>
                             <!-- -->
                         </li>
-                        {% else %}
+
+
+                        {% elif user.user.usertype == 'iu_re' %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Approvals
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
+                                        Approvals</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
+                                    class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            Profile
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="{% url 'update-profile' %}">Update</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile-deletion' %}">Delete</a></li>
+                        </ul>
+                    </li>
+                        <li class="nav-item">
+                            <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <a style="color:#ffffff;" href="javascript:{}"
+                                    onclick="document.getElementById('frm_logout').submit(); return false;">
+                                    <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>
+                            </form>
+                            <!-- -->
+                        </li>
+
+                        {% elif user.user.usertype == 'iu_sm' %}
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Approvals
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
+                                        Approvals</a></li>
+                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
+                                    class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="#"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                        </li>
+                        <li class="nav-item">
+                            <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <a style="color:#ffffff;" href="javascript:{}"
+                                    onclick="document.getElementById('frm_logout').submit(); return false;">
+                                    <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>
+                            </form>
+                            <!-- -->
+                        </li>
+                        
+                                    {% else %}
+
+
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="all_transactions">
                                 <i class="fa fa-money"></i>&nbsp;Transactions Approval</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
-                                href="approve_profile_deletion"><i class="fa fa-money"></i>&nbsp;Profile Approval</a>
+                                href="profile_approvals/"><i class="fa fa-money"></i>&nbsp;Profile Approval</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{#}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
