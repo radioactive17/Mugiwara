@@ -17,7 +17,7 @@ class UserRegistrationForm(UserCreationForm):
         'eu_mo': 'Merchant/Organization',
         'iu_re': 'Employee',
         'iu_sm': 'System Manager',
-        'iu_sa': 'System Administrator',
+        # 'iu_sa': 'System Administrator',
     }
 
     email = forms.EmailField()
@@ -155,15 +155,28 @@ from django import forms
 from .models import Transactions, Account
 
 class Transactions_Form(forms.ModelForm):
+    account1 = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
+    )
+
     class Meta:
         model = Transactions
-        fields = ['to_account', 'amount']
+        fields = ['account1', 'to_account', 'amount']  # Define field order
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         current_user = kwargs.pop('current_user', None)
-        super().__init__(*args, **kwargs)
+        super(Transactions_Form, self).__init__(*args, **kwargs)
 
-        # Exclude the current user's account from the options
+        # Set queryset for account1 field
+        if user:
+            self.fields['account1'].queryset = Account.objects.filter(
+                banking_user__user=user
+            ).select_related('banking_user').order_by('banking_user__user__username', 'account_type')
+
+        # Exclude the current user's account from the options for to_account field
         if current_user:
             self.fields['to_account'].queryset = Account.objects.exclude(banking_user=current_user)
 
@@ -171,20 +184,51 @@ class Transactions_Form(forms.ModelForm):
 
 
 class DebitForm(forms.Form):
-    amount = forms.IntegerField(
-        label='Amount',
-        min_value=1,
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter debit amount'}),
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
     )
+    amount = forms.DecimalField(
+        label='Amount',
+        min_value=0.01,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter debit amount'})
+    )
+
+
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(DebitForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['account'].queryset = Account.objects.filter(
+                banking_user__user=user
+            ).select_related('banking_user').order_by('banking_user__user__username', 'account_type')
 
 
 class CreditForm(forms.Form):
-    amount = forms.IntegerField(
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
+    )
+    amount = forms.DecimalField(
         label='Amount',
-        min_value=1,
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'}),
+        min_value=0.01,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'})
+    )
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
     )
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(CreditForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['account'].queryset = Account.objects.filter(
+                banking_user__user=user
+            ).select_related('banking_user').order_by('banking_user__user__username', 'account_type')
 
 
 class TransactionsForm(forms.ModelForm):
@@ -197,8 +241,17 @@ from .models import PaymentRequest, BankingUser
 from django.core.exceptions import ValidationError
 
 class PaymentRequestForm(forms.ModelForm):
-    client1 = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'))
-    client2 = forms.ModelChoiceField(queryset=BankingUser.objects.filter(usertype='eu_cust'), required=False)
+    client1 = forms.ModelChoiceField(
+        queryset=Account.objects.filter(banking_user__usertype='eu_cust').select_related('banking_user').order_by('banking_user__user__username', 'account_type'),
+        label="Client 1 Account",
+        to_field_name="account_number"  # Adjusted to reflect actual primary key field
+    )
+    client2 = forms.ModelChoiceField(
+        queryset=Account.objects.filter(banking_user__usertype='eu_cust').select_related('banking_user').order_by('banking_user__user__username', 'account_type'),
+        label="Client 2 Account",
+        required=False,
+        to_field_name="account_number"  # Adjusted to reflect actual primary key field
+    )
 
     class Meta:
         model = PaymentRequest
@@ -219,6 +272,16 @@ class PaymentRequestForm(forms.ModelForm):
     #         self.add_error('client2', ValidationError("Client 2 is required for transfer transactions."))
 
     #     return cleaned_data
+
+    def __init__(self, *args, **kwargs):
+        super(PaymentRequestForm, self).__init__(*args, **kwargs)
+        # Customize the label from here if needed
+        self.fields['client1'].label_from_instance = self.label_from_instance
+        self.fields['client2'].label_from_instance = self.label_from_instance
+
+    def label_from_instance(self, obj):
+        # This method is used to customize how the dropdown displays the accounts
+        return f"{obj.banking_user.user.username} - {obj.account_type} (#{obj.account_number})"
 
 class OTPVerificationForm(forms.Form):
     otp = forms.CharField(max_length=6)
@@ -253,7 +316,12 @@ class SelectUserForm(forms.Form):
 #         self.fields['from_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
 #         self.fields['to_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
 
-class ContactForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-    message = forms.CharField(widget=forms.Textarea)
+class UsernameForm(forms.Form):
+    username = forms.CharField(label='Username')
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(label='OTP')
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())
