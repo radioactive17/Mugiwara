@@ -93,17 +93,8 @@ def user_approvals(request):
         action = request.POST.get('action')
         print(request_id, action)
         if action == 'approve':
-            # user = User.objects.get(username = create_account_requests[request_id]['user'])
-            # banking_user = BankingUser.objects.get(user = user)
-            # print(create_account_requests[request_id]['data'])
-            # acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
-            # acc.save()
-            # acc.save()
-            # # create_account_requests.pop(int(request_id))
-            # messages.success(request, 'Account created successfully.')
             u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'], 
                      last_name = regitration_requests[request_id]['data']['last_name'], email = regitration_requests[request_id]['data']['email'])
-            # user_type = form_data['user_type'], user_approval = form_data['user_approval']
             u.set_password(regitration_requests[request_id]['data']['password1'])
             u.save()
             bu = BankingUser(user = u, usertype = regitration_requests[request_id]['data']['usertype'])
@@ -131,47 +122,6 @@ def user_approvals(request):
         'user_types': user_types
     }
     return render(request, 'users/approve_registrations.html', context)
-
-
-
-# registration_forms = request.session.get('registration_forms', [])
-#    user_types = UserRegistrationForm.User_types
-#    if request.method == 'POST':
-#        for form_data in registration_forms:
-#            print(form_data)
-#            status = request.POST.get(form_data['username'])
-#            if status  == 'approved' or status == 'rejected':
-#                if status == 'approved':
-#                    form_data['user_approval'] = request.POST.get(form_data['username'])
-#                    u = User(username = form_data['username'], first_name = form_data['username'], last_name = form_data['username'],
-#                             email = form_data['email'])
-#                    # user_type = form_data['user_type'], user_approval = form_data['user_approval']
-#                    u.set_password(form_data['password1'])
-#                    u.save()
-#                    bu = BankingUser(user = u, usertype = form_data['usertype'])
-#                    bu.save()
-#                    registration_forms.remove(form_data)
-
-
-#                    subject = 'Account Created Succesfully'
-#                    message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
-#                    email_from = settings.EMAIL_HOST_USER
-#                    recipient_list = [u.email, ]
-#                    send_mail( subject, message, email_from, recipient_list )
-
-
-#                elif status == 'rejected':
-#                    subject = 'Account Creation Denied'
-#                    message = f"Hi {form_data['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
-#                    email_from = settings.EMAIL_HOST_USER
-#                    recipient_list = [form_data['email'], ]
-#                    send_mail( subject, message, email_from, recipient_list )
-#                    registration_forms.remove(form_data)
-#                else:
-#                    pass
-#        # Update session with modified registration_forms
-#        request.session['registration_forms'] = registration_forms
-#        return redirect('user-approvals')  # Redirect to the same page to display updated status
 
 # ================================================ USER REGISTRATION / LOGIN ================================================
 
@@ -208,23 +158,7 @@ def create_account(request):
    return render(request, 'users/create_account_request.html', {'form': form})
 
 
-# @login_required
-# def approve_accounts(request):
-#    AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm, extra = 0)
-#    formset = AccountApprovalFormSet(queryset = Account.objects.filter(modification_status = 'pending'))
-#    if request.method == 'POST':
-#        formset = AccountApprovalFormSet(request.POST or None)
-#        if formset.is_valid():
-#            for form in formset:
-#                if form.cleaned_data['modification_status'] == 'approved':
-#                    form.save()
-#                elif form.cleaned_data['modification_status'] == 'rejected':
-#                    a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
-#                    a.delete()
-#                else:
-#                    pass
-#    return render(request, 'users/account_approval.html', {'formset':formset})
-
+@login_required
 def approve_accounts(request):
     if request.method == 'POST':
         request_id = int(request.POST.get('request_id'))
@@ -316,11 +250,8 @@ def request_profile_update(request):
                 'approved': False
             })
             messages.success(request, 'Your update request has been submitted for approval')
-            # # Redirect to profile or any other appropriate URL after successful submission
         else:
             print(form.errors)
-            # Handle form errors if needed
-            # return render(request, 'users/profile.html', {'b_form': b_form})
     else:
         initial_data = {
             'first_name': banking_user_instance.user.first_name,
@@ -340,7 +271,7 @@ def request_profile_update(request):
     }
     return render(request, 'users/profile_update.html', context)
 
-
+@login_required
 def approve_profile_update(request):
     if request.method == 'POST':
         request_id = int(request.POST.get('request_id'))
@@ -379,6 +310,7 @@ def approve_profile_update(request):
 # ------------------------------------------------------ PROFILE UPDATE ------------------------------------------------------
 
 # ------------------------------------------------------ PROFILE VIEW ------------------------------------------------------
+@login_required
 def profile(request):
     user = request.user
     banking_user = BankingUser.objects.get(user = user)
@@ -404,44 +336,9 @@ def accounts(request):
 # ------------------------------------------------------ ACCOUNT VIEW ------------------------------------------------------
 
 # ------------------------------------------------------ ACCOUNT DELETE ------------------------------------------------------
-# @login_required
-# def accounts(request):
-#    u = request.user
-#    banking_user = BankingUser.objects.get(user = u)
-#    account = Account.objects.filter(banking_user = banking_user)
-#    if len(account) == 1:
-#        account1 = account[0]
-#        if request.method == 'POST':
-#            a1_form = AccountUpdateForm(request.POST, instance = account1)
-#            if a1_form.is_valid():
-#                a1_form.save()
-#                messages.success(request, 'Profile Updated Successfully')
-#                return redirect('accounts')
-#        a1_form = AccountUpdateForm(request.POST, instance = account1)
-#        context = {
-#            'a1_form': a1_form,
-#        }
-#        return render(request, 'users/accounts.html', context)
-#    else:
-#        account1 = account[0]
-#        account2 = account[1]
-#        if request.method == 'POST':
-#            a1_form = AccountUpdateForm(request.POST, instance = account1)
-#            a2_form = AccountUpdateForm(request.POST, instance = account2)
-#            if a1_form.is_valid() and a2_form.is_valid():
-#                a1_form.save()
-#                a2_form.save()
-#                messages.success(request, 'Accounts Updated Successfully')
-#                return redirect('accounts')
-#        a1_form = AccountUpdateForm(request.POST, instance = account1)
-#        a2_form = AccountUpdateForm(request.POST, instance = account2)
-#        context = {
-#            'a1_form': a1_form,
-#            'a2_form': a2_form,
-#        }
-#        return render(request, 'users/accounts.html', context)
 
 account_delete_requests = []
+@login_required
 def request_account_deletion(request):
     bu = BankingUser.objects.get(user = request.user)
     if request.method == 'POST':
@@ -459,6 +356,7 @@ def request_account_deletion(request):
         form = AccountDeletionRequestForm(bu)
     return render(request, 'users/request_account_deletion.html', {'form': form})
 
+@login_required
 def approve_account_deletion(request):
     if request.method == 'POST':
         request_id = int(request.POST.get('request_id'))
