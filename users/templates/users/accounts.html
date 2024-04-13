@@ -2,7 +2,7 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<!-- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,22 +19,10 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <img src="../../static/users/asset/images/profile.jpeg" alt="car-key" border="0">
-                            <h2 class="text-center text-uppercase">{{ user.username }}</h2>
-                            <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
-                                {% csrf_token %}
-                            
-                            
-                                {{ a1_form.as_p }}
-                            
-                            
-                                {% if a2_form %}
-                            
-                                {{ a2_form.as_p }}
-                            
-                                {% endif %}
-                                <button type="submit" class="submit-button">Update</button>
-                                <a class="cancel-button" href="{% url 'mugiwara' %}" role="button">Cancel</a>
-                            </form>
+                            <h2 class="text-center text-uppercase">{{ user.username }}'s Accounts</h2>
+                            {% for account in accounts %}
+                            {{account.account_type}}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
@@ -42,10 +30,8 @@
         </div>
     </div>
 </body>
-</html> -->
+</html>
 
-{% for account in accounts %}
-    {{account.account_type}}
-{% endfor %}
+
 
 {% endblock %}
