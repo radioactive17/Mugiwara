@@ -252,3 +252,13 @@ class SelectUserForm(forms.Form):
 #         # Filter 'from_client' and 'to_client' to only include external individual users
 #         self.fields['from_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
 #         self.fields['to_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
+
+class UsernameForm(forms.Form):
+    username = forms.CharField(label='Username')
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(label='OTP')
+
+class ChangePasswordForm(forms.Form):
+    new_password = forms.CharField(widget=forms.PasswordInput())
+    confirm_password = forms.CharField(widget=forms.PasswordInput())

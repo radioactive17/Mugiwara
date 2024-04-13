@@ -139,7 +139,7 @@ def create_account(request):
                 'approved': False
             })
             print(create_account_requests)
-            messages.success(request, 'Your request for account deletion has been submitted for approval')   
+            messages.success(request, 'Your request for account deletion has been submitted for approval')
    else:
        banking_user_instance = BankingUser.objects.get(user=request.user)
        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
@@ -1309,3 +1309,63 @@ def merchant_dashboard(request):
 
 #     return render(request, 'users/payment_requests.html', {'payment_requests': payment_requests})
 
+
+def forgot_password(request):
+    if request.method == 'POST':
+        form = UsernameForm(request.POST)
+        if form.is_valid():
+            username = form.cleaned_data['username']
+            user = User.objects.filter(username=username).first()
+            if not user:
+                messages.error(request, "Username does not exist.")
+                return redirect('forgot_password')
+            otp = generate_otp()
+            request.session['otp'] = otp  # Store OTP in session for later verification
+            request.session['user_id'] = user.id  # Store user ID in session
+            send_otp_email(user.email, otp)
+            return redirect('reset_password')
+    else:
+        form = UsernameForm()
+    return render(request, 'users/forgot_password.html', {'form': form})
+
+import uuid
+
+
+def reset_password(request):
+    if request.method == 'POST':
+        form = OTPForm(request.POST)
+        if form.is_valid():
+            user_otp = request.session.get('otp', '')
+            if form.cleaned_data['otp'] == user_otp:
+                token = str(uuid.uuid4())  # Generate a unique token
+                request.session['token'] = token
+                return redirect('change_password', token=token)
+            else:
+                messages.error(request, 'Incorrect OTP.')
+    else:
+        form = OTPForm()
+    return render(request, 'users/reset_password.html', {'form': form})
+
+
+
+def change_password(request, token):
+    if request.method == 'POST':
+        form = ChangePasswordForm(request.POST)
+        if form.is_valid():
+            new_password = form.cleaned_data['new_password']
+            confirm_password = form.cleaned_data['confirm_password']
+            if new_password != confirm_password:
+                messages.error(request, "Passwords do not match.")
+                return redirect('change_password', token=token)
+            if request.session.get('token', '') == token:
+                user_id = request.session.get('user_id')
+                user = User.objects.get(pk=user_id)
+                user.set_password(new_password)
+                user.save()
+                del request.session['token']  # Clear the token from the session
+                del request.session['otp']    # Clear the OTP from the session
+                messages.success(request, "Your password has been updated successfully.")
+                return redirect('login')
+    else:
+        form = ChangePasswordForm()
+    return render(request, 'users/change_password.html', {'form': form})
