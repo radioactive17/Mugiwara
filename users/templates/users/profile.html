@@ -1,0 +1,40 @@
+{% extends 'users/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/profile_update.css">
+    <title>Profile</title>
+</head>
+<body>
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/profile.jpeg" alt="profile-picture" border="0">
+                            <h2 class="text-center text-uppercase">Hey There! {{ user }}</h2>
+                            <p><strong>Email: </strong> {{ user.email }}</p>
+                            <p><strong>Mobile No: </strong>{{ banking_user.mobile_number }}</p>
+                            <p><strong>Birth Date: </strong>{{ banking_user.dob }}</p>
+                            <p><strong>Street Address: </strong>{{banking_user.street_address}}</p>
+                            <p><strong>City: </strong>{{banking_user.city}}</p>
+                            <p><strong>State: </strong>{{banking_user.state}}</p>
+                            <p><strong>Zip Code: </strong>{{banking_user.zip_code}}</p>
+                            <p><strong>Country: </strong>{{banking_user.country}}</p>
+                            <p><strong>Account Creation Date: </strong>{{banking_user.account_created}}</p>
+                            <!-- You can display other user information here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+{% endblock %}

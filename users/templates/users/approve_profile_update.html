@@ -2,21 +2,67 @@
 
 {% block content %}
 {% if profile_update_requests %}
-        <ul>
-            {% for request in profile_update_requests %}
-                <li>
-                    User: {{ request.user }}
-                    Data: {{ request.data }}
-                    <form method="post">
-                        {% csrf_token %}
-                        <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
-                        <button type="submit" name="action" value="approve">Approve</button>
-                        <button type="submit" name="action" value="reject">Reject</button>
-                    </form>
-                </li>
-            {% endfor %}
-        </ul>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/approve_profile_update.css">
+    <title>Update Profile Approval</title>
+</head>
+<body>
+    <!-- <ul>
+        {% for request in profile_update_requests %}
+        <li>
+            User: {{ request.user }}
+            Data: {{ request.data }}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
+                <button type="submit" name="action" value="approve">Approve</button>
+                <button type="submit" name="action" value="reject">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
     {% else %}
+    <p>No profile update requests.</p>
+    {% endif %} -->
+    <div class="container forget-password">
+        {% if profile_update_requests %}
+        {% for request in profile_update_requests %}
+        <div class="card">
+            <div class="card-header">
+                Request by: {{ request.user }}
+            </div>
+            <div class="card-body">
+                <p><strong>First Name: </strong>{{request.data.first_name}}</p>
+                <p><strong>Last Name: </strong>{{request.data.last_name}}</p>
+                <p><strong>User Name: </strong>{{request.data.username}}</p>
+                <p><strong>Date of Birth: </strong>{{request.data.dob}}</p>
+                <p><strong>Mobile Number: </strong>{{request.data.mobile_number}}</p>
+                <p><strong>Street Address: </strong>{{request.data.street_address}}</p>
+                <p><strong>City: </strong>{{request.data.city}}</p>
+                <p><strong>State: </strong>{{request.data.state}}</p>
+                <p><strong>Zip Code: </strong>{{request.data.zip_code}}</p>
+                <p><strong>Country: </strong>{{request.data.country}}</p>
+                <p><strong>Status: </strong>{{request.data.status}}</p>
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
+                    <button type="submit" name="action" value="approve" class="submit-button">Approve</button>
+                    <button type="submit" name="action" value="reject" class="cancel-button">Reject</button>
+                </form>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
         <p>No profile update requests.</p>
-    {% endif %}
-{% endblock %}
+        {% endif %}
+    </div>
+    </body>
+    
+    </html>
+    {% endblock %}

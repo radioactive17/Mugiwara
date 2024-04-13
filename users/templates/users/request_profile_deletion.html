@@ -53,7 +53,7 @@
                             <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
                                 {% csrf_token %}
                                 {{ form|crispy }}
-                                <button type="submit" class="submit-button">Update</button>
+                                <button type="submit" class="submit-button">Submit</button>
                                 <a class="cancel-button" href="{% url 'mugiwara' %}" role="button">Cancel</a>
                             </form>
                         </div>

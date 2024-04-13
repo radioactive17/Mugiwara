@@ -18,7 +18,8 @@ urlpatterns = [
    path('debit/<int:pk>', views.debit, name = 'debit'),
    path('credit/<int:pk>/', views.credit, name = 'credit'),
 
-   path('view_accounts/', views.view_accounts, name = 'view-accounts'), # display along with profile information
+   path('view_accounts/', views.view_accounts, name = 'view-accounts'),
+   path('profile/', views.profile, name = 'profile'),
    # Approve User Registration
    path('user_approvals/', views.user_approvals, name = 'user-approvals'),
    # Create Account
@@ -30,6 +31,9 @@ urlpatterns = [
    # Update Profile
    path('update_profile/', views.request_profile_update, name = 'update-profile'),
    path('profile_approvals/', views.approve_profile_update, name = 'profile-approvals'),
+   # Delete Account
+   path('delete_account/', views.request_account_deletion, name = 'account-delete'),
+   path('approve_account_deletion/', views.approve_account_deletion, name = 'approve-account-deletion'),
 
    path('all_transactions', views.all_transactions, name='all_transactions'),
    path('approve_transaction/<int:transaction_id>/', approve_transaction, name='approve_transaction'),
@@ -73,6 +77,11 @@ urlpatterns = [
 
    # path('authorize_payment/<int:payment_request_id>/', views.authorize_payment_request, name='authorize_payment_request'),
    # path('client/dashboard/', views.client_dashboard, name='client_dashboard'),
+
+
+   path('forgot_password/', views.forgot_password, name='forgot_password'),
+   path('reset_password/', views.reset_password, name='reset_password'),
+   path('change_password/<str:token>/', views.change_password, name='change_password'),
 
 
 ]
