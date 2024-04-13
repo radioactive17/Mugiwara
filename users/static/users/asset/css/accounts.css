@@ -152,3 +152,7 @@ select {
 .text-uppercase {
     text-transform: uppercase;
 }
+.spacer {
+    height: 50px;
+    /* Adjust height as needed */
+}
