@@ -102,12 +102,20 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
-                                href="{% url 'account-approvals' %}"><i
-                                    class="fa fa-money"></i>&nbsp;AccountApproval</a></li>
-                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;"
-                            href="{% url 'approve-account-deletion' %}"><i
-                                class="fa fa-money"></i>&nbsp;AccountDeletion</a></li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Accounts
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="{% url 'account-approvals' %}">Account Approval</a></li>
+                                <li><a class="dropdown-item" href="{% url 'approve-account-deletion' %}">Account Deletion</a></li>
+    
+                                
+                            </ul>
+                        </li>
+                        
                         
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
