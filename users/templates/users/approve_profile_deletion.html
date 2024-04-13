@@ -29,7 +29,9 @@
     
         </div>
     </div> -->
+    
     <div class="container forget-password">
+        {% if formset.forms %}
         <div class="row">
             <div class="col-md-12 col-md-offset-4">
                 <div class="panel panel-default">
@@ -37,38 +39,6 @@
                         <div class="text-center">
                             
                             
-                            <!-- <form class="debit-form">
-                                            <div class="input-group mb-3">
-                                        
-                                                <span class="input-group-text">$</span>
-                                                <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
-                                            </div>
-                                            <button type="submit" class="withdraw-button">Withdraw</button>
-                                        </form> -->
-    
-                            <!-- <form method="post" class="debit-form">
-                                {% csrf_token %}
-                                <ul>
-                                    {% for form_data in registration_forms %}
-                                    <li>
-                                        {{ form_data.username }} ---
-                                        {% for key, value in user_types.items%}
-                                        {% if key == form_data.usertype %}
-                                        {{ value }}
-                                        {% endif %}
-                                        {% endfor %}
-                                        <select name="{{ form_data.username }}">
-                                            <option value="pending">Pending</option>
-                                            <option value="approved">Approve</option>
-                                            <option value="rejected">Deny</option>
-                                        </select>
-                                    </li>
-                                    {% endfor %}
-                                </ul>
-                                
-                                <button type="submit" class="submit-button">Submit</button>
-                            </form> -->
-                            {% if formset.forms %}
                             <h2 class="text-center">Profile Deletion Requests</h2>
                             <p>{{ user.username }}</p>
                             <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
@@ -77,15 +47,17 @@
                                 <button type="submit" class="submit-button">Approve</button>
                                 <a href="/" class="cancel-button">Cancel</a>
                             </form>
-                            {% else %}
-                            <p><strong>No profile deletion requests at the moment.</strong></p>
-                            {% endif %}
+                            
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        {% else %}
+        <p class="no-requests"><strong>No profile deletion requests at the moment.</strong></p>
+        {% endif %}
     </div>
+    
 </body>
 </html>
 

@@ -165,3 +165,21 @@ select {
 .text-center {
     text-align: center;
 }
+
+/* Narrow the message text area */
+#id_message {
+    width: calc(100% - 22px);
+    /* Adjust the width to match the name field */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+/* Adjust width for smaller screens if needed */
+@media (max-width: 768px) {
+    #id_message {
+        width: 100%;
+        /* Adjust for smaller screens */
+    }
+}

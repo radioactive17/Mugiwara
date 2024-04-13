@@ -21,7 +21,7 @@
                     <form method="POST">
                         {% csrf_token %}
                         {{ form|crispy }}
-                        <a href="#l" class="forgot-link float-right text-primary">Forgot password?</a><br>
+                        
                         <button type="submit" class="btn btn-theme mt-3 btn-custom">Login</button>
 
                     </form>
@@ -33,7 +33,9 @@
                             Up!</a></p>
                 </div>
 
-                <a href="{% url 'forgot_password' %}" class="forgot-link float-right text-primary">Forgot password?</a>
+                <div class="text-center"> <!-- Added text-center class here -->
+                    <a href="{% url 'forgot_password' %}" class="forgot-link text-primary">Forgot password?</a>
+                </div>
 
             </div><!-- End: Login Box [En] -->
         </div>
