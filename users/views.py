@@ -586,7 +586,10 @@ def user_transactions(request):
 # user debit transaction
 @transaction.atomic
 def debit_view(request):
-   form = DebitForm(request.POST or None)
+
+   user = request.user
+
+   form = DebitForm(request.POST or None, user=user)
 
 
    if request.method == 'POST' and form.is_valid():
@@ -595,7 +598,11 @@ def debit_view(request):
 
        user_pk = request.user.pk
        banking_user = BankingUser.objects.get(user_id=user_pk)
-       account = Account.objects.get(banking_user=banking_user)
+
+       account = form.cleaned_data['account']
+    #    account = Account.objects.get(banking_user=banking_user)
+
+    #
 
 
        if account.account_bal < amount:
