@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-{% if profile_update_requests %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,23 +11,7 @@
     <title>Update Profile Approval</title>
 </head>
 <body>
-    <!-- <ul>
-        {% for request in profile_update_requests %}
-        <li>
-            User: {{ request.user }}
-            Data: {{ request.data }}
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
-                <button type="submit" name="action" value="approve">Approve</button>
-                <button type="submit" name="action" value="reject">Reject</button>
-            </form>
-        </li>
-        {% endfor %}
-    </ul>
-    {% else %}
-    <p>No profile update requests.</p>
-    {% endif %} -->
+   
     <div class="container forget-password">
         {% if profile_update_requests %}
         {% for request in profile_update_requests %}
@@ -59,7 +43,10 @@
         </div>
         {% endfor %}
         {% else %}
-        <p>No profile update requests.</p>
+        
+        <div class="card">
+            <p><strong>No profile update requests.</strong></p>
+        </div>
         {% endif %}
     </div>
     </body>
