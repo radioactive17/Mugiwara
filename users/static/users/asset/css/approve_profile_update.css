@@ -72,3 +72,34 @@
     border-color: #dc3545;
     /* Change border color to danger color */
 }
+
+.card {
+    width: 60%;
+    margin: auto;
+    /* Center the card horizontally */
+    margin-bottom: 20px;
+    /* Add some space between cards */
+    text-align: center;
+    /* Center the text inside the card */
+    border: 1px solid #ccc;
+    /* Add border for better visual separation */
+    border-radius: 5px;
+    /* Add rounded corners */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* Add shadow for depth */
+}
+
+.card-header,
+.card-footer {
+    padding: 10px;
+    /* Add padding to header and footer */
+    background-color: #f0f0f0;
+    /* Light gray background color */
+    border-bottom: 1px solid #ccc;
+    /* Add border to separate header/footer from body */
+}
+
+.card-body {
+    padding: 20px;
+    /* Add padding to body */
+}
