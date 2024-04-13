@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 
 {% block content %}
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -19,15 +19,6 @@
                     <div class="panel-body">
                         <div class="text-center">
                             <h2 class="text-center">All Requests</h2>
-                            <!-- <form class="debit-form">
-                                        <div class="input-group mb-3">
-                                    
-                                            <span class="input-group-text">$</span>
-                                            <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
-                                        </div>
-                                        <button type="submit" class="withdraw-button">Withdraw</button>
-                                    </form> -->
-    
                             <form method="post" class="debit-form">
                                 {% csrf_token %}
                                 <ul>
@@ -47,7 +38,6 @@
                                     </li>
                                     {% endfor %}
                                 </ul>
-                                <!-- <button type="submit">Submit</button> -->
                                 <button type="submit" class="submit-button">Submit</button>
                             </form>
                         </div>
@@ -58,6 +48,33 @@
     </div>
 </body>
 
+</html> -->
+{% if regitration_requests %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <ul>
+        {% for request in regitration_requests %}
+        <li>
+            Data: {{ request.data }}
+            <form method="post">
+                {% csrf_token %}
+                <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
+                <button type="submit" name="action" value="approve">Approve</button>
+                <button type="submit" name="action" value="reject">Reject</button>
+            </form>
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No Account Deletion requests.</p>
+    {% endif %}
+</body>
 </html>
 
 
