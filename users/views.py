@@ -526,29 +526,27 @@ def send_otp_email(email, otp):
 # User create transaction
 @login_required
 def create_transaction(request):
-   if request.method == 'POST':
-       form = Transactions_Form(request.POST)
-       otp = generate_otp()
-       if form.is_valid():
-           user_pk = request.user.pk
-           banking_user = BankingUser.objects.get(user_id=user_pk)
-           form.instance.from_account =  Account.objects.get(banking_user=request.user.user)
-           form.instance.transaction_status = 'pending'
-           form.instance.transaction_handler = banking_user
-           form.instance.transaction_type='transfer'
-           form.instance.otp=otp
-           form.save()
-           send_otp_email(request.user.email, otp)
-           transaction_id = form.instance.pk
-           return redirect('verify_otp', transaction_id=transaction_id)
-   else:
-           user_pk = request.user.pk
-           banking_user = BankingUser.objects.get(user_id=user_pk)
-           current_user_account = Account.objects.get(banking_user=request.user.user)
-           initial_data = {'from_account': current_user_account}
-           form = Transactions_Form(initial=initial_data)
+   
+        user=request.user
+        form = Transactions_Form(request.POST or None, user=user)
+        otp = generate_otp()
 
-   return render(request, 'users/create_transaction.html', {'form': form})
+
+        if request.method == 'POST' and form.is_valid():
+            user_pk = request.user.pk
+            banking_user = BankingUser.objects.get(user_id=user_pk)
+            account1=form.cleaned_data['account1']
+            form.instance.from_account =  account1
+            form.instance.transaction_status = 'pending'
+            form.instance.transaction_handler = banking_user
+            form.instance.transaction_type='transfer'
+            form.instance.otp=otp
+            form.save()
+            send_otp_email(request.user.email, otp)
+            transaction_id = form.instance.pk
+            return redirect('verify_otp', transaction_id=transaction_id)
+
+        return render(request, 'users/create_transaction.html', {'form': form})
 
 
 @login_required
@@ -583,6 +581,7 @@ def verify_otp(request, transaction_id):
 def all_transactions(request):
   # Filter transactions where the current user is either the sender or the receiver
   transactions = Transactions.objects.all()
+  transactions=transactions.order_by('-initiated')
   payment_requests = PaymentRequest.objects.all()
 
 
@@ -648,7 +647,10 @@ def user_transactions(request):
 # user debit transaction
 @transaction.atomic
 def debit_view(request):
-   form = DebitForm(request.POST or None)
+
+   user = request.user
+
+   form = DebitForm(request.POST or None, user=user)
 
 
    if request.method == 'POST' and form.is_valid():
@@ -657,7 +659,11 @@ def debit_view(request):
 
        user_pk = request.user.pk
        banking_user = BankingUser.objects.get(user_id=user_pk)
-       account = Account.objects.get(banking_user=banking_user)
+
+       account = form.cleaned_data['account']
+    #    account = Account.objects.get(banking_user=banking_user)
+
+    #
 
 
        if account.account_bal < amount:
@@ -697,15 +703,16 @@ def debit_view(request):
 # user credit transaction
 @transaction.atomic
 def credit_view(request):
-   form = CreditForm(request.POST or None)
+   user = request.user
+   form = CreditForm(request.POST or None,user=user)
 
 
    if request.method == 'POST' and form.is_valid():
        amount = form.cleaned_data['amount']
        user_pk = request.user.pk
        banking_user = BankingUser.objects.get(user_id=user_pk)
-       account = Account.objects.get(banking_user=banking_user)
-
+    #    account = Account.objects.get(banking_user=banking_user)
+       account=form.cleaned_data['account']
 
        # Add the amount to the account balance
        # account.account_bal += amount
@@ -752,7 +759,8 @@ def approve_transaction(request, transaction_id):
           # Update the transaction status to 'approved'
            if transaction.transaction_type == 'transfer':
           # Perform deduction from "From_account" and add to "To_account"
-
+                if transaction.from_account==transaction.to_account:
+                    return HttpResponse('<script>alert("Cannot send to same user"); window.history.back();</script>')
                 from_account = transaction.from_account
                 from_account.account_bal -= transaction.amount
                 if from_account.account_bal<0:
