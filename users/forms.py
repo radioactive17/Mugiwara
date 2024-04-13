@@ -17,7 +17,7 @@ class UserRegistrationForm(UserCreationForm):
         'eu_mo': 'Merchant/Organization',
         'iu_re': 'Employee',
         'iu_sm': 'System Manager',
-        'iu_sa': 'System Administrator',
+        # 'iu_sa': 'System Administrator',
     }
 
     email = forms.EmailField()
