@@ -98,6 +98,7 @@ select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    text-align: center;
 }
 
 select {
@@ -151,8 +152,4 @@ select {
 
 .text-uppercase {
     text-transform: uppercase;
-}
-.spacer {
-    height: 50px;
-    /* Adjust height as needed */
 }

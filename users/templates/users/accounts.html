@@ -4,32 +4,40 @@
 {% block content %}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Accounts</title>
     <link rel="stylesheet" href="../../static/users/asset/css/accounts.css">
 </head>
+
 <body>
 
+
+    <div class="spacer"></div>
+    <h2 class="text-center text-uppercase">{{ user.username }}'s Accounts</h2>
+    {% for account in accounts %}
     <div class="container forget-password">
         <div class="row">
             <div class="col-md-12 col-md-offset-4">
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-                            <img src="../../static/users/asset/images/profile.jpeg" alt="car-key" border="0">
-                            <h2 class="text-center text-uppercase">{{ user.username }}'s Accounts</h2>
-                            {% for account in accounts %}
-                            {{account.account_type}}
-                            {% endfor %}
+                            <p><strong>Account Type: </strong>{{account.account_type}}</p>
+                            <p><strong>Account Number: </strong>{{account.account_number}}</p>
+                            <p><strong>Account Balance: </strong>{{account.account_bal}}</p>
+                            <p><strong>Created On: </strong>{{account.created_on}}</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% endfor %}
+
 </body>
+
 </html>
 
 
