@@ -155,15 +155,28 @@ from django import forms
 from .models import Transactions, Account
 
 class Transactions_Form(forms.ModelForm):
+    account1 = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
+    )
+
     class Meta:
         model = Transactions
-        fields = ['to_account', 'amount']
+        fields = ['account1', 'to_account', 'amount']  # Define field order
 
     def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
         current_user = kwargs.pop('current_user', None)
-        super().__init__(*args, **kwargs)
+        super(Transactions_Form, self).__init__(*args, **kwargs)
 
-        # Exclude the current user's account from the options
+        # Set queryset for account1 field
+        if user:
+            self.fields['account1'].queryset = Account.objects.filter(
+                banking_user__user=user
+            ).select_related('banking_user').order_by('banking_user__user__username', 'account_type')
+
+        # Exclude the current user's account from the options for to_account field
         if current_user:
             self.fields['to_account'].queryset = Account.objects.exclude(banking_user=current_user)
 
@@ -171,16 +184,17 @@ class Transactions_Form(forms.ModelForm):
 
 
 class DebitForm(forms.Form):
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
+    )
     amount = forms.DecimalField(
         label='Amount',
         min_value=0.01,
         widget=forms.NumberInput(attrs={'placeholder': 'Enter debit amount'})
     )
-    account = forms.ModelChoiceField(
-        queryset=Account.objects.none(),  # Start with an empty queryset
-        label="Client 1 Account",
-        to_field_name="account_number"  # Ensure correct primary key field is used
-    )
+
 
     def __init__(self, *args, **kwargs):
         user = kwargs.pop('user', None)
@@ -192,12 +206,29 @@ class DebitForm(forms.Form):
 
 
 class CreditForm(forms.Form):
-    amount = forms.IntegerField(
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
+    )
+    amount = forms.DecimalField(
         label='Amount',
-        min_value=1,
-        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'}),
+        min_value=0.01,
+        widget=forms.NumberInput(attrs={'placeholder': 'Enter credit amount'})
+    )
+    account = forms.ModelChoiceField(
+        queryset=Account.objects.none(),  # Start with an empty queryset
+        label="Client  Account",
+        to_field_name="account_number"  # Ensure correct primary key field is used
     )
 
+    def __init__(self, *args, **kwargs):
+        user = kwargs.pop('user', None)
+        super(CreditForm, self).__init__(*args, **kwargs)
+        if user:
+            self.fields['account'].queryset = Account.objects.filter(
+                banking_user__user=user
+            ).select_related('banking_user').order_by('banking_user__user__username', 'account_type')
 
 
 class TransactionsForm(forms.ModelForm):
