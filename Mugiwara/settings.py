@@ -148,4 +148,4 @@ EMAIL_TIMEOUT = None
 EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
 
-CONTACT_EMAIL = 'mivaidya@iu.edu'
+CONTACT_EMAIL = ['jignagda@iu.edu', 'mivaidya@iu.edu', 'clotanka@iu.edu','sdsahu@iu.edu','nikkulk@iu.edu']
