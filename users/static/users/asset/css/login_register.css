@@ -35,10 +35,20 @@
     padding: 20px;
     overflow-y: auto; /* Keeps it scrollable */
 }
+.login-box-content {
+    margin-bottom: 20px;
+    align-items: center;
+}
 
-#login-box {
-    padding: 30px; /* Adjust padding as needed */
-    margin-top: 50px; /* Ensure there's space at the top */
-    margin-bottom: 50px; /* Ensure there's space at the bottom */
-    overflow-y: auto; /* Add scroll to the box */
+/* Adjust label and input field alignment */
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
 }
