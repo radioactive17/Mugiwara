@@ -252,3 +252,8 @@ class SelectUserForm(forms.Form):
 #         # Filter 'from_client' and 'to_client' to only include external individual users
 #         self.fields['from_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
 #         self.fields['to_client'].queryset = BankingUser.objects.filter(usertype='eu_cust')
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)

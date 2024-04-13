@@ -1280,3 +1280,29 @@ def merchant_dashboard(request):
 
 #     return render(request, 'users/payment_requests.html', {'payment_requests': payment_requests})
 
+from django.shortcuts import render
+from django.core.mail import send_mail
+from .forms import ContactForm
+from django.conf import settings
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            
+            # Sending email
+            send_mail(
+                'Contact Us Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                settings.DEFAULT_FROM_EMAIL,
+                [settings.CONTACT_EMAIL],  # Change to your contact email
+                fail_silently=False,
+            )
+            # return render(request, 'contact_success.html')
+            return redirect('base.html')  # Create a success page
+    else:
+        form = ContactForm()
+    return render(request, 'users/contact_form.html', {'form': form})
