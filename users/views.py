@@ -137,7 +137,7 @@ def create_account(request):
        form = AccountCreationForm(request.POST)
        if form.is_valid():
         try:
-            if Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'], modification_status = 'approved'):
+            if Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type']):
                 print('yes')
                 messages.info(request, f'You already have this type of account. Please select a differnet account type')
             else:
@@ -150,7 +150,7 @@ def create_account(request):
                 'approved': False
             })
             print(create_account_requests)
-            messages.success(request, 'Your request for account deletion has been submitted for approval')
+            messages.success(request, 'Your request for account creation has been submitted for approval')
    else:
        banking_user_instance = BankingUser.objects.get(user=request.user)
        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
@@ -382,13 +382,6 @@ def approve_account_deletion(request):
 
 
 # ------------------------------------------------------ ACCOUNT DELETE ------------------------------------------------------
-
-
-
-
-
-
-
 @login_required
 def debit(request, *args, **kwargs):
    return render(request, 'users/debit.html')
