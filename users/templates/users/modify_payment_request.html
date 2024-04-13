@@ -75,7 +75,7 @@
                                     {% csrf_token %}
                                     <div class="form-group">
                                         <label for="id_client1">Client Name:</label>
-                                        <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ payment_request.client1.user.username }}">
+                                        <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ payment_request.client1.banking_user }}">
                                         <!-- Hidden field for client1 to ensure it is included in POST -->
                                         <input type="hidden" name="client1" value="{{ payment_request.client1.id }}">
                                     </div>
