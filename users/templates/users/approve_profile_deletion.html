@@ -35,8 +35,8 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-                            <h2 class="text-center">Profile Deletion Requests</h2>
-                            <p>{{ user.username }}</p>
+                            
+                            
                             <!-- <form class="debit-form">
                                             <div class="input-group mb-3">
                                         
@@ -68,12 +68,18 @@
                                 
                                 <button type="submit" class="submit-button">Submit</button>
                             </form> -->
+                            {% if formset.forms %}
+                            <h2 class="text-center">Profile Deletion Requests</h2>
+                            <p>{{ user.username }}</p>
                             <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
                                 {% csrf_token %}
                                 {{ formset.as_p }}
                                 <button type="submit" class="submit-button">Approve</button>
                                 <a href="/" class="cancel-button">Cancel</a>
                             </form>
+                            {% else %}
+                            <p><strong>No profile deletion requests at the moment.</strong></p>
+                            {% endif %}
                         </div>
                     </div>
                 </div>

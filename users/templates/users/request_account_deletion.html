@@ -25,7 +25,7 @@
                         <div class="text-center">
                             <img src="../../static/users/asset/images/delete profile.jpeg" alt="car-key" border="0">
                             <h2 class="text-center text-uppercase">{{ user.username }}</h2>
-    
+                            <p>Which Account Do You Want to Delete?</p>
                             <form id="create_blog" method="POST" enctype="multipart/form-data" class="debit-form">
                                 {% csrf_token %}
                                 {{ form|crispy }}
