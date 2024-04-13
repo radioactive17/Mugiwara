@@ -19,6 +19,8 @@
                         <div class="text-center">
                             <img src="../../static/users/asset/images/profile.jpeg" alt="profile-picture" border="0">
                             <h2 class="text-center text-uppercase">Hey There! {{ user }}</h2>
+                            <p><strong>First Name: </strong> {{ user.first_name }}</p>
+                            <p><strong>Last Name: </strong> {{ user.last_name }}</p>
                             <p><strong>Email: </strong> {{ user.email }}</p>
                             <p><strong>Mobile No: </strong>{{ banking_user.mobile_number }}</p>
                             <p><strong>Birth Date: </strong>{{ banking_user.dob }}</p>

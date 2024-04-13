@@ -103,3 +103,14 @@
     padding: 20px;
     /* Add padding to body */
 }
+
+.no-requests {
+    text-align: center;
+        padding: 50px 0;
+        /* Adjust vertical padding for centering */
+        color: #6c757d;
+        /* Adjust color to match your design */
+        font-style: italic;
+        font-size: 24px;
+        /* Adjust font size */
+}

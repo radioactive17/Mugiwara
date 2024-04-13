@@ -37,46 +37,52 @@
                             <h2 class="text-center">Submit Payment Request</h2>
                             <!-- <form class="debit-form">
                                     <div class="input-group mb-3">
-                                
+
                                         <span class="input-group-text">$</span>
                                         <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
                                     </div>
                                     <button type="submit" class="withdraw-button">Withdraw</button>
                                 </form> -->
-    
-                            <form method="POST" class="debit-form">
-                                {% csrf_token %}
-                                {{ form|crispy }}
-                                <div id="client2FormGroup" style="display: none;">
-                                    {{ form.client2|as_crispy_field }}
-                                </div>
-                                <button type="submit" class="submit-button">Submit Request</button>
-                                <a href="/" class="cancel-button">Cancel</a>
-                            </form>
+
+                                <form method="POST">
+                                    {% csrf_token %}
+                                    {{ form.transaction_type|as_crispy_field }}
+                                    {{ form.client1|as_crispy_field }}
+                                    {{ form.amount|as_crispy_field }}
+
+                                    <!-- Initially hidden Client2 field -->
+                                    <div class="form-group client2-container" style="display: none;">
+                                        {{ form.client2|as_crispy_field }}
+                                    </div>
+
+                                    <button type="submit" class="submit-button">Submit Request</button>
+                                    <a class="cancel-button" href="{% url 'mugiwara' %}" role="button">Cancel</a>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
-            const transactionTypeField = document.querySelector('[name="transaction_type"]');
-            const client2FormGroup = document.getElementById('client2FormGroup');
+            const transactionTypeField = document.querySelector('select[name="transaction_type"]');
+            const client2Field = document.querySelector('select[name="client2"]');
+            const client2Container = document.querySelector('.client2-container');
 
             function updateClient2Visibility() {
                 if (transactionTypeField.value === 'transfer') {
-                    client2FormGroup.style.display = 'block';
+                    client2Container.style.display = 'block';
+                    client2Field.required = true;  // Make Client2 field required
                 } else {
-                    client2FormGroup.style.display = 'none';
+                    client2Container.style.display = 'none';
+                    client2Field.required = false;  // Remove the required attribute when not Transfer
+                    client2Field.value = '';  // Optionally reset the value
                 }
             }
 
-            // Update visibility based on current selection
             updateClient2Visibility();
-
-            // Update visibility whenever the transaction type changes
             transactionTypeField.addEventListener('change', updateClient2Visibility);
         });
     </script>

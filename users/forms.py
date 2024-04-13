@@ -241,50 +241,30 @@ from .models import PaymentRequest, BankingUser
 from django.core.exceptions import ValidationError
 
 class PaymentRequestForm(forms.ModelForm):
-    client1 = forms.ModelChoiceField(
-        queryset=Account.objects.filter(banking_user__usertype='eu_cust').select_related('banking_user').order_by('banking_user__user__username', 'account_type'),
-        label="Client 1 Account",
-        to_field_name="account_number"  # Adjusted to reflect actual primary key field
-    )
-    client2 = forms.ModelChoiceField(
-        queryset=Account.objects.filter(banking_user__usertype='eu_cust').select_related('banking_user').order_by('banking_user__user__username', 'account_type'),
-        label="Client 2 Account",
-        required=False,
-        to_field_name="account_number"  # Adjusted to reflect actual primary key field
-    )
-
     class Meta:
         model = PaymentRequest
         fields = ['transaction_type', 'client1', 'client2', 'amount']
 
-    # def __init__(self, *args, **kwargs):
-    #     super(PaymentRequestForm, self).__init__(*args, **kwargs)
-    #     self.fields['client1'].disabled = True
-    #     self.fields['transaction_type'].disabled = True
-
-    # def clean(self):
-    #     cleaned_data = super().clean()
-    #     transaction_type = cleaned_data.get('transaction_type')
-    #     client2 = cleaned_data.get('client2')
-
-    #     if transaction_type == 'transfer' and not client2:
-    #         # Raise a ValidationError if transaction_type is 'transfer' and client2 is not provided
-    #         self.add_error('client2', ValidationError("Client 2 is required for transfer transactions."))
-
-    #     return cleaned_data
-
     def __init__(self, *args, **kwargs):
         super(PaymentRequestForm, self).__init__(*args, **kwargs)
-        # Customize the label from here if needed
-        self.fields['client1'].label_from_instance = self.label_from_instance
-        self.fields['client2'].label_from_instance = self.label_from_instance
+        self.fields['client1'].queryset = Account.objects.all()
+        self.fields['client2'].queryset = Account.objects.all()
+        self.fields['client2'].required = False  # Ensure this field is optional unless it's a transfer
 
-    def label_from_instance(self, obj):
-        # This method is used to customize how the dropdown displays the accounts
-        return f"{obj.banking_user.user.username} - {obj.account_type} (#{obj.account_number})"
+        # Handling non-editable fields in update scenarios
+        if 'instance' in kwargs:
+            self.fields['transaction_type'].disabled = True
+            self.fields['client1'].disabled = True
 
-class OTPVerificationForm(forms.Form):
-    otp = forms.CharField(max_length=6)
+    def clean(self):
+        cleaned_data = super().clean()
+        transaction_type = cleaned_data.get('transaction_type')
+        client2 = cleaned_data.get('client2')
+
+        if transaction_type == 'transfer' and not client2:
+            raise forms.ValidationError("Client 2 is required for transfer transactions.")
+        return cleaned_data
+
 
 class UserModificationForm(forms.ModelForm):
 
@@ -319,7 +299,7 @@ class SelectUserForm(forms.Form):
 class UsernameForm(forms.Form):
     username = forms.CharField(label='Username')
 
-class OTPForm(forms.Form):
+class OTPVerificationForm(forms.Form):
     otp = forms.CharField(label='OTP')
 
 class ChangePasswordForm(forms.Form):
