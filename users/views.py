@@ -53,15 +53,32 @@ def home(request):
 
 
 # ================================================ USER REGISTRATION / LOGIN ================================================
+regitration_requests = []
 def register(request):
    if request.method == 'POST':
        form = UserRegistrationForm(request.POST)
        if form.is_valid():
-           registration_forms = request.session.get('registration_forms', [])
-           registration_forms.append(form.cleaned_data)
-           request.session['registration_forms'] = registration_forms
-           messages.info(request, "Your registration request has been submitted for approval.")
-           return redirect('login')
+        try:
+            if User.objects.filter(email = form.cleaned_data['email']) or User.objects.filter(username = form.cleaned_data['username']):
+                print('yes')
+                messages.error(request, f'An account already exists for this email id')
+            else:
+                print('No')
+                regitration_requests.append({
+                'data': form.cleaned_data,
+                'approved': False
+                })
+                print(regitration_requests)
+                messages.info(request, "Your registration request has been submitted for approval.") 
+                return redirect('login')
+        except:
+            regitration_requests.append({
+                'data': form.cleaned_data,
+                'approved': False
+            })
+            print(regitration_requests)
+            messages.info(request, "Your registration request has been submitted for approval.")
+            return redirect('login')
    else:
        form = UserRegistrationForm()
    return render(request, 'users/register.html', {'form':form})
@@ -70,47 +87,91 @@ def register(request):
 # Send mail to user once account has been created or denied
 @login_required
 def user_approvals(request):
-   registration_forms = request.session.get('registration_forms', [])
-   user_types = UserRegistrationForm.User_types
-   if request.method == 'POST':
-       for form_data in registration_forms:
-           print(form_data)
-           status = request.POST.get(form_data['username'])
-           if status  == 'approved' or status == 'rejected':
-               if status == 'approved':
-                   form_data['user_approval'] = request.POST.get(form_data['username'])
-                   u = User(username = form_data['username'], first_name = form_data['username'], last_name = form_data['username'],
-                            email = form_data['email'])
-                   # user_type = form_data['user_type'], user_approval = form_data['user_approval']
-                   u.set_password(form_data['password1'])
-                   u.save()
-                   bu = BankingUser(user = u, usertype = form_data['usertype'])
-                   bu.save()
-                   registration_forms.remove(form_data)
+    user_types = UserRegistrationForm.User_types
+    if request.method == 'POST':
+        request_id = int(request.POST.get('request_id'))
+        action = request.POST.get('action')
+        print(request_id, action)
+        if action == 'approve':
+            # user = User.objects.get(username = create_account_requests[request_id]['user'])
+            # banking_user = BankingUser.objects.get(user = user)
+            # print(create_account_requests[request_id]['data'])
+            # acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
+            # acc.save()
+            # acc.save()
+            # # create_account_requests.pop(int(request_id))
+            # messages.success(request, 'Account created successfully.')
+            u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'], 
+                     last_name = regitration_requests[request_id]['data']['last_name'], email = regitration_requests[request_id]['data']['email'])
+            # user_type = form_data['user_type'], user_approval = form_data['user_approval']
+            u.set_password(regitration_requests[request_id]['data']['password1'])
+            u.save()
+            bu = BankingUser(user = u, usertype = regitration_requests[request_id]['data']['usertype'])
+            bu.save()
+            regitration_requests.pop(int(request_id))
+
+            subject = 'Account Created Succesfully'
+            message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [u.email, ]
+            send_mail( subject, message, email_from, recipient_list )
+            print('accepted')
+        elif action == 'reject':
+            print('reject')
+            subject = 'Account Creation Denied'
+            message = f"Hi {regitration_requests[request_id]['data']['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
+            email_from = settings.EMAIL_HOST_USER
+            recipient_list = [regitration_requests[request_id]['data']['email'], ]
+            send_mail( subject, message, email_from, recipient_list )
+            regitration_requests.pop(int(request_id))
+        else:
+            messages.error(request, 'Invalid action.')
+    context = {
+        'regitration_requests': regitration_requests,
+        'user_types': user_types
+    }
+    return render(request, 'users/approve_registrations.html', context)
 
 
-                   subject = 'Account Created Succesfully'
-                   message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
-                   email_from = settings.EMAIL_HOST_USER
-                   recipient_list = [u.email, ]
-                   send_mail( subject, message, email_from, recipient_list )
+
+# registration_forms = request.session.get('registration_forms', [])
+#    user_types = UserRegistrationForm.User_types
+#    if request.method == 'POST':
+#        for form_data in registration_forms:
+#            print(form_data)
+#            status = request.POST.get(form_data['username'])
+#            if status  == 'approved' or status == 'rejected':
+#                if status == 'approved':
+#                    form_data['user_approval'] = request.POST.get(form_data['username'])
+#                    u = User(username = form_data['username'], first_name = form_data['username'], last_name = form_data['username'],
+#                             email = form_data['email'])
+#                    # user_type = form_data['user_type'], user_approval = form_data['user_approval']
+#                    u.set_password(form_data['password1'])
+#                    u.save()
+#                    bu = BankingUser(user = u, usertype = form_data['usertype'])
+#                    bu.save()
+#                    registration_forms.remove(form_data)
 
 
-               elif status == 'rejected':
-                   subject = 'Account Creation Denied'
-                   message = f"Hi {form_data['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
-                   email_from = settings.EMAIL_HOST_USER
-                   recipient_list = [form_data['email'], ]
-                   send_mail( subject, message, email_from, recipient_list )
-                   registration_forms.remove(form_data)
-               else:
-                   pass
-       # Update session with modified registration_forms
-       request.session['registration_forms'] = registration_forms
-       return redirect('user-approvals')  # Redirect to the same page to display updated status
+#                    subject = 'Account Created Succesfully'
+#                    message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
+#                    email_from = settings.EMAIL_HOST_USER
+#                    recipient_list = [u.email, ]
+#                    send_mail( subject, message, email_from, recipient_list )
 
-   return render(request, 'users/approve_registrations.html', {'registration_forms': registration_forms, 'user_types': user_types})
 
+#                elif status == 'rejected':
+#                    subject = 'Account Creation Denied'
+#                    message = f"Hi {form_data['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
+#                    email_from = settings.EMAIL_HOST_USER
+#                    recipient_list = [form_data['email'], ]
+#                    send_mail( subject, message, email_from, recipient_list )
+#                    registration_forms.remove(form_data)
+#                else:
+#                    pass
+#        # Update session with modified registration_forms
+#        request.session['registration_forms'] = registration_forms
+#        return redirect('user-approvals')  # Redirect to the same page to display updated status
 
 # ================================================ USER REGISTRATION / LOGIN ================================================
 
@@ -175,6 +236,7 @@ def approve_accounts(request):
             print(create_account_requests[request_id]['data'])
             acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
             acc.save()
+            create_account_requests.pop(int(request_id))
             # acc.save()
             # # create_account_requests.pop(int(request_id))
             messages.success(request, 'Account created successfully.')
