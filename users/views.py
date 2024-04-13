@@ -1330,3 +1330,31 @@ def change_password(request, token):
     else:
         form = ChangePasswordForm()
     return render(request, 'users/change_password.html', {'form': form})
+
+
+from django.shortcuts import render
+from django.core.mail import send_mail
+from .forms import ContactForm
+from django.conf import settings
+
+def contact(request):
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            email = form.cleaned_data['email']
+            message = form.cleaned_data['message']
+            
+            # Sending email
+            send_mail(
+                'Contact Us Form Submission',
+                f'Name: {name}\nEmail: {email}\nMessage: {message}',
+                settings.DEFAULT_FROM_EMAIL,
+                settings.CONTACT_EMAIL,  # Use settings.CONTACT_EMAIL as recipients
+                fail_silently=False,
+            )
+            return redirect('mugiwara') # Create a success page
+    else:
+        form = ContactForm()
+    return render(request, 'users/contact_form.html', {'form': form})
+
