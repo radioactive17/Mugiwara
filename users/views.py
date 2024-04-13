@@ -69,7 +69,7 @@ def register(request):
                 'approved': False
                 })
                 print(regitration_requests)
-                messages.info(request, "Your registration request has been submitted for approval.") 
+                messages.info(request, "Your registration request has been submitted for approval.")
                 return redirect('login')
         except:
             regitration_requests.append({
@@ -93,7 +93,7 @@ def user_approvals(request):
         action = request.POST.get('action')
         print(request_id, action)
         if action == 'approve':
-            u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'], 
+            u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'],
                      last_name = regitration_requests[request_id]['data']['last_name'], email = regitration_requests[request_id]['data']['email'])
             u.set_password(regitration_requests[request_id]['data']['password1'])
             u.save()
@@ -417,7 +417,7 @@ def send_otp_email(email, otp):
 # User create transaction
 @login_required
 def create_transaction(request):
-   
+
         user=request.user
         form = Transactions_Form(request.POST or None, user=user)
         otp = generate_otp()
@@ -495,26 +495,23 @@ def user_transactions(request):
     user_pk = request.user.pk
 
     try:
-        banking_user = BankingUser.objects.get(user__pk=user_pk)
+        banking_user = BankingUser.objects.get(user_id=user_pk)
 
-        # Get the account balance for the user
-        account_balance = Account.objects.filter(banking_user=banking_user).first().account_bal if Account.objects.filter(banking_user=banking_user).exists() else 0
+        # Get all accounts for the user
+        accounts = Account.objects.filter(banking_user=banking_user)
 
-        # Transactions where the user is either the sender or receiver
+        # Transactions where the user's accounts are either the sender or receiver
         user_transactions = Transactions.objects.filter(
-            from_account__banking_user=banking_user
-        ) | Transactions.objects.filter(
-            to_account__banking_user=banking_user
-        )
-        user_transactions = user_transactions.order_by('-initiated')
+            Q(from_account__in=accounts) | Q(to_account__in=accounts)
+        ).order_by('-initiated')
 
-        # Payment requests where the user is either client1 or client2
+        # Payment requests where the user's accounts are either client1 or client2
         payment_requests = PaymentRequest.objects.filter(
-            client1=banking_user
-        ) | PaymentRequest.objects.filter(
-            client2=banking_user
-        )
-        payment_requests = payment_requests.order_by('-id')
+            Q(client1__in=accounts) | Q(client2__in=accounts)
+        ).order_by('-id')
+
+        # Calculate the total account balance across all accounts
+        account_balance = accounts.aggregate(Sum('account_bal'))['account_bal__sum'] or 0
 
         context = {
             'transactions': user_transactions,
@@ -525,7 +522,7 @@ def user_transactions(request):
         return render(request, 'users/user_transactions.html', context)
 
     except BankingUser.DoesNotExist:
-        messages.error(request, "Something went wrong.")
+        messages.error(request, "Banking user not found.")
         return HttpResponseRedirect(request.META.get('HTTP_REFERER', '/'))
 
 
@@ -772,16 +769,29 @@ def submit_payment_request(request):
         form = PaymentRequestForm(request.POST)
         if form.is_valid():
             payment_request = form.save(commit=False)
-            # Retrieve the BankingUser instance associated with the logged-in User
-            # Use request.user.user due to the unconventional related_name='user'
-            payment_request.merchant = request.user.user
-            payment_request.otp = generate_otp()
-            payment_request.save()
+            # Check and assign the merchant
+            if hasattr(request.user, 'user'):
+                payment_request.merchant = request.user.user  # Assign the BankingUser instance of the logged-in user
+                payment_request.otp = generate_otp()
+                payment_request.save()
 
-            send_otp_email(payment_request.client1.user.email, payment_request.otp)
-            return redirect('verify_payment_otp', payment_request_id=payment_request.id)
+                # Assuming client1 is an Account instance
+                client1_user_email = payment_request.client1.banking_user.user.email  # Navigate through BankingUser to get User and then email
+                if client1_user_email:
+                    send_otp_email(client1_user_email, payment_request.otp)
+                else:
+                    # Handle the error if no associated email found
+                    messages.error(request, "Client 1 does not have an associated email.")
+                    return redirect('submit_payment_request')
+
+                return redirect('verify_payment_otp', payment_request_id=payment_request.id)
+            else:
+                # Handle the error if no associated BankingUser found
+                messages.error(request, "You must be a registered merchant to submit payment requests.")
+                return redirect('submit_payment_request')
     else:
         form = PaymentRequestForm()
+
     return render(request, 'users/submit_payment_request.html', {'form': form})
 
 
@@ -812,16 +822,8 @@ def approve_payment_request(request, request_id):
 
     if payment_request.status == 'pending' and payment_request.otp_verified:
         if request.method == 'POST':
-            # critical_transaction_amount = 10000
-
-            # if payment_request.amount > critical_transaction_amount and request.user.banking_user.usertype != 'iu_sm':
-            #     messages.error(request, "Only system managers can authorize critical transactions over USD 10,000.")
-            #     return redirect('all_transactions')
-
-            client1_accounts = payment_request.client1.banking_user.all()  # Use the 'banking_user' related_name
-            if client1_accounts.exists():
-                client1_account = client1_accounts.first()  # Assuming client1 has at least one account
-
+            client1_account = payment_request.client1
+            if client1_account:
                 if payment_request.transaction_type == 'deposit':
                     client1_account.account_bal += payment_request.amount
                     client1_account.save()
@@ -835,9 +837,8 @@ def approve_payment_request(request, request_id):
                         return redirect('all_transactions')
 
                 elif payment_request.transaction_type == 'transfer' and payment_request.client2:
-                    client2_accounts = payment_request.client2.banking_user.all()  # Use the 'banking_user' related_name
-                    if client2_accounts.exists():
-                        client2_account = client2_accounts.first()  # Assuming client2 has at least one account
+                    client2_account = payment_request.client2
+                    if client2_account:
                         if client1_account.account_bal >= payment_request.amount:
                             client1_account.account_bal -= payment_request.amount
                             client2_account.account_bal += payment_request.amount
@@ -849,7 +850,6 @@ def approve_payment_request(request, request_id):
 
                 payment_request.status = 'approved'
                 payment_request.save()
-
                 messages.success(request, "Payment request approved successfully.")
                 return redirect('all_transactions')
             else:
@@ -1344,7 +1344,7 @@ def contact(request):
             name = form.cleaned_data['name']
             email = form.cleaned_data['email']
             message = form.cleaned_data['message']
-            
+
             # Sending email
             send_mail(
                 'Contact Us Form Submission',

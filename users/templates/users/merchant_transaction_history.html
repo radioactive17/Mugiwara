@@ -29,9 +29,9 @@
         <tbody>
             {% for request in payment_requests %}
             <tr>
-                <td>{{ request.client1.user.username }}</td>
+                <td>{{ request.client1.banking_user.user.username }} - {{ request.client1.account_type }}</td>
                 <td>{% if request.client2 %}
-                        {{ request.client2.user.username }}
+                    {{ request.client2.banking_user.user.username }} - {{ request.client2.account_type }}
                     {% else %}
                         N/A
                     {% endif %}
