@@ -119,6 +119,7 @@ def user_approvals(request):
 
 # ================================================ ACCOUNT CREATION ================================================
 #Redirect here if no account
+create_account_requests = []
 @login_required
 def create_account(request):
    if request.method == 'POST':
@@ -132,33 +133,61 @@ def create_account(request):
                 print('No account does not exist')
         except:
             print(form.cleaned_data)
-            form.save()
-            
-            
+            create_account_requests.append({
+                'user': request.user,
+                'data': form.cleaned_data,
+                'approved': False
+            })
+            print(create_account_requests)
+            messages.success(request, 'Your request for account deletion has been submitted for approval')   
    else:
        banking_user_instance = BankingUser.objects.get(user=request.user)
        form = AccountCreationForm(initial={'banking_user': banking_user_instance})
 
-
    return render(request, 'users/create_account_request.html', {'form': form})
 
 
-@login_required
+# @login_required
+# def approve_accounts(request):
+#    AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm, extra = 0)
+#    formset = AccountApprovalFormSet(queryset = Account.objects.filter(modification_status = 'pending'))
+#    if request.method == 'POST':
+#        formset = AccountApprovalFormSet(request.POST or None)
+#        if formset.is_valid():
+#            for form in formset:
+#                if form.cleaned_data['modification_status'] == 'approved':
+#                    form.save()
+#                elif form.cleaned_data['modification_status'] == 'rejected':
+#                    a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
+#                    a.delete()
+#                else:
+#                    pass
+#    return render(request, 'users/account_approval.html', {'formset':formset})
+
 def approve_accounts(request):
-   AccountApprovalFormSet = modelformset_factory(Account, form = AccountApprovalForm, extra = 0)
-   formset = AccountApprovalFormSet(queryset = Account.objects.filter(modification_status = 'pending'))
-   if request.method == 'POST':
-       formset = AccountApprovalFormSet(request.POST or None)
-       if formset.is_valid():
-           for form in formset:
-               if form.cleaned_data['modification_status'] == 'approved':
-                   form.save()
-               elif form.cleaned_data['modification_status'] == 'rejected':
-                   a = Account.objects.get(banking_user = form.cleaned_data['banking_user'], account_type = form.cleaned_data['account_type'])
-                   a.delete()
-               else:
-                   pass
-   return render(request, 'users/account_approval.html', {'formset':formset})
+    if request.method == 'POST':
+        request_id = int(request.POST.get('request_id'))
+        action = request.POST.get('action')
+        print(request_id, action)
+        if action == 'approve':
+            user = User.objects.get(username = create_account_requests[request_id]['user'])
+            banking_user = BankingUser.objects.get(user = user)
+            print(create_account_requests[request_id]['data'])
+            acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
+            acc.save()
+            # acc.save()
+            # # create_account_requests.pop(int(request_id))
+            messages.success(request, 'Account created successfully.')
+        elif action == 'reject':
+            print('reject')
+            create_account_requests.pop(int(request_id))
+            messages.info(request, 'Account creation request rejected successfully.')
+        else:
+            messages.error(request, 'Invalid action.')
+    context = {
+        'create_account_requests': create_account_requests,
+    }
+    return render(request, 'users/account_approval.html', context)
 
 
 # ================================================ ACCOUNT CREATION ================================================
