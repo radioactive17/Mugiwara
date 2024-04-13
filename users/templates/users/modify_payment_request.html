@@ -21,23 +21,23 @@
                         <input type="text" readonly class="form-control-plaintext" id="id_client1"
                             value="{{ form.client1.value }}">
                     </div>
-    
+
                     <div class="form-group">
                         <label for="id_transaction_type">Transaction Type:</label>
                         <input type="text" readonly class="form-control-plaintext" id="id_transaction_type"
                             value="{{ form.transaction_type.value }}">
                     </div>
-    
+
                     <div class="form-group" id="client2FormGroup" style="display: none;">
                         <label for="id_client2">Client 2:</label>
                         {{ form.client2 }}
                     </div>
-    
+
                     <div class="form-group">
                         <label for="id_amount">Amount:</label>
                         {{ form.amount }}
                     </div>
-    
+
                     <button type="submit" class="btn btn-primary">Save Changes</button>
                 </form>
             </div>
@@ -57,7 +57,7 @@
                                                     <input type="number" id="withdrawAmount" value="" class="withdraw-input" required />
                                                 </div>
                                             <div class="input-group mb-3">
-                
+
                                                 <span class="input-group-text">$</span>
                                                 <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
                                             </div>
@@ -66,43 +66,52 @@
                             <!-- <form class="debit-form" method="post" action="{% url 'debit_view' %}">
                                     {% csrf_token %}
                                     <div class="form-group">
-        
+
                                         {{ form.as_p }}
                                     </div>
                                     <button type="submit" class="withdraw-button">Debit</button>
                                 </form> -->
-                            <form method="POST" class="debit-form">
-                                {% csrf_token %}
-                                <div class="form-group">
-                                    <label for="id_client1">Client Name:</label>
-                                    <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ payment_request.client1.user.username }}">
-                                </div>
-                            
-                                <div class="form-group">
-                                    <label for="id_transaction_type">Transaction Type:</label>
-                                    <input type="text" readonly class="form-control-plaintext" id="id_transaction_type"
-                                        value="{{ form.transaction_type.value }}">
-                                </div>
-                            
-                                <div class="form-group" id="client2FormGroup" style="display: none;">
-                                    <label for="id_client2">Client 2:</label>
-                                    {{ form.client2 }}
-                                </div>
-                            
-                                <div class="form-group">
-                                    <label for="id_amount">Amount:</label>
-                                    {{ form.amount }}
-                                </div>
-                            
-                                <button type="submit" class="withdraw-button">Save Changes</button>
-                            </form>
+                                <form method="POST" class="debit-form">
+                                    {% csrf_token %}
+                                    <div class="form-group">
+                                        <label for="id_client1">Client Name:</label>
+                                        <input type="text" readonly class="form-control-plaintext" id="id_client1" value="{{ payment_request.client1.user.username }}">
+                                        <!-- Hidden field for client1 to ensure it is included in POST -->
+                                        <input type="hidden" name="client1" value="{{ payment_request.client1.id }}">
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="id_transaction_type">Transaction Type:</label>
+                                        <input type="text" readonly class="form-control-plaintext" id="id_transaction_type"
+                                            value="{{ payment_request.get_transaction_type_display }}">
+                                        <!-- Hidden field for transaction_type to ensure it is included in POST -->
+                                        <input type="hidden" name="transaction_type" value="{{ payment_request.transaction_type }}">
+                                    </div>
+
+                                    <div class="form-group" id="client2FormGroup" style="display: none;">
+                                        <label for="id_client2">Client 2:</label>
+                                        {{ form.client2 }}
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="id_amount">Amount:</label>
+                                        {{ form.amount }}
+                                        {% if form.amount.errors %}
+                                        <div class="alert alert-danger">
+                                            {{ form.amount.errors.as_text }}
+                                        </div>
+                                        {% endif %}
+                                    </div>
+
+                                    <button type="submit" class="withdraw-button">Save Changes</button>
+                                </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function () {
             const transactionType = document.getElementById('id_transaction_type').value;

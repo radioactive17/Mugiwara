@@ -117,18 +117,15 @@ class PaymentRequest(models.Model):
         ('transfer', 'Transfer')
     ]
 
-
     merchant = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='submitted_payments')
     transaction_type = models.CharField(max_length=8, choices=TRANSACTION_CHOICES)
-    client1 = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='client1_payments')
-    client2 = models.ForeignKey(BankingUser, on_delete=models.CASCADE, related_name='client2_payments', null=True, blank=True)
+    client1 = models.ForeignKey('Account', on_delete=models.CASCADE, related_name='client1_payments')  # Changed to Account
+    client2 = models.ForeignKey('Account', on_delete=models.CASCADE, related_name='client2_payments', null=True, blank=True)  # Changed to Account
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     otp = models.CharField(max_length=6, blank=True)
     otp_verified = models.BooleanField(default=False)
     transaction_approved = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=[('pending', 'Pending'), ('approved', 'Approved'), ('declined', 'Declined')], default='pending')
-
-    awaiting_internal_approval = models.BooleanField(default=False)
 
     def __str__(self):
         return f"{self.merchant.user.username} payment request for {self.amount}"
