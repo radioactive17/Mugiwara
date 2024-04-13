@@ -325,3 +325,12 @@ class OTPForm(forms.Form):
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())
+
+
+
+from django import forms
+
+class ContactForm(forms.Form):
+    name = forms.CharField(max_length=100,label='Enter Your Name')
+    email = forms.EmailField(label='Enter Your Mail ID')
+    message = forms.CharField(widget=forms.Textarea,label='Enter Message')
