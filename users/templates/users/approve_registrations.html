@@ -49,31 +49,49 @@
 </body>
 
 </html> -->
-{% if regitration_requests %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../../static/users/asset/css/approve_profile_update.css">
     <title>Document</title>
 </head>
 <body>
-    <ul>
+    <div class="container forget-password">
+        {% if regitration_requests %}
         {% for request in regitration_requests %}
-        <li>
-            Data: {{ request.data }}
-            <form method="post">
-                {% csrf_token %}
-                <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
-                <button type="submit" name="action" value="approve">Approve</button>
-                <button type="submit" name="action" value="reject">Reject</button>
-            </form>
-        </li>
+        <div class="card">
+            <div class="card-header">
+                Request by: {{ request.data.first_name }}
+            </div>
+            <div class="card-body">
+                <p><strong>First Name: </strong>{{request.data.first_name}}</p>
+                <p><strong>Last Name: </strong>{{request.data.last_name}}</p>
+                <p><strong>Email: </strong>{{request.data.email}}</p>
+                <p><strong>Username: </strong>{{request.data.username}}</p>
+                <p><strong>User Type: </strong>{{request.data.usertype}}</p>
+                <p><strong>Approval Status: </strong>{{request.data.user_approval}}</p>
+                
+            </div>
+            <div class="card-footer">
+                <form method="post">
+                    {% csrf_token %}
+                    <input type="hidden" name="request_id" value="{{ forloop.counter0 }}">
+                    <button type="submit" name="action" value="approve" class="submit-button">Approve</button>
+                    <button type="submit" name="action" value="reject" class="cancel-button">Reject</button>
+                </form>
+            </div>
+        </div>
         {% endfor %}
-    </ul>
-    {% else %}
-    <p>No Account Deletion requests.</p>
-    {% endif %}
+        {% else %}
+    
+        <div class="card">
+            <p><strong>No Registration Approval Request</strong></p>
+        </div>
+        {% endif %}
+    </div>
 </body>
 </html>
 
