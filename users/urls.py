@@ -57,7 +57,7 @@ urlpatterns = [
    path('modify_user_personal_data/', views.modify_user_personal_data, name='modify_user_personal_data'),
    path('modify_user_details/<int:user_id>/', views.modify_user_details, name='modify_user_details'),
    path('approve_modifications/', views.approve_modifications, name='approve_modifications'),
-   # path('contact/', contact, name='contact'),
+   path('contact', contact, name='contact'),
 
 
 
