@@ -52,6 +52,9 @@ def home(request):
    return render(request, 'users/home.html')
 
 
+
+
+
 # ================================================ USER REGISTRATION / LOGIN ================================================
 regitration_requests = []
 def register(request):
