@@ -519,7 +519,18 @@ def all_transactions(request):
         'payment_requests': payment_requests
     })
 
+@login_required
+def all_transactions_sa(request):
+  # Filter transactions where the current user is either the sender or the receiver
+  transactions = Transactions.objects.all()
+  transactions=transactions.order_by('-initiated')
+  payment_requests = PaymentRequest.objects.all()
 
+
+  return render(request, 'users/all_transactions_sa.html', {
+        'transactions': transactions,
+        'payment_requests': payment_requests
+    })
 
 
 from django.shortcuts import render
