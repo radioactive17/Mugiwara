@@ -302,6 +302,10 @@ class UsernameForm(forms.Form):
 class OTPVerificationForm(forms.Form):
     otp = forms.CharField(label='OTP')
 
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(label='OTP')
+
 class ChangePasswordForm(forms.Form):
     new_password = forms.CharField(widget=forms.PasswordInput())
     confirm_password = forms.CharField(widget=forms.PasswordInput())

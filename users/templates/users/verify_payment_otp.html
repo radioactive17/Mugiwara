@@ -2,21 +2,80 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
-<div class="container">
-    <h2 class="mt-5">Verify Payment Request</h2>
-    <p>Please enter the OTP sent to the client's email to verify the payment request.</p>
-    <div class="row justify-content-center">
-        <div class="col-md-4">
-            <form method="POST" class="mt-4">
-                {% csrf_token %}
-                <div class="form-group mb-3">
-                    <label for="otp">OTP</label>
-                    <input type="text" class="form-control" id="otp" name="otp" placeholder="Enter OTP">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify OTP</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/verify_otp.css">
+    <style>
+        #keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .keyboard-btn {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #d4d4d4;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container forget-password">
+        <div class="row">
+            <div class="col-md-12 col-md-offset-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="text-center">
+                            <img src="../../static/users/asset/images/otp.jpeg" alt="car-key" border="0">
+                            <h2 class="mt-5">Verify Payment Request</h2>
+                            <p>Please enter the OTP sent to the client's email to verify the payment request.</p>
+                            <form method="post" class="debit-form">
+                                {% csrf_token %}
+                                <div class="input-group mb-3">
+                                    <label for="otp">Enter OTP:</label>
+                                    <input type="text" id="otp" name="otp" readonly>
+                                    <div id="keyboard"></div>
+                                </div>
+                                <button type="submit" class="withdraw-button">Verify OTP</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
-                <button type="submit" class="btn btn-primary">Verify OTP</button>
-                <a href="/" class="btn btn-secondary">Cancel</a>
-            </form>
+            </div>
         </div>
     </div>
-</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputField = document.getElementById('otp');
+            const keyboard = document.getElementById('keyboard');
+
+            '0123456789'.split('').forEach(char => {
+                let btn = document.createElement('button');
+                btn.textContent = char;
+                btn.type = 'button'; // Prevents the form from submitting when clicked
+                btn.onclick = function() { inputField.value += this.textContent; };
+                btn.classList.add('keyboard-btn');
+                keyboard.appendChild(btn);
+            });
+
+            // Optional: Add a backspace button
+            let backspace = document.createElement('button');
+            backspace.textContent = '←';
+            backspace.type = 'button'; // Prevents the form from submitting when clicked
+            backspace.onclick = function() {
+                inputField.value = inputField.value.slice(0, -1);
+            };
+            backspace.classList.add('keyboard-btn');
+            keyboard.appendChild(backspace);
+        });
+        </script>
+</body>
+</html>
 {% endblock %}

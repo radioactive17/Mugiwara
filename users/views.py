@@ -52,6 +52,9 @@ def home(request):
    return render(request, 'users/home.html')
 
 
+
+
+
 # ================================================ USER REGISTRATION / LOGIN ================================================
 regitration_requests = []
 def register(request):
@@ -1358,3 +1361,11 @@ def contact(request):
         form = ContactForm()
     return render(request, 'users/contact_form.html', {'form': form})
 
+
+
+from django_ratelimit.decorators import ratelimit
+from django.contrib.auth import views as auth_views
+
+@ratelimit(key='ip', rate='5/m', method='POST', block=True)
+def rate_limited_login(request, *args, **kwargs):
+    return auth_views.LoginView.as_view(template_name='users/login.html')(request, *args, **kwargs)

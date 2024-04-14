@@ -1,0 +1,116 @@
+.forget-password {
+    padding: 3% 0;
+}
+
+.panel-default {
+    padding: 0;
+    margin-top: 10%;
+}
+
+.panel-body {
+    padding: 3%;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.text-center h2 {
+    margin-bottom: 20px;
+}
+
+.profile-update-form ul {
+    list-style: none;
+    padding: 0;
+}
+
+.profile-update-form li {
+    margin-bottom: 20px;
+}
+
+.profile-update-form select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 40px;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: #fff;
+    border: 1px solid #007bff;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #fff;
+    color: #007bff;
+    border-color: #007bff;
+}
+
+.cancel-button {
+    background-color: #dc3545;
+    color: #fff;
+    border: 1px solid #dc3545;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    border-radius: 4px;
+}
+/* Hover effect for cancel button */
+.cancel-button:hover {
+    background-color: #fff;
+    /* Change background color to white on hover */
+    color: #dc3545;
+    /* Change text color to danger color */
+    border-color: #dc3545;
+    /* Change border color to danger color */
+}
+
+.card {
+    width: 60%;
+    margin: auto;
+    /* Center the card horizontally */
+    margin-bottom: 20px;
+    /* Add some space between cards */
+    text-align: center;
+    /* Center the text inside the card */
+    border: 1px solid #ccc;
+    /* Add border for better visual separation */
+    border-radius: 5px;
+    /* Add rounded corners */
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    /* Add shadow for depth */
+}
+
+.card-header,
+.card-footer {
+    padding: 10px;
+    /* Add padding to header and footer */
+    background-color: #f0f0f0;
+    /* Light gray background color */
+    border-bottom: 1px solid #ccc;
+    /* Add border to separate header/footer from body */
+}
+
+.card-body {
+    padding: 20px;
+    /* Add padding to body */
+}
+
+.no-requests {
+    text-align: center;
+        padding: 50px 0;
+        /* Adjust vertical padding for centering */
+        color: #6c757d;
+        /* Adjust color to match your design */
+        font-style: italic;
+        font-size: 24px;
+        /* Adjust font size */
+}
