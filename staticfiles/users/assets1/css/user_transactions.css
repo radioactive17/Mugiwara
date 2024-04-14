@@ -1,0 +1,52 @@
+/* ../../static/users/assets1/css/user_transactions.css */
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f7f7f7; /* Light gray background */
+}
+
+.container {
+    max-width: 800px;
+    margin: 50px auto; /* Center the container horizontally and add some top margin */
+    padding: 20px;
+    background-color: #fff; /* White background */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+.title {
+    text-align: center;
+    color: #333; /* Dark gray text color */
+}
+
+.balance {
+    text-align: right; /* Align balance text to the right */
+    margin-bottom: 20px;
+}
+
+.transaction-table {
+    width: 100%;
+    border-collapse: collapse;
+    border-radius: 10px; /* Rounded corners */
+    overflow: hidden; /* Hide overflowing borders */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+.transaction-table th {
+    padding: 15px; /* Increase padding to make cells broader */
+    background-color: #f2f2f2; /* Light gray header background */
+    color: #666; /* Dark gray header text color */
+}
+
+.transaction-table td {
+    padding: 15px; /* Increase padding to make cells broader */
+    border: 1px solid #ddd;
+    text-align: left;
+    width: auto; /* Set width to auto */
+}
+
+.transaction-table tr:nth-child(even) {
+    background-color: #f9f9f9; /* Even rows background color */
+}

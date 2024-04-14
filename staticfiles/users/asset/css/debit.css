@@ -1,0 +1,110 @@
+
+
+.forget-pwd>a {
+    color: #dc3545;
+    font-weight: 500;
+}
+
+.forget-password .panel-default {
+    padding: 31%;
+    margin-top: -27%;
+}
+
+.forget-password .panel-body {
+    padding: 15%;
+    margin-bottom: -50%;
+    background: #fff;
+    border-radius: 5px;
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+img {
+    width: 40%;
+    margin-bottom: 10%;
+}
+
+.btnForget {
+    background: #c0392b;
+    border: none;
+}
+
+.forget-password .dropdown {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+}
+
+.forget-password .dropdown button {
+    width: 100%;
+}
+
+.forget-password .dropdown ul {
+    width: 100%;
+}
+
+.withdraw-button {
+    background-color: #007bff;
+    /* Default background color (blue) */
+    color: white;
+    /* Default text color (white) */
+    border: 1px solid #007bff;
+    /* Default border color (blue) */
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.withdraw-button:hover {
+    background-color: white;
+    /* Change background color to white on hover */
+    color: #007bff;
+    /* Change text color to blue on hover */
+}
+
+img {
+    width: 60%;
+    /* Adjust the width as needed */
+    margin-bottom: 10%;
+}
+
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.withdraw-input {
+    width: calc(100% - 22px);
+    /* Adjust width to accommodate for padding and border */
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 10px;
+    /* Add margin bottom to create gap */
+}
+
+.withdraw-button {
+    background-color: #007bff;
+    color: white;
+    border: 1px solid #007bff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    /* Add margin top to create gap */
+}
+
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    text-align: center;
+}
+
+select {
+    /* Additional styles for select element */
+    height: 40px;
+    /* Example height */
+}
