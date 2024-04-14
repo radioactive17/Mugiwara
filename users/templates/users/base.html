@@ -159,18 +159,7 @@
 
 
                         {% elif user.user.usertype == 'iu_re' %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Approvals
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
-                                        Approvals</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                     <li class="nav-item dropdown">
@@ -198,18 +187,7 @@
                         </li>
 
                         {% elif user.user.usertype == 'iu_sm' %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Approvals
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
-                                        Approvals</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i class="fa fa-user"></i>&nbsp;Profile</a>
