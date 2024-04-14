@@ -43,16 +43,29 @@ img {
 }
 
 .withdraw-button {
-    background-color: #007bff;
-    /* Default background color (blue) */
-    color: white;
-    /* Default text color (white) */
-    border: 1px solid #007bff;
-    /* Default border color (blue) */
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 10px 20px; /* Adjust padding to make the button smaller if necessary */
+    margin-top: 10px; /* Adds space between the keyboard and the button */
+    width: auto; /* Adjusts width to content or specify a max-width */
+    display: block; /* Makes the button block level to fill the form width or center it */
+    margin-left: auto; /* Centers the button horizontally */
+    margin-right: auto; /* Centers the button horizontally */
+}
+
+
+#keyboard {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.keyboard-btn {
+    padding: 10px;
+    background-color: #f0f0f0;
+    border: 1px solid #d4d4d4;
     cursor: pointer;
 }
+
 
 .withdraw-button:hover {
     background-color: white;
@@ -100,7 +113,7 @@ select {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    text-align: center; 
+    text-align: center;
 }
 
 select {
