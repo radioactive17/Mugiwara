@@ -139,7 +139,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'mugiwara'
-LOGOUT_REDIRECT_URL = 'mugiwara'
+LOGOUT_REDIRECT_URL = 'login'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
