@@ -1,0 +1,107 @@
+{% extends 'users/base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>All Transactions</title>
+    <link rel="stylesheet" href="../../static/users/asset/css/all_transactions.css">
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mt-5 title">All Transactions</h1>
+        <h2>Transactions</h2>
+        <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down"
+            data-aos-delay="50">
+            <thead class="table-dark">
+                <tr>
+                    <th>From Account</th>
+                    <th>To Account</th>
+                    <th>Status</th>
+                    <th>Transaction Handler</th>
+                    <th>Initiated</th>
+                    <th>Status Changed</th>
+                    <th>Transaction Type</th>
+                    <th>Amount</th>
+                    <th>OTP Verified</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for transaction in transactions %}
+                {% if user.is_authenticated %}
+                    <tr>
+                    <td>{{ transaction.from_account }}</td>
+                    <td>{{ transaction.to_account }}</td>
+                    <td>{{ transaction.transaction_status }}</td>
+                    <td>{{ transaction.transaction_handler }}</td>
+                    <td>{{ transaction.initiated }}</td>
+                    <td>{{ transaction.status_changed }}</td>
+                    <td>{{ transaction.transaction_type }}</td>
+                    <td>{{ transaction.amount }}</td>
+                    <td>{{transaction.otp_verified}}</td>
+
+                    
+                    </tr>
+                    {% endif %}
+
+                    {% endfor %}
+            </tbody>
+        </table>
+
+        <h2>Payment Requests</h2>
+        <table class="table table-bordered shadow p-3 mb-5 bg-white rounded table-striped" data-aos="fade-down"
+            data-aos-delay="50">
+            <thead class="table-dark">
+                <tr>
+                    <th>From Merchant</th>
+                    <th>To Client1</th>
+                    <th>To Client2 (if transfer)</th>
+                    <th>Status</th>
+                    <th>Initiated</th>
+                    <th>Amount</th>
+                    <th>Transaction Type</th>
+                    <th>OTP Verified</th>
+                    
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in payment_requests %}
+                <tr>
+                    <td>{{ request.merchant.user.username }}</td>
+                    <td>{{ request.client1.banking_user.user.username }} - {{ request.client1.account_type }}</td>
+                    <td>
+                        {% if request.transaction_type == 'transfer' and request.client2 %}
+                        {{ request.client2.banking_user.user.username }} - {{ request.client2.account_type }}
+                        {% else %}
+                        N/A
+                        {% endif %}
+                    </td>
+                    <td>{{ request.status }}</td>
+                    <td>{{ request.initiated|date:"F d, Y H:i" }}</td>
+                    <td>{{ request.amount }}</td>
+                    <td>{{ request.get_transaction_type_display }}</td>
+                    <td>{{ request.otp_verified }}</td>
+                    
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="10">No payment requests found.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+
+    </div>
+</body>
+
+</html>
+
+{% endblock %}
