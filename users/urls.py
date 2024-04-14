@@ -12,7 +12,7 @@ from .views import *
 urlpatterns = [
    path('', views.home, name = 'mugiwara'),
    path('register/', views.register, name = 'signup'),
-   path('login/', auth_views.LoginView.as_view(template_name = 'users/login.html'), name = 'login'),
+   path('login/', views.rate_limited_login, name='login'),
    path('logout/', auth_views.LogoutView.as_view(), {'next_page': settings.LOGOUT_REDIRECT_URL},  name = 'logout'),
    path('accounts/', views.accounts, name = 'accounts'),
    path('debit/<int:pk>', views.debit, name = 'debit'),

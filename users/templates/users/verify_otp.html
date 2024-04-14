@@ -8,20 +8,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Verify OTP</title>
     <link rel="stylesheet" href="../../static/users/asset/css/verify_otp.css">
+    <style>
+        #keyboard {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .keyboard-btn {
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 1px solid #d4d4d4;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <!-- <h1>Verify OTP</h1>
-
-    <p>Please enter the OTP sent to your email to confirm the transaction.</p>
-
-    <form method="post">
-        {% csrf_token %}
-        <label for="otp">Enter OTP:</label>
-        <input type="text" id="otp" name="otp">
-        <br>
-        <button type="submit">Verify OTP</button>
-    </form> -->
-
     <div class="container forget-password">
         <div class="row">
             <div class="col-md-12 col-md-offset-4">
@@ -31,23 +34,14 @@
                             <img src="../../static/users/asset/images/otp.jpeg" alt="car-key" border="0">
                             <h2 class="text-center">Verify OTP</h2>
                             <p>Enter the OTP you received via Email</p>
-                            <!-- <form class="debit-form">
-                                <div class="input-group mb-3">
-                            
-                                    <span class="input-group-text">$</span>
-                                    <input type="number" class="form-control " aria-label="Withdraw Amount:" required>
-                                </div>
-                                <button type="submit" class="withdraw-button">Withdraw</button>
-                            </form> -->
-
                             <form method="post" class="debit-form">
                                 {% csrf_token %}
                                 <div class="input-group mb-3">
-                                <label for="otp">Enter OTP:</label>
-                                <input type="text" id="otp" name="otp">
-                                
-                                <button type="submit" class="withdraw-button">Verify OTP</button>
+                                    <label for="otp">Enter OTP:</label>
+                                    <input type="text" id="otp" name="otp" readonly>
+                                    <div id="keyboard"></div>
                                 </div>
+                                <button type="submit" class="withdraw-button">Verify OTP</button>
                             </form>
                         </div>
                     </div>
@@ -55,6 +49,32 @@
             </div>
         </div>
     </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputField = document.getElementById('otp');
+            const keyboard = document.getElementById('keyboard');
+
+            '0123456789'.split('').forEach(char => {
+                let btn = document.createElement('button');
+                btn.textContent = char;
+                btn.type = 'button'; // Prevents the form from submitting when clicked
+                btn.onclick = function() { inputField.value += this.textContent; };
+                btn.classList.add('keyboard-btn');
+                keyboard.appendChild(btn);
+            });
+
+            // Optional: Add a backspace button
+            let backspace = document.createElement('button');
+            backspace.textContent = '←';
+            backspace.type = 'button'; // Prevents the form from submitting when clicked
+            backspace.onclick = function() {
+                inputField.value = inputField.value.slice(0, -1);
+            };
+            backspace.classList.add('keyboard-btn');
+            keyboard.appendChild(backspace);
+        });
+        </script>
 </body>
 </html>
 {% endblock %}

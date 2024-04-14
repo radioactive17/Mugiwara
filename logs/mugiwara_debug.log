@@ -1,0 +1,1505 @@
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:29:29.836378' AND "django_session"."session_key" = 'qucjya1c4ctwcnc84gv5xpkmjyukuf5g') LIMIT 21; args=('2024-04-14 04:29:29.836378', 'qucjya1c4ctwcnc84gv5xpkmjyukuf5g'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:29:33.723474' AND "django_session"."session_key" = 'qucjya1c4ctwcnc84gv5xpkmjyukuf5g') LIMIT 21; args=('2024-04-14 04:29:33.723474', 'qucjya1c4ctwcnc84gv5xpkmjyukuf5g'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE "django_session"."session_key" = 'qucjya1c4ctwcnc84gv5xpkmjyukuf5g' LIMIT 21; args=('qucjya1c4ctwcnc84gv5xpkmjyukuf5g',); alias=default
+(0.954) DELETE FROM "django_session" WHERE "django_session"."session_key" IN ('qucjya1c4ctwcnc84gv5xpkmjyukuf5g'); args=('qucjya1c4ctwcnc84gv5xpkmjyukuf5g',); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+Exception while resolving variable 'include_media' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [include_media] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=Unknown, fields=(username;password)>}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}]
+Exception while resolving variable 'wrapper_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [wrapper_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}, {}]
+Exception while resolving variable 'error_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [error_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F1364440>}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}]
+Exception while resolving variable 'wrapper_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [wrapper_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}, {}]
+Exception while resolving variable 'error_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [error_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000218F137F5F0>}, {}]
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."username" = 'nikhil16kulkarni' LIMIT 21; args=('nikhil16kulkarni',); alias=default
+(0.000) SELECT 1 AS "a" FROM "django_session" WHERE "django_session"."session_key" = '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u' LIMIT 1; args=(1, '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) INSERT INTO "django_session" ("session_key", "session_data", "expire_date") VALUES ('2yftgwqfwpvb0gpv0k5ccyakgsop3x0u', 'e30:1rvrV6:1gN1l7HcCmyTf3hsAWJdmf066_yhaGEbVOUq5rswtRk', '2024-04-28 04:29:56.814839'); args=('2yftgwqfwpvb0gpv0k5ccyakgsop3x0u', 'e30:1rvrV6:1gN1l7HcCmyTf3hsAWJdmf066_yhaGEbVOUq5rswtRk', '2024-04-28 04:29:56.814839'); alias=default
+(0.187) COMMIT; args=None; alias=default
+(0.094) UPDATE "auth_user" SET "last_login" = '2024-04-14 04:29:56.997529' WHERE "auth_user"."id" = 9; args=('2024-04-14 04:29:56.997529', 9); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) UPDATE "django_session" SET "session_data" = '.eJxVjMsOgjAUBf-la9MUCqV16Z5vIPcpqGkTHivjvwsJC93OzDlvM8C2jsO2yDxMbK4mmcsvQ6Cn5EPwA_K9WCp5nSe0R2JPu9i-sLxuZ_t3MMIy7uugHLRzvkGtiTBgpZDAC0hU59tAiCnEULO4WJFrux00KkIszLFV8_kCHBo5vg:1rvrV7:gELlxKfVYiN6fEZtI2-Cs-V74X5TbnY9QMuZXabGEP8', "expire_date" = '2024-04-28 04:29:57.093336' WHERE "django_session"."session_key" = '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'; args=('.eJxVjMsOgjAUBf-la9MUCqV16Z5vIPcpqGkTHivjvwsJC93OzDlvM8C2jsO2yDxMbK4mmcsvQ6Cn5EPwA_K9WCp5nSe0R2JPu9i-sLxuZ_t3MMIy7uugHLRzvkGtiTBgpZDAC0hU59tAiCnEULO4WJFrux00KkIszLFV8_kCHBo5vg:1rvrV7:gELlxKfVYiN6fEZtI2-Cs-V74X5TbnY9QMuZXabGEP8', '2024-04-28 04:29:57.093336', '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'); alias=default
+(0.109) COMMIT; args=None; alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:29:57.208037' AND "django_session"."session_key" = '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u') LIMIT 21; args=('2024-04-14 04:29:57.208037', '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:29:59.282527' AND "django_session"."session_key" = '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u') LIMIT 21; args=('2024-04-14 04:29:59.282527', '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE "django_session"."session_key" = '2yftgwqfwpvb0gpv0k5ccyakgsop3x0u' LIMIT 21; args=('2yftgwqfwpvb0gpv0k5ccyakgsop3x0u',); alias=default
+(0.172) DELETE FROM "django_session" WHERE "django_session"."session_key" IN ('2yftgwqfwpvb0gpv0k5ccyakgsop3x0u'); args=('2yftgwqfwpvb0gpv0k5ccyakgsop3x0u',); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000)
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+Exception while resolving variable 'include_media' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'include_media'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [include_media] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=Unknown, fields=(username;password)>}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}]
+Exception while resolving variable 'wrapper_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [wrapper_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}, {}]
+Exception while resolving variable 'error_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [error_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 0, 'counter': 1, 'revcounter': 2, 'revcounter0': 1, 'first': True, 'last': False}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3F6E0>}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}]
+Exception while resolving variable 'wrapper_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'wrapper_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [wrapper_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}]
+Exception while resolving variable 'form_class' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'form_class'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [form_class] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}, {}]
+Exception while resolving variable 'error_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'error_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [error_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}, {}]
+Exception while resolving variable 'help_text_inline' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'help_text_inline'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [help_text_inline] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}, {}]
+Exception while resolving variable 'tag' in template 'bootstrap5/uni_form.html'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\context.py", line 83, in __getitem__
+    raise KeyError(key)
+KeyError: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 881, in _resolve_lookup
+    if isinstance(current, BaseContext) and getattr(
+                                            ^^^^^^^^
+AttributeError: type object 'Context' has no attribute 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'tag'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [tag] in [{'True': True, 'False': False, 'None': None}, {'field_class': '', 'field_template': 'bootstrap5/field.html', 'form_show_errors': True, 'form_show_labels': True, 'label_class': '', 'form': <AuthenticationForm bound=False, valid=False, fields=(username;password)>}, {'forloop': {'parentloop': {}, 'counter0': 1, 'counter': 2, 'revcounter': 1, 'revcounter0': 0, 'first': False, 'last': True}, 'field': <django.forms.boundfield.BoundField object at 0x00000158C0F3CD70>}, {}]
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."username" = 'nikhil16kulkarni' LIMIT 21; args=('nikhil16kulkarni',); alias=default
+(0.000) SELECT 1 AS "a" FROM "django_session" WHERE "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd' LIMIT 1; args=(1, 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) INSERT INTO "django_session" ("session_key", "session_data", "expire_date") VALUES ('t19qxnm4m06nrd21x1o36ei7vs4wj7yd', 'e30:1rvrYm:FOH2fojM0sHvtp7NoC-s6zBjJ9VlwoAc-ugBXGNcyMQ', '2024-04-28 04:33:44.697237'); args=('t19qxnm4m06nrd21x1o36ei7vs4wj7yd', 'e30:1rvrYm:FOH2fojM0sHvtp7NoC-s6zBjJ9VlwoAc-ugBXGNcyMQ', '2024-04-28 04:33:44.697237'); alias=default
+(0.110) COMMIT; args=None; alias=default
+(0.093) UPDATE "auth_user" SET "last_login" = '2024-04-14 04:33:44.808314' WHERE "auth_user"."id" = 9; args=('2024-04-14 04:33:44.808314', 9); alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) UPDATE "django_session" SET "session_data" = '.eJxVjMsOgjAUBf-la9MUCqV16Z5vIPcpqGkTHivjvwsJC93OzDlvM8C2jsO2yDxMbK4mmcsvQ6Cn5EPwA_K9WCp5nSe0R2JPu9i-sLxuZ_t3MMIy7uugHLRzvkGtiTBgpZDAC0hU59tAiCnEULO4WJFrux00KkIszLFV8_kCHBo5vg:1rvrYm:jrlOJFATgpOwathqc15yasTDqeafQnU6xyikgd1iChE', "expire_date" = '2024-04-28 04:33:44.904421' WHERE "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'; args=('.eJxVjMsOgjAUBf-la9MUCqV16Z5vIPcpqGkTHivjvwsJC93OzDlvM8C2jsO2yDxMbK4mmcsvQ6Cn5EPwA_K9WCp5nSe0R2JPu9i-sLxuZ_t3MMIy7uugHLRzvkGtiTBgpZDAC0hU59tAiCnEULO4WJFrux00KkIszLFV8_kCHBo5vg:1rvrYm:jrlOJFATgpOwathqc15yasTDqeafQnU6xyikgd1iChE', '2024-04-28 04:33:44.904421', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.125) COMMIT; args=None; alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:33:45.049114' AND "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd') LIMIT 21; args=('2024-04-14 04:33:45.049114', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+Exception while resolving variable 'name' in template 'unknown'.
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\views\static.py", line 51, in serve
+    raise Http404(_("�%(path)s� does not exist") % {"path": fullpath})
+django.http.response.Http404: �D:\Mugiwara4\Mugiwara\assets\images\logo-white.svg� does not exist
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 875, in _resolve_lookup
+    current = current[bit]
+              ~~~~~~~^^^^^
+TypeError: 'URLResolver' object is not subscriptable
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 885, in _resolve_lookup
+    current = getattr(current, bit)
+              ^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'URLResolver' object has no attribute 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 891, in _resolve_lookup
+    current = current[int(bit)]
+                      ^^^^^^^^
+ValueError: invalid literal for int() with base 10: 'name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "D:\Mugiwara4\myenv\Lib\site-packages\django\template\base.py", line 898, in _resolve_lookup
+    raise VariableDoesNotExist(
+django.template.base.VariableDoesNotExist: Failed lookup for key [name] in <URLResolver <URLPattern list> (admin:admin) 'admin/'>
+Not Found: /assets/images/logo-white.svg
+(0.000) BEGIN; args=None; alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:33:47.538080' AND "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd') LIMIT 21; args=('2024-04-14 04:33:47.538080', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) COMMIT; args=None; alias=default
+(0.000) BEGIN; args=None; alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:33:48.669119' AND "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd') LIMIT 21; args=('2024-04-14 04:33:48.669119', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) COMMIT; args=None; alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:33:51.066027' AND "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd') LIMIT 21; args=('2024-04-14 04:33:51.066027', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status" FROM "users_account"; args=(); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 8 LIMIT 21; args=(8,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status" FROM "users_account"; args=(); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 8 LIMIT 21; args=(8,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) 
+            SELECT name, type FROM sqlite_master
+            WHERE type in ('table', 'view') AND NOT name='sqlite_sequence'
+            ORDER BY name; args=None; alias=default
+(0.000) SELECT "django_migrations"."id", "django_migrations"."app", "django_migrations"."name", "django_migrations"."applied" FROM "django_migrations"; args=(); alias=default
+(0.000) SELECT "django_session"."session_key", "django_session"."session_data", "django_session"."expire_date" FROM "django_session" WHERE ("django_session"."expire_date" > '2024-04-14 04:41:10.436539' AND "django_session"."session_key" = 't19qxnm4m06nrd21x1o36ei7vs4wj7yd') LIMIT 21; args=('2024-04-14 04:41:10.436539', 't19qxnm4m06nrd21x1o36ei7vs4wj7yd'); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."user_id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT 1 AS "a" FROM "users_account" WHERE "users_account"."banking_user_id" = 8 LIMIT 1; args=(1, 8); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status" FROM "users_account"; args=(); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 8 LIMIT 21; args=(8,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status", "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_account" INNER JOIN "users_bankinguser" ON ("users_account"."banking_user_id" = "users_bankinguser"."id") INNER JOIN "auth_user" ON ("users_bankinguser"."user_id" = "auth_user"."id") WHERE "users_bankinguser"."user_id" = 9 ORDER BY "auth_user"."username" ASC, "users_account"."account_type" ASC; args=(9,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
+(0.000) SELECT "users_account"."account_number", "users_account"."account_type", "users_account"."banking_user_id", "users_account"."account_bal", "users_account"."created_on", "users_account"."account_status", "users_account"."closed_on", "users_account"."modification_status" FROM "users_account"; args=(); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 6 LIMIT 21; args=(6,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 7 LIMIT 21; args=(7,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 2 LIMIT 21; args=(2,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 3 LIMIT 21; args=(3,); alias=default
+(0.000) SELECT "users_bankinguser"."id", "users_bankinguser"."user_id", "users_bankinguser"."usertype", "users_bankinguser"."dob", "users_bankinguser"."mobile_number", "users_bankinguser"."street_address", "users_bankinguser"."city", "users_bankinguser"."state", "users_bankinguser"."zip_code", "users_bankinguser"."country", "users_bankinguser"."account_created", "users_bankinguser"."user_handler_id", "users_bankinguser"."pd_modification_status", "users_bankinguser"."pd_modified", "users_bankinguser"."deletion", "users_bankinguser"."deletion_status" FROM "users_bankinguser" WHERE "users_bankinguser"."id" = 8 LIMIT 21; args=(8,); alias=default
+(0.000) SELECT "auth_user"."id", "auth_user"."password", "auth_user"."last_login", "auth_user"."is_superuser", "auth_user"."username", "auth_user"."first_name", "auth_user"."last_name", "auth_user"."email", "auth_user"."is_staff", "auth_user"."is_active", "auth_user"."date_joined" FROM "auth_user" WHERE "auth_user"."id" = 9 LIMIT 21; args=(9,); alias=default
