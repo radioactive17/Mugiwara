@@ -451,7 +451,12 @@ def send_otp_email(email, otp):
     recipient_list = [email]
     send_mail(subject, message, from_email, recipient_list)
 
-
+def send_otp_email_reset_password(email, otp):
+    subject = 'Your OTP for password reset'
+    message = f'Your OTP for transaction confirmation is: {otp}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [email]
+    send_mail(subject, message, from_email, recipient_list)
 # User create transaction
 @login_required
 def create_transaction(request):
@@ -1332,7 +1337,7 @@ def forgot_password(request):
             otp = generate_otp()
             request.session['otp'] = otp  # Store OTP in session for later verification
             request.session['user_id'] = user.id  # Store user ID in session
-            send_otp_email(user.email, otp)
+            send_otp_email_reset_password(user.email, otp)
             return redirect('reset_password')
     else:
         form = UsernameForm()
