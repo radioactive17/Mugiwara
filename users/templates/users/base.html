@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <link rel="stylesheet" href="{% static 'users/asset/css/style.css' %}">
     <link rel="stylesheet" href="{% static 'users/asset/css/login_register.css' %}">
+    <link href="https://unpkg.com/simple-keyboard/build/css/index.css" rel="stylesheet">
+    <script src="https://unpkg.com/simple-keyboard/build/index.js"></script>
+
 
 </head>
 
@@ -111,12 +114,12 @@
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li><a class="dropdown-item" href="{% url 'account-approvals' %}">Account Approval</a></li>
                                 <li><a class="dropdown-item" href="{% url 'approve-account-deletion' %}">Account Deletion</a></li>
-    
-                                
+
+
                             </ul>
                         </li>
-                        
-                        
+
+
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'contact' %}"><i
@@ -177,7 +180,7 @@
                         </a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                             <li><a class="dropdown-item" href="{% url 'profile' %}">View Profile</a></li>
-                            
+
                             <li><a class="dropdown-item" href="{% url 'update-profile' %}">Update</a></li>
                             <li><a class="dropdown-item" href="{% url 'profile-deletion' %}">Delete</a></li>
                         </ul>
@@ -222,7 +225,7 @@
                             </form>
                             <!-- -->
                         </li>
-                        
+
                                     {% else %}
 
 
