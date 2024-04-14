@@ -41,7 +41,12 @@
                 <td>{{ transaction.transaction_type }}</td>
                 <td>{{transaction.otp_verified}}</td>
             </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No payment requests found.</td>
+            </tr>
             {% endfor %}
+            
         </tbody>
     </table>
 
