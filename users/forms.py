@@ -318,3 +318,7 @@ class ContactForm(forms.Form):
     name = forms.CharField(max_length=100,label='Enter Your Name')
     email = forms.EmailField(label='Enter Your Mail ID')
     message = forms.CharField(widget=forms.Textarea,label='Enter Message')
+
+
+class OTPForm(forms.Form):
+    otp = forms.CharField(label='OTP')

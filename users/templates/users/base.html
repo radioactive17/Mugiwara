@@ -18,7 +18,7 @@
     <link href="https://unpkg.com/simple-keyboard/build/css/index.css" rel="stylesheet">
     <script src="https://unpkg.com/simple-keyboard/build/index.js"></script>
 
-
+    
 </head>
 
 <body><!-- Start: Dark NavBar -->
@@ -105,7 +105,7 @@
                                 </li>
                             </ul>
                         </li>
-
+                        
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
@@ -119,7 +119,8 @@
                             </ul>
                         </li>
 
-
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions_sa'%}"><i
+                                    class="fa fa-user"></i>&nbsp;All Transactions</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i
                                     class="fa fa-user"></i>&nbsp;Profile</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'contact' %}"><i
@@ -156,21 +157,32 @@
                             </form>
                             <!-- -->
                         </li>
+                        {% elif user.user.usertype == 'eu_mo' %}
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'submit_payment_request'%}">
+                                <i class="fa fa-money"></i>&nbsp;Payment Requests</a></li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'merchant_transaction_history'%}"><i
+                                    class="fa fa-money"></i>&nbsp;Merchant Transaction History</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'modify_user_personal_data'%}"><i
+                                    class="fa fa-money"></i>&nbsp;Modify User Data</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i class="fa fa-user"></i>&nbsp;Profile</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'contact' %}"><i
+                                    class="fa fa-user"></i>&nbsp;Contact Us</a></li>
+                        <li class="nav-item">
+                            <form id="frm_logout" class="nav-link" style="color:#ffffff;" action="{% url 'logout' %}" method="post">
+                                {% csrf_token %}
+                                <a style="color:#ffffff;" href="javascript:{}"
+                                    onclick="document.getElementById('frm_logout').submit(); return false;">
+                                    <i class="fa fa-sign-in"></i>&nbsp;Logout</a></iclass>
+                            </form>
+                            <!-- -->
+                        </li>
 
 
                         {% elif user.user.usertype == 'iu_re' %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Approvals
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
-                                        Approvals</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                     <li class="nav-item dropdown">
@@ -198,18 +210,7 @@
                         </li>
 
                         {% elif user.user.usertype == 'iu_sm' %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" style="color:#ffffff;" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                Approvals
-                            </a>
-                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="{% url 'user-approvals' %}">Registration
-                                        Approvals</a></li>
-                                <li><a class="dropdown-item" href="{% url 'profile-approvals' %}">Update Approvals</a>
-                                </li>
-                            </ul>
-                        </li>
+                        
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{%url 'all_transactions'%}"><i
                                     class="fa fa-user"></i>&nbsp;Transaction Approvals</a></li>
                         <li class="nav-item"><a class="nav-link" style="color:#ffffff;" href="{% url 'profile' %}"><i class="fa fa-user"></i>&nbsp;Profile</a>

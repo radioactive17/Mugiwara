@@ -95,31 +95,39 @@ def user_approvals(request):
         request_id = int(request.POST.get('request_id'))
         action = request.POST.get('action')
         print(request_id, action)
-        if action == 'approve':
-            u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'],
-                     last_name = regitration_requests[request_id]['data']['last_name'], email = regitration_requests[request_id]['data']['email'])
-            u.set_password(regitration_requests[request_id]['data']['password1'])
-            u.save()
-            bu = BankingUser(user = u, usertype = regitration_requests[request_id]['data']['usertype'])
-            bu.save()
-            regitration_requests.pop(int(request_id))
-
-            subject = 'Account Created Succesfully'
-            message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [u.email, ]
-            send_mail( subject, message, email_from, recipient_list )
-            print('accepted')
-        elif action == 'reject':
-            print('reject')
-            subject = 'Account Creation Denied'
-            message = f"Hi {regitration_requests[request_id]['data']['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
-            email_from = settings.EMAIL_HOST_USER
-            recipient_list = [regitration_requests[request_id]['data']['email'], ]
-            send_mail( subject, message, email_from, recipient_list )
-            regitration_requests.pop(int(request_id))
-        else:
-            messages.error(request, 'Invalid action.')
+        try:
+            if action == 'approve':
+                u = User(username = regitration_requests[request_id]['data']['username'], first_name = regitration_requests[request_id]['data']['first_name'],
+                        last_name = regitration_requests[request_id]['data']['last_name'], email = regitration_requests[request_id]['data']['email'])
+                u.set_password(regitration_requests[request_id]['data']['password1'])
+                u.save()
+                bu = BankingUser(user = u, usertype = regitration_requests[request_id]['data']['usertype'])
+                bu.save()
+                try:
+                    regitration_requests.pop(int(request_id))
+                except:
+                    pass
+                subject = 'Account Created Succesfully'
+                message = f"Hi {u.username}, thank you for registering in Mugiwara. You can now login using your username and password you created while registering"
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [u.email, ]
+                send_mail( subject, message, email_from, recipient_list )
+                print('accepted')
+            elif action == 'reject':
+                print('reject')
+                subject = 'Account Creation Denied'
+                message = f"Hi {regitration_requests[request_id]['data']['username']}, thank you for registering in Mugiwara. Your account cannot be created, please contact bank manager for more details"
+                email_from = settings.EMAIL_HOST_USER
+                recipient_list = [regitration_requests[request_id]['data']['email'], ]
+                send_mail( subject, message, email_from, recipient_list )
+                try:
+                    regitration_requests.pop(int(request_id))
+                except:
+                    pass
+            else:
+                messages.error(request, 'Invalid action.')
+        except:
+            messages.info(request, 'All requests are handled')
     context = {
         'regitration_requests': regitration_requests,
         'user_types': user_types
@@ -167,22 +175,31 @@ def approve_accounts(request):
         request_id = int(request.POST.get('request_id'))
         action = request.POST.get('action')
         print(request_id, action)
-        if action == 'approve':
-            user = User.objects.get(username = create_account_requests[request_id]['user'])
-            banking_user = BankingUser.objects.get(user = user)
-            print(create_account_requests[request_id]['data'])
-            acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
-            acc.save()
-            create_account_requests.pop(int(request_id))
-            # acc.save()
-            # # create_account_requests.pop(int(request_id))
-            messages.success(request, 'Account created successfully.')
-        elif action == 'reject':
-            print('reject')
-            create_account_requests.pop(int(request_id))
-            messages.info(request, 'Account creation request rejected successfully.')
-        else:
-            messages.error(request, 'Invalid action.')
+        try:
+            if action == 'approve':
+                user = User.objects.get(username = create_account_requests[request_id]['user'])
+                banking_user = BankingUser.objects.get(user = user)
+                print(create_account_requests[request_id]['data'])
+                acc = Account(banking_user = banking_user, account_type = create_account_requests[request_id]['data']['account_type'])
+                acc.save()
+                try:
+                    create_account_requests.pop(int(request_id))
+                except:
+                    pass
+                # acc.save()
+                # # create_account_requests.pop(int(request_id))
+                messages.success(request, 'Account created successfully.')
+            elif action == 'reject':
+                print('reject')
+                try:
+                    create_account_requests.pop(int(request_id))
+                except:
+                    pass
+                messages.info(request, 'Account creation request rejected successfully.')
+            else:
+                messages.error(request, 'Invalid action.')
+        except:
+            messages.info(request, 'All requests are handled')
     context = {
         'create_account_requests': create_account_requests,
     }
@@ -217,24 +234,24 @@ def approve_profile_deletion(request, *args, **kwargs):
    UserDeletionFormSet = modelformset_factory(BankingUser, form = UserDeletionApprovalForm, extra = 0)
    formset = UserDeletionFormSet(queryset = BankingUser.objects.filter(deletion = 'yes'))
    if request.method == 'POST':
-       formset = UserDeletionFormSet(request.POST or None)
-       if formset.is_valid():
-           for form in formset:
-               print(form.cleaned_data)
-               if form.cleaned_data['deletion_status'] == 'approved':
-                   u = form.cleaned_data['user']
-                   bu = BankingUser.objects.get(user = u)
-                   bu.delete()
-                   us = User.objects.get(username = u.username)
-                   us.delete()
-               elif form.cleaned_data['deletion_status'] == 'rejected':
-                   u = form.cleaned_data['user']
-                   bu = BankingUser.objects.get(user = u)
-                   bu.deletion = 'no'
-                   bu.save()
-               else:
+    formset = UserDeletionFormSet(request.POST or None)
+    if formset.is_valid():
+            for form in formset:
+                print(form.cleaned_data)
+                if form.cleaned_data['deletion_status'] == 'approved':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.delete()
+                    us = User.objects.get(username = u.username)
+                    us.delete()
+                elif form.cleaned_data['deletion_status'] == 'rejected':
+                    u = form.cleaned_data['user']
+                    bu = BankingUser.objects.get(user = u)
+                    bu.deletion = 'no'
+                    bu.save()
+                else:
                    pass
-           return redirect('mugiwara')
+    return redirect('mugiwara')
    return render(request, 'users/approve_profile_deletion.html', {'formset': formset})
 # ================================================ PROFILE DELETION ================================================
 
@@ -280,29 +297,38 @@ def approve_profile_update(request):
         request_id = int(request.POST.get('request_id'))
         action = request.POST.get('action')
         print(request_id, action)
-        if action == 'approve':
-            user = User.objects.get(username = profile_update_requests[request_id]['user'])
-            banking_user = BankingUser.objects.get(user = user)
-            user.first_name = profile_update_requests[request_id]['data']['first_name']
-            user.last_name = profile_update_requests[request_id]['data']['last_name']
-            banking_user.dob = profile_update_requests[request_id]['data']['dob']
-            banking_user.mobile_number = profile_update_requests[request_id]['data']['mobile_number']
-            banking_user.street_address = profile_update_requests[request_id]['data']['street_address']
-            banking_user.city = profile_update_requests[request_id]['data']['city']
-            banking_user.state = profile_update_requests[request_id]['data']['state']
-            banking_user.zip_code = profile_update_requests[request_id]['data']['zip_code']
-            banking_user.country = profile_update_requests[request_id]['data']['country']
-            user.save()
-            banking_user.save()
-            profile_update_requests.pop(int(request_id))
-            messages.success(request, 'Request approved successfully.')
-        elif action == 'reject':
-            print('reject')
-            # Code to reject request
-            profile_update_requests.pop(int(request_id))
-            messages.success(request, 'Request rejected successfully.')
-        else:
-            messages.error(request, 'Invalid action.')
+        try:
+            if action == 'approve':
+                user = User.objects.get(username = profile_update_requests[request_id]['user'])
+                banking_user = BankingUser.objects.get(user = user)
+                user.first_name = profile_update_requests[request_id]['data']['first_name']
+                user.last_name = profile_update_requests[request_id]['data']['last_name']
+                banking_user.dob = profile_update_requests[request_id]['data']['dob']
+                banking_user.mobile_number = profile_update_requests[request_id]['data']['mobile_number']
+                banking_user.street_address = profile_update_requests[request_id]['data']['street_address']
+                banking_user.city = profile_update_requests[request_id]['data']['city']
+                banking_user.state = profile_update_requests[request_id]['data']['state']
+                banking_user.zip_code = profile_update_requests[request_id]['data']['zip_code']
+                banking_user.country = profile_update_requests[request_id]['data']['country']
+                user.save()
+                banking_user.save()
+                try:
+                    profile_update_requests.pop(int(request_id))
+                except:
+                    pass
+                messages.success(request, 'Request approved successfully.')
+            elif action == 'reject':
+                print('reject')
+                # Code to reject request
+                try:
+                    profile_update_requests.pop(int(request_id))
+                except:
+                    pass
+                messages.success(request, 'Request rejected successfully.')
+            else:
+                messages.error(request, 'Invalid action.')
+        except:
+            messages.info(request, 'All requests are handled')
 
     context = {
         'profile_update_requests': profile_update_requests,
@@ -365,19 +391,28 @@ def approve_account_deletion(request):
         request_id = int(request.POST.get('request_id'))
         action = request.POST.get('action')
         print(request_id, action)
-        if action == 'approve':
-            user = User.objects.get(username = account_delete_requests[request_id]['user'])
-            banking_user = BankingUser.objects.get(user = user)
-            acc = Account.objects.get(banking_user = banking_user, account_type = account_delete_requests[request_id]['data']['account_type'])
-            acc.delete()
-            account_delete_requests.pop(int(request_id))
-            messages.success(request, 'Deletion Request approved successfully.')
-        elif action == 'reject':
-            print('reject')
-            account_delete_requests.pop(int(request_id))
-            messages.info(request, 'Deletion Request rejected successfully.')
-        else:
-            messages.error(request, 'Invalid action.')
+        try:
+            if action == 'approve':
+                user = User.objects.get(username = account_delete_requests[request_id]['user'])
+                banking_user = BankingUser.objects.get(user = user)
+                acc = Account.objects.get(banking_user = banking_user, account_type = account_delete_requests[request_id]['data']['account_type'])
+                acc.delete()
+                try:
+                    account_delete_requests.pop(int(request_id))
+                except:
+                    pass
+                messages.success(request, 'Deletion Request approved successfully.')
+            elif action == 'reject':
+                print('reject')
+                try:
+                    account_delete_requests.pop(int(request_id))
+                except:
+                    pass
+                messages.info(request, 'Deletion Request rejected successfully.')
+            else:
+                messages.error(request, 'Invalid action.')
+        except:
+            messages.info(request, 'All requests are handled')
     context = {
         'account_delete_requests': account_delete_requests,
     }
@@ -416,7 +451,12 @@ def send_otp_email(email, otp):
     recipient_list = [email]
     send_mail(subject, message, from_email, recipient_list)
 
-
+def send_otp_email_reset_password(email, otp):
+    subject = 'Your OTP for password reset'
+    message = f'Your OTP for transaction confirmation is: {otp}'
+    from_email = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [email]
+    send_mail(subject, message, from_email, recipient_list)
 # User create transaction
 @login_required
 def create_transaction(request):
@@ -484,7 +524,18 @@ def all_transactions(request):
         'payment_requests': payment_requests
     })
 
+@login_required
+def all_transactions_sa(request):
+  # Filter transactions where the current user is either the sender or the receiver
+  transactions = Transactions.objects.all()
+  transactions=transactions.order_by('-initiated')
+  payment_requests = PaymentRequest.objects.all()
 
+
+  return render(request, 'users/all_transactions_sa.html', {
+        'transactions': transactions,
+        'payment_requests': payment_requests
+    })
 
 
 from django.shortcuts import render
@@ -1286,7 +1337,7 @@ def forgot_password(request):
             otp = generate_otp()
             request.session['otp'] = otp  # Store OTP in session for later verification
             request.session['user_id'] = user.id  # Store user ID in session
-            send_otp_email(user.email, otp)
+            send_otp_email_reset_password(user.email, otp)
             return redirect('reset_password')
     else:
         form = UsernameForm()

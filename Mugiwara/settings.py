@@ -139,7 +139,7 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = 'mugiwara'
-LOGOUT_REDIRECT_URL = 'mugiwara'
+LOGOUT_REDIRECT_URL = 'login'
 
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -149,9 +149,9 @@ EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = "MY APP"
 EMAIL_HOST_USER = 'mugiwarabank@gmail.com'
 EMAIL_HOST_PASSWORD = 'hwje wozn ofoi ychf'
-EMAIL_USE_SSL = False
-EMAIL_SSL_CERTFILE = None
-EMAIL_SSL_KEYFILE = None
+# EMAIL_USE_SSL = True
+# EMAIL_SSL_CERTFILE = True
+# EMAIL_SSL_KEYFILE = True
 EMAIL_TIMEOUT = None
 EMAIL_SSL_CERTFILE = None
 EMAIL_SSL_KEYFILE = None
