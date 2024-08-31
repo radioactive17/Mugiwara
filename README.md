@@ -40,6 +40,7 @@ Make sure you are in the directory containing the manage.py file and Run the fol
 python manage.py runserver
 ```
 If everything went smoothly, you should see the below screen.   
+<img src="mugiwara images/terminal.png" width="750">
 
 If you run into errors. Please look online for solutions
 
