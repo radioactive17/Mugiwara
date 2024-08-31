@@ -42,7 +42,7 @@ python manage.py runserver
 If everything went smoothly, you should see the below screen.   
 <img src="mugiwara images/terminal.png" width="750">
 
-If you run into errors. Please look online for solutions
+If you encounter any errors, please search online for solutions or feel free to reach out to me at jigsshah.97@gmail.com.
 
 ## Few Snippets of the application  
 
