@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-d@$w%1&7ckh%lt!1n0gadfhfii33hr*c7!#bm5^z9tffz-c+eu
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -159,7 +159,7 @@ EMAIL_SSL_KEYFILE = None
 CONTACT_EMAIL = ['jignagda@iu.edu', 'mivaidya@iu.edu', 'clotanka@iu.edu','sdsahu@iu.edu','nikkulk@iu.edu']
 SECURE_BROWSER_XSS_FILTER = True
 SECURE_CONTENT_TYPE_NOSNIFF = True
-SECURE_SSL_REDIRECT = True
+SECURE_SSL_REDIRECT = False
 
 LOGGING = {
     'version': 1,
