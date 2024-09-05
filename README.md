@@ -112,8 +112,6 @@ If you encounter any errors, please search online for solutions or feel free to 
 
 ### 5. Merchants
 
-<img src="mugiwara images/merch1.png" width="750">
-
 * Payment Request Submission: Merchants can submit payment requests for processing. Each request requires One-Time Password (OTP) verification to ensure authenticity.
   
   <img src="mugiwara images/merch2.png" width="750">
@@ -131,6 +129,17 @@ If you encounter any errors, please search online for solutions or feel free to 
   <img src="mugiwara images/merch5.png" width="750">
   <img src="mugiwara images/merch6.png" width="750">
 
+### 6. Admin
+
+* User and Account Management: Administrators have the authority to approve or reject user registration requests, user profile update requests, and user deletion requests.
+They also manage account-related activities, including approving or rejecting requests for creating new accounts or deleting existing ones.
+
+  <img src="mugiwara images/a3.png" width="750">
+  <img src="mugiwara images/a2.png" width="750">
+  <img src="mugiwara images/a4.png" width="750">
+  <img src="mugiwara images/a5.png" width="750">
+  
+* Transaction Oversight: Administrators have full visibility of all transactions within the database, allowing them to monitor and audit activities across the platform.
 
 
 ## Developers
