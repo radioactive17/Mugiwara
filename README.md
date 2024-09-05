@@ -96,9 +96,19 @@ If you encounter any errors, please search online for solutions or feel free to 
   
   <img src="mugiwara images/e4.png" width="750">
 
+### 4. Bank Manager
 
-
-
+* Transaction Oversight: Bank managers have the authority to view and monitor transactions, specifically those above a threshold amount of $10,000.
+  
+  <img src="mugiwara images/man3.png" width="750">
+  
+* Transaction Approval and Management: Managers can approve, decline, or modify high-value transactions, ensuring compliance with the bank’s policies and regulatory requirements. To verify the authenticity of high-value transactions, managers can check if the user has completed the One-Time Password (OTP) verification process.
+  
+  <img src="mugiwara images/man1.png" width="750">
+  
+* Transaction Modification: Managers can modify high-value transactions upon the user’s request, provided the changes adhere to bank regulations and policies.
+  
+  <img src="mugiwara images/man2.png" width="750">
 
 
 
