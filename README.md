@@ -110,6 +110,27 @@ If you encounter any errors, please search online for solutions or feel free to 
   
   <img src="mugiwara images/man2.png" width="750">
 
+### 5. Merchants
+
+<img src="mugiwara images/merch1.png" width="750">
+
+* Payment Request Submission: Merchants can submit payment requests for processing. Each request requires One-Time Password (OTP) verification to ensure authenticity.
+  
+  <img src="mugiwara images/merch2.png" width="750">
+  
+* Request Modification: Merchants have the ability to modify the requested payment amount as needed before it is processed.
+
+  <img src="mugiwara images/merch4.png" width="750">
+  
+* Request Approval: Submitted payment requests are subject to approval or rejection by bank employees or managers, depending on the transaction's nature and value.
+
+  <img src="mugiwara images/merch.png" width="750">
+  
+* User Details Modification: Merchants can modify specific user details, ensuring the information is accurate and up-to-date for transaction processing.
+  
+  <img src="mugiwara images/merch5.png" width="750">
+  <img src="mugiwara images/merch6.png" width="750">
+
 
 
 ## Developers
