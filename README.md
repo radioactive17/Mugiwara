@@ -50,11 +50,12 @@ If you encounter any errors, please search online for solutions or feel free to 
 <img src="mugiwara images/h2.png" width="750">
 <img src="mugiwara images/h3.png" width="750">
 
-### 2: Customer/Banking User Interface
+### 2: Customer/Banking User
 
 * Account Request and Management: Users can request a new checking or savings account if they do not already have an account. Once an account is created, additional options become available in the navigation menu.
 
   <img src="mugiwara images/c2.png" width="750">
+  
   <img src="mugiwara images/c3.png" width="750">
   
 * Account Maintenance: Users can view their existing accounts or request the deletion of an account.
@@ -81,6 +82,19 @@ If you encounter any errors, please search online for solutions or feel free to 
   <img src="mugiwara images/c16.png" width="750">
 
 
+### 3. Bank Employee
+
+* Transaction Approval and Management: Employees have the authority to approve, decline, or modify user transactions. To ensure the authenticity of transactions, employees can verify whether the user has successfully completed the One-Time Password (OTP) verification process.
+  
+  <img src="mugiwara images/e2.png" width="750">
+  
+* Transaction Modification: Employees can modify transactions upon the user's request, ensuring that any changes align with the bank's policies and procedures.
+  
+  <img src="mugiwara images/e3.png" width="750">
+  
+* Transaction Monitoring: Employees can access and review a comprehensive list of all transactions made by a user, allowing them to monitor and manage user activity effectively.
+  
+  <img src="mugiwara images/e4.png" width="750">
 
 
 
