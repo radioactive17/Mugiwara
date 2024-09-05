@@ -45,10 +45,34 @@ If everything went smoothly, you should see the below screen.
 If you encounter any errors, please search online for solutions or feel free to reach out to me at jigsshah.97@gmail.com.
 
 ## Few Snippets of the application  
-### 1) Home Page
+### [^1]: Home Page
 <img src="mugiwara images/h1.png" width="750">
 <img src="mugiwara images/h2.png" width="750">
 <img src="mugiwara images/h3.png" width="750">
+
+### [^2] Customer/Banking User Interface
+
+Account Request and Management:
+
+Users can request a new checking or savings account if they do not already have an account.
+Once an account is created, additional options become available in the navigation menu.
+Account Maintenance:
+
+Users can view their existing accounts or request the deletion of an account.
+Deposits and Withdrawals:
+
+Users can deposit funds into their account, with transactions requiring a One-Time Password (OTP) verification to confirm their identity.
+Users can also request to debit money from their account, following the same OTP verification process.
+Transaction Management:
+
+Users can view their transaction history, including the status of each transaction.
+All transactions are initially marked as pending and are completed only upon approval by authorized personnel, such as bank employees or managers.
+Fund Transfers:
+
+Users can send money to other accounts, with OTP verification required to ensure the authenticity of the transaction.
+Profile Management:
+
+Users can check, request updates, or request the deletion of their profile details.
 
 
 ## Developers
