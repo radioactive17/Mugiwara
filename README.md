@@ -56,19 +56,27 @@ If you encounter any errors, please search online for solutions or feel free to 
 
   <img src="mugiwara images/c2.png" width="750">
   <img src="mugiwara images/c3.png" width="750">
+  
 * Account Maintenance: Users can view their existing accounts or request the deletion of an account.
+  
   <img src="mugiwara images/c4.png" width="750">
+  
 * Deposits and Withdrawals: Users can deposit funds into their account, with transactions requiring a One-Time Password (OTP) verification to confirm their identity. Users can also request to debit money from their account, following the same OTP verification process.
   
   <img src="mugiwara images/c5.png" width="750">
   <img src="mugiwara images/c6.png" width="750">
   <img src="mugiwara images/c8.png" width="750">
+  
 * Transaction Management: Users can view their transaction history, including the status of each transaction. All transactions are initially marked as pending and are completed only upon approval by authorized personnel, such as bank employees or managers.
   
   <img src="mugiwara images/c13.png" width="750">
+  
 * Fund Transfers: Users can send money to other accounts, with OTP verification required to ensure the authenticity of the transaction.
+  
   <img src="mugiwara images/c11.png" width="750">
+  
 * Profile Management: Users can check, request updates, or request the deletion of their profile details.
+  
   <img src="mugiwara images/c14.png" width="750">
   <img src="mugiwara images/c15.png" width="750">
 
