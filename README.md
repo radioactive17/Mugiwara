@@ -45,6 +45,10 @@ If everything went smoothly, you should see the below screen.
 If you encounter any errors, please search online for solutions or feel free to reach out to me at jigsshah.97@gmail.com.
 
 ## Few Snippets of the application  
+### 1) Home Page
+<img src="mugiwara images/h1.png" width="750">
+<img src="mugiwara images/h2.png" width="750">
+<img src="mugiwara images/h3.png" width="750">
 
 
 ## Developers
