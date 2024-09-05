@@ -52,8 +52,8 @@ If you encounter any errors, please search online for solutions or feel free to 
 
 ### 2: Customer/Banking User Interface
 
- Markup : * Bullet list
-          * Bullet list item 2
+* Bullet list
+* Bullet list item 2
 
 
     * Account Request and Management: Users can request a new checking or savings account if they do not already have an account. Once an account is created, additional options become available in the navigation menu.
