@@ -77,8 +77,8 @@ If you encounter any errors, please search online for solutions or feel free to 
   
 * Profile Management: Users can check, request updates, or request the deletion of their profile details.
   
-  <img src="mugiwara images/c14.png" width="750">
   <img src="mugiwara images/c15.png" width="750">
+  <img src="mugiwara images/c16.png" width="750">
 
 
 
